@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "132864646347",
+    "project_id": "clms-65d75",
+    "storage_bucket": "clms-65d75.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:132864646347:android:8fc1c2e3963e02b3534f4e",
+        "android_client_info": {
+          "package_name": "com.leads.mypcot"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDA2bZLMutD0lo-UH-WXrP3_HVpI64Ad2E"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
