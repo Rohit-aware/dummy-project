@@ -1,22 +1,27 @@
 import React from 'react';
 import BottomTab from './BottomTab';
 import { Login, Register } from '../screen';
-import useAuthStore from '../store/auth/auth-store';
+import { MainStackProps } from './interface';
 import DeviceInfo from 'react-native-device-info';
+import { useAuthStore, useCommonStore } from '../store';
 import { NavigationContainer } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 
-const Stack = createNativeStackNavigator();
+const Stack = createNativeStackNavigator<MainStackProps>();
 
 const MainStack = () => {
+
     const { updateDeviceId, token } = useAuthStore();
+    const { getStates } = useCommonStore();
+
     const getUuid = async () => {
         const deviceId = await DeviceInfo.getUniqueId();
-        updateDeviceId(deviceId);
+        updateDeviceId({ id: deviceId });
     };
 
     React.useEffect(() => {
         getUuid();
+        getStates();
     }, []);
 
     return (
@@ -37,4 +42,4 @@ const MainStack = () => {
     )
 }
 
-export default MainStack
+export default MainStack;

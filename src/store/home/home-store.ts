@@ -34,7 +34,14 @@ const useHomeStore = create<DashboardStore>((set) => ({
             console.error('Error fetching dashboard data:', error);
         }
     },
-
+    processLogout: async ({ token }) => {
+        try {
+            const response = await networkRequest({ token }).post(endpoints.logout);
+            return response.data;
+        } catch (error: any) {
+            console.error('Error processLogout api :', error);
+        }
+    },
     clearDashboardData: () => {
         set({
             data: {

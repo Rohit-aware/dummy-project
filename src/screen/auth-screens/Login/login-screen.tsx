@@ -76,6 +76,7 @@ const Login = () => {
                 value={inputs.email}
                 onChangeText={onChangeText}
                 placeholder={'Official Email ID'}
+                containerStyle={{ width: '100%' }}
             />
             <InputBox
                 name={'password'}
@@ -84,6 +85,7 @@ const Login = () => {
                 onChangeText={onChangeText}
                 placeholder={'Password'}
                 secureTextEntry
+                containerStyle={{ width: '100%' }}
             />
             <Button title={'Login'} onPress={doLogin} loading={loader} />
 

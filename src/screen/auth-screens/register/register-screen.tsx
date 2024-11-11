@@ -1,86 +1,25 @@
 import React from 'react';
-import { View, Text, StyleSheet, ScrollView } from 'react-native';
 import { Colors } from '../../../constants';
-import { useNavigation } from '@react-navigation/native';
+import { View, StyleSheet, ScrollView } from 'react-native';
 import { Button, DropdownButton, Header, InputBox, NumberInput } from '../../../components';
+import { useRegisterHook } from './register-hook';
 
-export default () => {
-  const navigation = useNavigation();
-  const [loading, setLoading] = React.useState(false);
-  const organization: [] = [];
-  const [inputs, setInputs] = React.useState({
-    first_name: '',
-    last_name: '',
-    phone_number: '',
-    email: '',
-    address: '',
-    password: '',
-    confirm_password: '',
-    state_id: '',
-    city_id: '',
-    gender: '',
-    organization_name: '',
-    countrycode: '91',
-  });
-
-  const [countryModal, setcountryModal] = React.useState(false);
-  const onSelectCountry = (country: any) => {
-    setInputs({ ...inputs, phone_number: '' })
-    const { callingCode } = country;
-    setInputs({
-      ...inputs,
-      countrycode: callingCode.toString(),
-    });
-  };
-
-  const openCountryModal = () => setcountryModal(true);
-  const closeCountryModal = () => setcountryModal(false);
-  const onChangeText = (name: string, value: string) => setInputs({ ...inputs, [name]: value });
-
-  const passwordCheck = () =>
-    inputs.password == inputs.confirm_password ? false : true;
-
-  const onOrgnizationSelect = (name: string, data: any) =>
-    setInputs({ ...inputs, [name]: data['organization_name'] });
-
-  const getOrgnization = (name: string) =>
-    organization.find((e) => e['organization_name'] == name)!['organization_id'];
-
-  const onSelect = (name: string, data: any) =>
-    setInputs({ ...inputs, [name]: data['full_name'] });
-
-  const getSelectedGender = () => (inputs.gender === 'Male' ? 'M' : 'F');
-  const onRegister = async () => {
-    try {
-      setLoading(true);
-      const formdata = new FormData();
-      formdata.append('first_name', inputs.first_name);
-      formdata.append('last_name', inputs.last_name);
-      formdata.append('phone_code', inputs.countrycode);
-      formdata.append('phone_number', inputs.phone_number);
-      formdata.append('email', inputs.email);
-      formdata.append('password', inputs.password);
-      formdata.append('confirm_password', inputs.confirm_password);
-      formdata.append('gender', getSelectedGender());
-      formdata.append('designation', '');
-      formdata.append('address', null);
-      formdata.append('state_id', '');
-      formdata.append('city_id', '');
-      formdata.append('location', '');
-      formdata.append('organization_id', getOrgnization(inputs.organization_name));
-      console.log(JSON.stringify(formdata, undefined, 4), 'formdata ')
-      // const response = await dispatch(processRegistration(formdata));
-      setLoading(false);
-      // if (response.payload.success == 1) {
-      //   navigation.goBack();
-      // }
-    } catch (error) {
-      console.log(error, 'error at onRegister');
-    }
-  };
+const Register = () => {
+  const loading = false;
+  const {
+    inputs,
+    Genders,
+    orgLoad,
+    onSelect,
+    onRegister,
+    onChangeText,
+    organization,
+    getAllOrganization,
+    onOrgnizationSelect,
+  } = useRegisterHook();
 
   React.useEffect(() => {
-    // dispatch(getAllOrganization());
+    getAllOrganization()
   }, []);
 
   return (
@@ -116,7 +55,7 @@ export default () => {
           maxLength={17}
           keyboardType={'numeric'}
           countrycode={inputs.countrycode}
-          onPressCode={openCountryModal}
+          onPressCode={() => { }}
         />
 
         <InputBox
@@ -145,10 +84,11 @@ export default () => {
         <DropdownButton
           star
           placeholder={'Gender'}
-          data={['']}
+          data={Genders}
           onSelect={onSelect}
           name={'gender'}
           value={inputs.gender}
+          
         />
         <DropdownButton
           star
@@ -157,23 +97,12 @@ export default () => {
           onSelect={onOrgnizationSelect}
           name={'organization_name'}
           value={inputs.organization_name}
-          loading={false}
+          loading={orgLoad}
         />
         <View style={styles.btncontainer}>
           <Button title={'Register'} onPress={onRegister} loading={loading} />
         </View>
       </ScrollView>
-      {/* {countryModal &&
-        <CountryPicker
-          visible={true}
-          modalProps={{ visible: countryModal }}
-          onSelect={onSelectCountry}
-          onClose={closeCountryModal}
-          withFilter
-          withCallingCode
-          containerButtonStyle={styles.countrybuttonstyle}
-        />
-      } */}
     </View>
   );
 };
@@ -206,3 +135,4 @@ const styles = StyleSheet.create({
     justifyContent: 'flex-end',
   },
 });
+export default Register;

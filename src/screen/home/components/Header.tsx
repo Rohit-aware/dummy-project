@@ -2,7 +2,7 @@ import Box from './Box';
 import React from 'react';
 import { Colors } from '../../../constants';
 import { fontStyles } from '../../../styles';
-import { useHomeStore } from '../../../store';
+import { useAuthStore, useHomeStore } from '../../../store';
 import FastImage from 'react-native-fast-image';
 import { useNavigation } from '@react-navigation/native';
 import moderateScale, { SCREEN_WIDTH } from '../../../constants/dimenssion';
@@ -14,7 +14,8 @@ const LOGOUT_ICON = require('../../../../assets/images/logout.png');
 
 const Header = () => {
   const { navigate } = useNavigation<any>();
-  const { data } = useHomeStore();
+  const { data, processLogout } = useHomeStore();
+  const { token, clearLoginData } = useAuthStore();
 
   const onLeads = () => navigate('MyLeads');
 
@@ -22,10 +23,11 @@ const Header = () => {
 
   const doLogout = async () => {
     try {
-      // const res = await dispatch(processlogout({ token: userData.token }));
-      if (1 === 1) {
-
+      const res = await processLogout({ token });
+      if (res.success === "1") {
+        clearLoginData();
       } else {
+        console.log("response failed : ",res)
       }
     } catch (error: any) {
       console.log('Error inside doLogout Api in Header.js : ', error.message)
@@ -36,7 +38,7 @@ const Header = () => {
       { text: 'cancel' },
       {
         text: 'ok',
-        onPress: () => { },
+        onPress: doLogout,
       },
     ]);
   };

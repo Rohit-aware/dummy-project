@@ -83,6 +83,8 @@ const styles = StyleSheet.create({
         borderRadius: moderateScale(10),
         borderColor: Colors.grey,
         marginVertical: moderateScale(10),
+        alignSelf: 'center',
+        width: '92%'
     },
     textinput: {
         color: Colors.black,

@@ -23,7 +23,8 @@ interface AuthStore {
     token: string;
     errorMessage: string | null;
     deviceId: string;
-    updateDeviceId: (id: string) => void;
+    updateDeviceId: ({ id }: { id: string }) => void;
+    clearLoginData: () => void;
     processDoLogin: ({ formData }: { formData: {} }) => Promise<any>;
     updateMyDeviceId: ({ token, formData }: { token: string, formData: {} }) => void;
 }

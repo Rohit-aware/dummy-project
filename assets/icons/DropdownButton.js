@@ -1,6 +1,5 @@
 import * as React from "react"
 import Svg, { Path } from "react-native-svg"
-import Colors from "../../constants/color"
 
 function DropDownIcon(props) {
     return (

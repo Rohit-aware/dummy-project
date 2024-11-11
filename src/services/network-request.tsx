@@ -30,7 +30,7 @@ const networkRequest = (networkConfig: NetworkConfig) => {
 
 
   const axiosInstance = axios.create({
-    baseURL: BASE_URLS.VIVEK_LOCAL,
+    baseURL: BASE_URLS.STAGING,
     headers,
   });
 

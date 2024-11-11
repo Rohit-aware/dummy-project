@@ -1,6 +1,6 @@
 import * as React from "react"
 import Svg, { Path } from "react-native-svg"
-import Colors from "../../constants/color"
+import { Colors } from "../../src/constants"
 
 function Back(props) {
     return (

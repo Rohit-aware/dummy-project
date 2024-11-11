@@ -59,6 +59,9 @@ importers:
       react-native-get-random-values:
         specifier: ^1.11.0
         version: 1.11.0(react-native@0.76.1(@babel/core@7.26.0)(@babel/preset-env@7.26.0(@babel/core@7.26.0))(@react-native-community/cli-server-api@15.0.0)(@types/react@18.3.12)(react@18.3.1))
+      react-native-keychain:
+        specifier: ^9.1.0
+        version: 9.1.0
       react-native-mmkv:
         specifier: 2.6.0
         version: 2.6.0(react-native@0.76.1(@babel/core@7.26.0)(@babel/preset-env@7.26.0(@babel/core@7.26.0))(@react-native-community/cli-server-api@15.0.0)(@types/react@18.3.12)(react@18.3.1))(react@18.3.1)
@@ -3574,6 +3577,10 @@ packages:
     resolution: {integrity: sha512-4BTbDbRmS7iPdhYLRcz3PGFIpFJBwNZg9g42iwa2P6FOv9vZj/xJc678RZXnLNZzd0qd7Q3CCF6Yd+CU2eoXKQ==}
     peerDependencies:
       react-native: '>=0.56'
+
+  react-native-keychain@9.1.0:
+    resolution: {integrity: sha512-txBVnhO/AVg+j6lrKe9cL/HPpb5BNHYYBRg/6lzbxKe8AsNqp639wq0nN8/IdkUCPjSezN8Pgp142HNomgqk4Q==}
+    engines: {node: '>=18'}
 
   react-native-mmkv@2.6.0:
     resolution: {integrity: sha512-Vq6JDgx1e6vYc8nNwHk9KJezI2+qIQvU/AlpxAWt1Qcgpc/HJJYiq1gonDTT85mmQzKILGE+USQeMk3IOzgK0w==}
@@ -8813,6 +8820,8 @@ snapshots:
     dependencies:
       fast-base64-decode: 1.0.0
       react-native: 0.76.1(@babel/core@7.26.0)(@babel/preset-env@7.26.0(@babel/core@7.26.0))(@react-native-community/cli-server-api@15.0.0)(@types/react@18.3.12)(react@18.3.1)
+
+  react-native-keychain@9.1.0: {}
 
   react-native-mmkv@2.6.0(react-native@0.76.1(@babel/core@7.26.0)(@babel/preset-env@7.26.0(@babel/core@7.26.0))(@react-native-community/cli-server-api@15.0.0)(@types/react@18.3.12)(react@18.3.1))(react@18.3.1):
     dependencies:

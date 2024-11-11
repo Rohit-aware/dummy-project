@@ -16,5 +16,6 @@ interface DashboardStore {
     loading: boolean;
     getDashboardData: ({ token, formData }: { token: string, formData: object }) => Promise<void>;
     clearDashboardData: () => void;
+    processLogout: ({ token }: { token: string }) =>  Promise<any>;
 }
 export type { DashboardData, DashboardStore }

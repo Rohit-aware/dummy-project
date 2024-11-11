@@ -14,8 +14,13 @@ const useAuthStore = create<AuthStore>()(
             deviceId: '',
             errorMessage: '',
 
-            updateDeviceId: (id) => set({ deviceId: id }),
-
+            updateDeviceId: ({ id }) => set({ deviceId: id }),
+            clearLoginData: () => {
+                set({
+                    user_detail: {},
+                    token: '',
+                })
+            },
             processDoLogin: async ({ formData }) => {
                 set({ loader: true });
                 try {
