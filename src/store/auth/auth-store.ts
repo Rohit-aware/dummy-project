@@ -1,6 +1,7 @@
 import { create } from "zustand";
 import { AuthStore } from "./interface";
 import { endpoints } from "../../services/endpoints";
+import { setItem } from "../../local-storage/key-store";
 import { createJSONStorage, persist } from "zustand/middleware";
 import { networkRequest } from "../../services/network-request";
 import AsyncStorage from '@react-native-async-storage/async-storage';
@@ -31,6 +32,7 @@ const useAuthStore = create<AuthStore>()(
                             user_detail: response.data.data[0],
                             token: response.data.data[0].token,
                         });
+                        await setItem(response.data.data[0].token)
                     } else {
                         set({ loader: false, errorMessage: 'Failed to load dashboard data: Invalid status' });
                     }

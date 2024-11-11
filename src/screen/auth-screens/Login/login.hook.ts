@@ -41,10 +41,9 @@ const useLogin = (): LoginReturnType => {
             formData.append('password', passwordEncrypted);
             formData.append('uuid', uuid);
             const response = await processDoLogin({ formData });
-            console.log(JSON.stringify(response,undefined,4), ' Logged ')
             if (response.success === '1') {
                 await messaging()
-                    .getToken()
+                .getToken()
                     .then(token => {
                         console.log('FCM TOKEN  : ', { token });
                         const fnName = 'updateDeviceId';
@@ -58,9 +57,9 @@ const useLogin = (): LoginReturnType => {
                         formdata.append('deviceId', token);
                         formdata.append('uuid', uuid);
                         formdata.append('hash_key', hash_key);
-                        updateMyDeviceId({ token: response.payload.data[0].token, formData: formdata, })
+                        updateMyDeviceId({ token: response.data[0].token, formData: formdata, })
                     }).catch((e) => { });
-            }
+                }
         } catch (error: any) {
             console.log('Error inside doLogin function:', error);
         }
