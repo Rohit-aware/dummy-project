@@ -8,5 +8,6 @@ const endpoints = {
    getAllCity:'getAllCity',
    processRegistration:'processRegistration',
    logout:'logout',
+   getLeads:'getLeads'
 };
 export { endpoints }

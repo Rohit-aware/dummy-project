@@ -1,7 +1,14 @@
-import { useAuthStore, useHomeStore } from "../../store";
 import { getHashString } from "../../utility/hashing";
+import { useAuthStore, useHomeStore } from "../../store";
+import { DashboardData } from "../../store/home/interface";
+interface UseHomeReturnProps {
+    data: DashboardData;
+    loading: boolean;
+    onNavigator: (name: string) => void;
+    fetchHomeData: () => Promise<void>;
+}
 
-const useHome = () => {
+const useHome = (): UseHomeReturnProps => {
     const { getDashboardData, data, loading } = useHomeStore();
     const { user_detail, deviceId: uuid, token } = useAuthStore();
     const { mkey, msalt } = user_detail;
@@ -31,4 +38,4 @@ const useHome = () => {
     }
 }
 
-export { useHome }
+export { useHome };

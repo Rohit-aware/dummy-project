@@ -7,17 +7,16 @@ import { Platform } from "react-native";
 
 const BASE_URLS = {
   STAGING: 'http://skyonliners.com/demo/clms-web/webservices/v1/',
-  VIVEK_LOCAL: 'https://779e-110-227-197-199.ngrok-free.app/webservices/v1/',
+  VIVEK_LOCAL: 'https://ff5c-110-227-197-199.ngrok-free.app/webservices/v1/',
   KAUSHIK_LOCAL: 'https://3575-110-227-197-199.ngrok-free.app/webservices/v1/',
 };
 
 interface NetworkConfig {
   token?: string;
-  uuid?: string;
 };
 
 const networkRequest = (networkConfig: NetworkConfig) => {
-  const { token, uuid } = networkConfig;
+  const { token } = networkConfig;
 
   const headers: Partial<AxiosHeaders> = {
     'Content-Type': 'multipart/form-data',
@@ -30,7 +29,7 @@ const networkRequest = (networkConfig: NetworkConfig) => {
 
 
   const axiosInstance = axios.create({
-    baseURL: BASE_URLS.STAGING,
+    baseURL: BASE_URLS.VIVEK_LOCAL,
     headers,
   });
 

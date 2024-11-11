@@ -41,6 +41,7 @@ const useLogin = (): LoginReturnType => {
             formData.append('password', passwordEncrypted);
             formData.append('uuid', uuid);
             const response = await processDoLogin({ formData });
+            console.log(JSON.stringify(response,undefined,4), ' Logged ')
             if (response.success === '1') {
                 await messaging()
                     .getToken()

@@ -67,9 +67,6 @@ const Login = () => {
         <View style={{ flex: 1, paddingHorizontal: moderateScale(16) }}>
             <BackGround />
             <Greet />
-            <Text style={styles.forgotpass} onPress={onForgot}>
-                {'Forget Password ?'}
-            </Text>
             <InputBox
                 name={'email'}
                 star
@@ -87,8 +84,10 @@ const Login = () => {
                 secureTextEntry
                 containerStyle={{ width: '100%' }}
             />
+            <Text style={styles.forgotpass} onPress={onForgot}>
+                {'Forget Password ?'}
+            </Text>
             <Button title={'Login'} onPress={doLogin} loading={loader} />
-
             <Text style={styles.common}>
                 <Text style={styles.question}>{'Don’t have an Account? '}</Text>
                 <Text style={styles.register} onPress={onRegister}>
