@@ -8,9 +8,9 @@ type SearchBarProps = {
     searchStyle?: ViewStyle;
     hide?: boolean;
     textinputStyle?: TextStyle;
-    onPress: () => void;
+    onPress?: () => void;
     onChangeText: (text: string) => void;
-    value: string;
+    value?: string;
     enabled?: boolean;
 }
 

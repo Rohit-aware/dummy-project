@@ -1,8 +1,8 @@
 import React from 'react';
 import BottomTab from './BottomTab';
-import { Login, Register } from '../screen';
 import { MainStackProps } from './interface';
 import DeviceInfo from 'react-native-device-info';
+import { AddLead, Login, Register } from '../screen';
 import { useAuthStore, useCommonStore } from '../store';
 import { NavigationContainer } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
@@ -11,8 +11,10 @@ const Stack = createNativeStackNavigator<MainStackProps>();
 
 const MainStack = () => {
 
-    const { updateDeviceId, token } = useAuthStore();
     const { getStates } = useCommonStore();
+    const { updateDeviceId, token, deviceId: uuid, user_detail: userData } = useAuthStore();
+
+  
 
     const getUuid = async () => {
         const deviceId = await DeviceInfo.getUniqueId();
@@ -35,6 +37,7 @@ const MainStack = () => {
                     :
                     <Stack.Group>
                         <Stack.Screen name="BottomTab" component={BottomTab} />
+                        <Stack.Screen name="AddLead" component={AddLead} />
                     </Stack.Group>
                 }
             </Stack.Navigator>

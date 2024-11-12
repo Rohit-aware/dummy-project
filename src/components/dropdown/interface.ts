@@ -13,11 +13,11 @@ interface PickerProps {
 interface DropdownButtonprops {
     placeholder: string
     value: string
-    star: boolean
+    star?: boolean
     onPress?: () => void
     wrapperStyle?: ViewStyle
-    name: string
-    data: string | Array<any>
+    name?: string
+    data?: string | Array<any>
     loading?: boolean
     disabled?: boolean
     onSelect: (name: string, item: any) => void;

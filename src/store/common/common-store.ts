@@ -8,9 +8,14 @@ import { networkRequest } from "../../services/network-request";
 const useCommonStore = create<CommonStoreProps>()((set) => ({
     cityData: [],
     stateData: [],
+    outsiderData: [],
+    projectStatus: [],
+    sources: [],
+    call_status: [],
     orgLoad: false,
     cityLoad: false,
     stateLoad: false,
+    outsiderLoad: false,
     organizationData: [],
 
     getAllOrganization: async () => {
@@ -45,9 +50,9 @@ const useCommonStore = create<CommonStoreProps>()((set) => ({
         }
     },
 
-    getCity: async ({ formData }) => {
+    getCity: async ({ token, formData }) => {
         try {
-            const response = await networkRequest({}).post(endpoints.getAllCity);
+            const response = await networkRequest({ token }).post(endpoints.getAllCity, formData);
             if (response.data.success === '1') {
                 set({
                     cityData: response.data.data,
@@ -60,5 +65,32 @@ const useCommonStore = create<CommonStoreProps>()((set) => ({
 
         }
     },
+    getOutsiders: async ({ token, formData }) => {
+        set({ outsiderLoad: true })
+        try {
+            const response = await networkRequest({ token }).post(endpoints.getOutsiders, formData);
+            if (response.data.success === '1') {
+                set({ outsiderData: response.data.data })
+            }
+        } catch (error: any) {
+            console.log('Error inside getOutSiders function : ', error)
+        }
+        set({ outsiderLoad: false })
+    },
+
+    getMasterData: async ({ token, formData }) => {
+        try {
+            const response = await networkRequest({ token }).post(endpoints.getMasterData, formData);
+            if (response.data.success === '1') {
+                set({
+                    projectStatus: response.data.data.project_status,
+                    sources: response.data.data.source,
+                    call_status: response.data.data.call_status,
+                })
+            }
+        } catch (error: any) {
+            console.log('Error inside getMasterData function : ', error)
+        }
+    }
 }));
 export default useCommonStore;

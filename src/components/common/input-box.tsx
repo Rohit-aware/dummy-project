@@ -6,7 +6,7 @@ import { View, StyleSheet, TextInput, KeyboardType, ViewStyle, TextStyle } from 
 
 interface InputBoxProps {
     name: string;
-    star: boolean;
+    star?: boolean;
     value: string;
     editable?: boolean;
     maxLength?: number;
@@ -70,7 +70,7 @@ const InputBox: React.FC<InputBoxProps> = ({
                 keyboardType={keyboardType ? keyboardType : 'default'}
                 multiline={multiLine}
             />
-            {checkForEmpty() && <PlaceHolder placeholder={placeholder} star={star} placeholderStyle={placeholderStyle!} />}
+            {checkForEmpty() && <PlaceHolder placeholder={placeholder} star={star!} placeholderStyle={placeholderStyle!} />}
         </View>
     );
 };

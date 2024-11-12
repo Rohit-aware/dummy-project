@@ -8,6 +8,9 @@ const endpoints = {
    getAllCity:'getAllCity',
    processRegistration:'processRegistration',
    logout:'logout',
-   getLeads:'getLeads'
+   getLeads:'getLeads',
+   createLead:'createLead',
+   getOutsiders:'getOutsiders',
+   getMasterData:'getMasterData'
 };
 export { endpoints }

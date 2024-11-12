@@ -6,6 +6,7 @@ import { getHashString } from '../../utility/hashing';
 import { NavigationProp, useNavigation } from '@react-navigation/native';
 import { useAuthStore, useMyLeadStore } from '../../store';
 import { MainStackProps } from '../../router/interface';
+import { Colors } from '../../constants';
 
 const MyLeads = () => {
     const { user_detail: userData, deviceId: uuid, token } = useAuthStore();
@@ -54,20 +55,20 @@ const MyLeads = () => {
         setMyLeadPage({ leadPage: 0 });
         fetchLeads({});
     };
-    
+
     React.useEffect(() => {
         setMyLeadPage({ leadPage: 0 });
         fetchLeads({ page: 0 });
 
         const timeoutId = setTimeout(() => {
-            setMyLeadPage({ leadPage: 1 }); 
-        }, 1000); 
+            setMyLeadPage({ leadPage: 1 });
+        }, 1000);
 
-        return () => clearTimeout(timeoutId);  
+        return () => clearTimeout(timeoutId);
     }, []);
 
     return (
-        <View style={{ flex: 1 }}>
+        <View style={{ flex: 1, backgroundColor: Colors.white }}>
             <Header title={'My Leads'} />
             <SearchBar
                 onPress={onFilter}

@@ -30,11 +30,10 @@ const DropdownButton = ({
     };
 
     const handlePicker = () => loading ? null : show ? closePicker() : openPicker()
-
     const ITEM_HEIGHT = moderateScale(50);
     const MIN_HEIGHT = moderateScale(100);
     const MAX_HEIGHT = moderateScale(300);
-    const dynamicHeight = Math.min(Math.max(data?.length * ITEM_HEIGHT, MIN_HEIGHT), MAX_HEIGHT);
+    const dynamicHeight = Math.min(Math.max(data!?.length * ITEM_HEIGHT, MIN_HEIGHT), MAX_HEIGHT);
 
     return (
         <View style={[styles.wrapper, wrapperStyle]} onResponderStart={handlePicker}>
@@ -42,7 +41,7 @@ const DropdownButton = ({
                 <View style={styles.container}>
                     {value === '' ? (
                         <>
-                            <PlaceHolder placeholder={placeholder} star={star} />
+                            <PlaceHolder placeholder={placeholder} star={star!} />
                             <View style={styles.empty} />
                         </>
                     ) : (
@@ -54,7 +53,7 @@ const DropdownButton = ({
                         style={[styles.button]}
                         android_ripple={{ color: Colors.blue, borderless: true, radius: 15 }}
                     >
-                        <View style={show ? { transform: [{ rotate: '180deg' }] } : {}}>
+                        <View style={show ? { transform: [{ rotate: '180deg' }] } : {}} onResponderStart={handlePicker}>
                             {loading ? <ActivityIndicator color={Colors.blue} /> : <DropDownIcon />}
                         </View>
                     </Pressable>
@@ -65,7 +64,7 @@ const DropdownButton = ({
                     <Picker
                         show={show}
                         close={closePicker}
-                        name={name}
+                        name={name!}
                         data={data}
                         onSelect={onSelect}
                         value={value}

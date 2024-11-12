@@ -11,10 +11,14 @@ const Home = () => {
         loading,
         onNavigator,
         fetchHomeData,
+        fetchOutsiders,
+        fetchmaster_data,
     } = useHome();
 
     React.useEffect(() => {
         fetchHomeData();
+        fetchOutsiders();
+        fetchmaster_data();
     }, [])
 
     const _renderHome_ = () => {
