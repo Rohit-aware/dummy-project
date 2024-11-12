@@ -41,8 +41,7 @@ const useAuthStore = create<AuthStore>()(
             },
             updateMyDeviceId: async ({ formData, token }) => {
                 try {
-                    const response = await networkRequest({ token }).post(endpoints.updateDeviceId, formData);
-                    console.log(JSON.stringify(response.data, undefined, 4), 'response.data in auth store ')
+                    await networkRequest({ token }).post(endpoints.updateDeviceId, formData);
                 } catch (error: any) {
                     console.log(JSON.stringify(error, undefined, 4), 'error in auth store inside updateMyDeviceId ')
 

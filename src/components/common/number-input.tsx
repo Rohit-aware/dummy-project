@@ -1,8 +1,8 @@
-import React, { useState } from 'react';
-import { View, StyleSheet, Text, TextInput, KeyboardType } from 'react-native';
+import React from 'react';
 import PlaceHolder from './PlaceHolder';
 import { Colors } from '../../constants';
 import { fontStyles } from '../../styles';
+import { View, StyleSheet, Text, TextInput, KeyboardType, Pressable } from 'react-native';
 
 interface NumberInputProps {
     editable?: boolean;
@@ -35,7 +35,7 @@ const NumberInput = ({
     countrycode,
     onPressCode
 }: NumberInputProps) => {
-    const [empty, setEmpty] = useState(true);
+    const [empty, setEmpty] = React.useState(true);
 
     const checkForEmpty = () => {
         const isEmpty = empty && (value == '' || value == undefined) ? true : false;
@@ -52,9 +52,11 @@ const NumberInput = ({
 
     return (
         <View style={styles.container}>
-            <Text numberOfLines={1} ellipsizeMode="tail" style={styles.countryCode} onPress={onPressCode}>
-                {`+${countrycode}`}
-            </Text>
+           <Pressable onPress={onPressCode}>
+                <Text numberOfLines={1} ellipsizeMode="tail" style={styles.countryCode}>
+                    {`+${countrycode}`}
+                </Text>
+            </Pressable>
             <View style={styles.pipe} />
             <TextInput
                 style={[styles.textinput]}

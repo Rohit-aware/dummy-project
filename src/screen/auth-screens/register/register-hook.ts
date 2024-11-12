@@ -21,7 +21,12 @@ interface useRegisterHookprops {
         short_name: string;
         full_name: string;
     }[];
+    show: boolean; 
+    loading: boolean; 
     orgLoad: boolean;
+    closeModal: () => void;
+    showModal: () => void;
+    onSelectCountry: (item: any) => void;
     onSelect: (name: string, data: any) => void;
     onRegister: () => Promise<void>;
     onChangeText: (name: string, value: string) => void;
@@ -33,9 +38,10 @@ interface useRegisterHookprops {
 
 const useRegisterHook = (): useRegisterHookprops => {
     const { goBack } = useNavigation();
-    const { processRegistration } = useRegisterStore();
+    const { processRegistration, loading } = useRegisterStore();
     const { organizationData: organization, orgLoad, getAllOrganization, } = useCommonStore();
 
+    const [show, setShow] = React.useState(false);
     const [inputs, setInputs] = React.useState({
         first_name: 'Test',
         last_name: 'User',
@@ -51,13 +57,23 @@ const useRegisterHook = (): useRegisterHookprops => {
         countrycode: '91',
     });
 
+    const closeModal = () => setShow(false);
+    const showModal = () => setShow(true);
     const Genders = [
         { short_name: "M", full_name: "Male" },
         { short_name: "F", full_name: "Female" },
         { short_name: "O", full_name: "Others" },
-    ]
+    ];
 
     const onChangeText = (name: string, value: string) => setInputs({ ...inputs, [name]: value });
+    const onSelectCountry = (country: any) => {
+        setInputs({ ...inputs, phone_number: '' })
+        const { callingCode } = country;
+        setInputs({
+            ...inputs,
+            countrycode: callingCode.toString(),
+        });
+    };
 
     const onOrgnizationSelect = (name: string, data: any) =>
         setInputs({ ...inputs, [name]: data['organization_name'] });
@@ -97,13 +113,18 @@ const useRegisterHook = (): useRegisterHookprops => {
     };
 
     return {
+        show,
         inputs,
         Genders,
         orgLoad,
+        loading,
         onSelect,
+        showModal,
+        closeModal,
         onRegister,
-        onChangeText,
         organization,
+        onChangeText,
+        onSelectCountry,
         getAllOrganization,
         onOrgnizationSelect,
     }

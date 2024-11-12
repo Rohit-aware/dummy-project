@@ -1,19 +1,25 @@
 import React from 'react';
-import { Colors } from '../../../constants';
-import { View, StyleSheet, ScrollView } from 'react-native';
-import { Button, DropdownButton, Header, InputBox, NumberInput } from '../../../components';
+import { styles } from './styles';
+import { View, ScrollView } from 'react-native';
 import { useRegisterHook } from './register-hook';
+import CountryPicker from 'react-native-country-picker-modal';
+import { Button, DropdownButton, Header, InputBox, NumberInput } from '../../../components';
 
 const Register = () => {
-  const loading = false;
+
   const {
+    show,
     inputs,
     Genders,
+    loading,
     orgLoad,
     onSelect,
+    showModal,
     onRegister,
+    closeModal,
     onChangeText,
     organization,
+    onSelectCountry,
     getAllOrganization,
     onOrgnizationSelect,
   } = useRegisterHook();
@@ -55,7 +61,7 @@ const Register = () => {
           maxLength={17}
           keyboardType={'numeric'}
           countrycode={inputs.countrycode}
-          onPressCode={() => { }}
+          onPressCode={showModal}
         />
 
         <InputBox
@@ -88,7 +94,7 @@ const Register = () => {
           onSelect={onSelect}
           name={'gender'}
           value={inputs.gender}
-          
+
         />
         <DropdownButton
           star
@@ -103,36 +109,19 @@ const Register = () => {
           <Button title={'Register'} onPress={onRegister} loading={loading} />
         </View>
       </ScrollView>
+      {show &&
+        <CountryPicker
+          countryCode='IN'
+          visible={true}
+          modalProps={{ visible: show }}
+          onSelect={onSelectCountry}
+          onClose={closeModal}
+          withFilter
+          withCallingCode
+          containerButtonStyle={{}}
+        />
+      }
     </View>
   );
 };
-
-const styles = StyleSheet.create({
-  root: {
-    flex: 1,
-    backgroundColor: Colors.white,
-  },
-  contentContainerStyle: {
-    flexGrow: 1,
-    paddingTop: 20,
-  },
-  wrapper: {
-    flexDirection: 'row',
-    justifyContent: 'space-between',
-    alignItems: 'center',
-    marginHorizontal: 15,
-  },
-  rightcontainer: {
-    flex: 0.47,
-    marginHorizontal: 0,
-  },
-  leftcontainer: {
-    flex: 0.47,
-    marginHorizontal: 0,
-  },
-  btncontainer: {
-    flex: 1,
-    justifyContent: 'flex-end',
-  },
-});
 export default Register;
