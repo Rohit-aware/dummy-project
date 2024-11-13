@@ -17,7 +17,7 @@ const useMyProjectHook = () => {
 
     const [search, setSearch] = React.useState('');
     const [refresh, setRefresh] = React.useState(false);
-    
+
     const onFilter = () => {
         setSearch('');
         navigation.navigate('FilterMyProjects');
@@ -71,16 +71,14 @@ const useMyProjectHook = () => {
     };
 
 
-    React.useEffect(() => {
-        fetchProjects({ page: 0 });
-    }, []);
+
 
     React.useEffect(() => {
         setMyProjectPage({ projectPage: 0 });
         fetchProjects({ page: 0 });
 
         const timeoutId = setTimeout(() => {
-            fetchProjects({ page: 1 });
+            setMyProjectPage({ projectPage: 1 });
         }, 1000);
 
         return () => clearTimeout(timeoutId);
@@ -88,20 +86,20 @@ const useMyProjectHook = () => {
 
 
     return {
+        page,
+        data,
+        search,
+        refresh,
+        isFinish,
+        onFilter,
+        setSearch,
+        onRefresh,
         navigation,
+        projectLoad,
+        onEndReached,
         projectStatus,
         project_status,
         isProjectFilter,
-        search,
-        data,
-        onFilter,
-        setSearch,
-        page,
-        isFinish,
-        projectLoad,
-        refresh,
-        onEndReached,
-        onRefresh,
     };
 };
 export { useMyProjectHook };

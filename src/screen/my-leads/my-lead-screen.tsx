@@ -77,7 +77,6 @@ const MyLeads = () => {
                 enabled={true}
             />
             <LeadsList
-                search={search}
                 data={leadsData}
                 onEndReached={onEndReached}
                 finish={isFinish}
