@@ -1,5 +1,5 @@
 import React from 'react';
-import ProjectsCard from './ProjectsCard';
+import ProjectsCard from './projects-card';
 import { ProjectsListProps } from '../interface';
 import { StyleSheet, FlatList, } from 'react-native';
 import { useNavigation } from '@react-navigation/native';

@@ -2,7 +2,7 @@ import React from 'react';
 import { View } from 'react-native';
 import { Colors } from '../../constants';
 import { Header, SearchBar } from '../../components';
-import ProjectsList from './components/ProjectsList';
+import ProjectsList from './components/projects-list';
 import { useMyProjectHook } from './my-project-hook';
 
 const MyProjects = () => {

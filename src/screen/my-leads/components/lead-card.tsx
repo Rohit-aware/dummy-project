@@ -1,5 +1,5 @@
 import React from 'react';
-import Details from './Details';
+import Details from './details';
 import { View, Text, StyleSheet, TouchableWithoutFeedback } from 'react-native';
 import { fontStyles } from '../../../styles';
 import { Colors } from '../../../constants';

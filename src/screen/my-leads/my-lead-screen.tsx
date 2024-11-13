@@ -1,6 +1,6 @@
 import React from 'react';
 import { View } from 'react-native';
-import LeadsList from './components/LeadsList';
+import LeadsList from './components/leads-list';
 import { Header, SearchBar } from '../../components';
 import { getHashString } from '../../utility/hashing';
 import { NavigationProp, useNavigation } from '@react-navigation/native';

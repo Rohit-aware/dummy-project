@@ -1,4 +1,4 @@
-import Box from './Box';
+import Box from './box';
 import React from 'react';
 import { Colors } from '../../../constants';
 import { fontStyles } from '../../../styles';

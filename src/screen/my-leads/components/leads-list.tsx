@@ -1,18 +1,28 @@
 import React from 'react';
-import LeadsCard from './LeadsCard';
+import LeadsCard from './lead-card';
 import { StyleSheet, FlatList } from 'react-native';
-import { Loader, BottomLoader } from '../../../components';
+import { Loader, BottomLoader, ListEmptyComponent } from '../../../components';
 
-const EMPTY_IMAGE = require('../../../assets/images/no_leads_record.png');
+const EMPTY_IMAGE = require('../../../../assets/images/no_leads_record.png');
+interface LeadsListProps {
+  page: number;
+  data: Array<any>;
+  finish: boolean;
+  refresh: boolean;
+  loading: boolean;
+  onRefresh: () => void;
+  onEndReached: () => void;
+};
+
 const LeadsList = ({
-  data,
-  onEndReached,
-  finish,
-  loading,
-  refresh,
-  onRefresh,
   page,
-}: any) => {
+  data,
+  finish,
+  refresh,
+  loading,
+  onRefresh,
+  onEndReached,
+}: LeadsListProps) => {
   const checkForEmpty = (value: any) => {
     const isEmpty =
       value == null || value == 'undefined' || value == undefined || value == '' || value == "null"
@@ -47,6 +57,14 @@ const LeadsList = ({
           showsVerticalScrollIndicator={false}
           ListFooterComponent={() => {
             return loading && page !== 0 ? <BottomLoader /> : null;
+          }}
+          ListEmptyComponent={() => {
+            return (
+              <ListEmptyComponent
+                image={EMPTY_IMAGE}
+                title={'No Record Available'}
+              />
+            );
           }}
           decelerationRate="normal"
           contentContainerStyle={[styles.contentContainerStyle]}

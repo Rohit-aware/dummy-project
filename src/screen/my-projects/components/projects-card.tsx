@@ -1,5 +1,5 @@
 import React from 'react';
-import Details from './Details';
+import Details from './details';
 import { fontStyles } from '../../../styles';
 import { Dots } from '../../../../assets/icons';
 import { ProjectsCardProps } from '../interface';
