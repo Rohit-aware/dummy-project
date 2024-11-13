@@ -11,6 +11,8 @@ const endpoints = {
    getLeads:'getLeads',
    createLead:'createLead',
    getOutsiders:'getOutsiders',
-   getMasterData:'getMasterData'
+   getMasterData:'getMasterData',
+   getProjects:'getProjects',
+   
 };
 export { endpoints }

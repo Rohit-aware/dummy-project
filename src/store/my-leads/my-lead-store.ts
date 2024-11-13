@@ -5,10 +5,10 @@ import { networkRequest } from "../../services/network-request";
 
 
 const useMyLeadStore = create<UseMyLeadStore>()((set, get) => ({
-    leadsData: [],
     page: 0,
-    isFinish: false,
+    leadsData: [],
     loading: false,
+    isFinish: false,
     setIsFinish: ({ value }) => {
         set({ isFinish: value })
     },
@@ -22,13 +22,9 @@ const useMyLeadStore = create<UseMyLeadStore>()((set, get) => ({
             const response = await networkRequest({ token }).post(endpoints.getLeads, formData);
             if (response.data.success === '1') {
                 if (leadPage === 0) {
-                    set({
-                        leadsData: response.data.data
-                    });
+                    set({ leadsData: response.data.data });
                 } else {
-                    set({
-                        leadsData: [...currnetData, ...response.data.data]
-                    });
+                    set({ leadsData: [...currnetData, ...response.data.data] });
                 }
             }
             if (response.data.success === '0' && response.data.data?.length === 0 && response.data.total_record == 0) {
