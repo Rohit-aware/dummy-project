@@ -6,6 +6,7 @@ import useAuthStore from "../../../store/auth/auth-store";
 import { MainStackProps } from '../../../router/interface';
 import { getHashString, RSAPUBLICKEY } from '../../../utility/hashing';
 import { NativeStackNavigationProp } from '@react-navigation/native-stack';
+import { showToast } from '../../../components';
 
 interface LoginReturnType {
     loader: boolean;
@@ -24,8 +25,10 @@ const useLogin = (): LoginReturnType => {
     const { navigate } = useNavigation<NativeStackNavigationProp<MainStackProps, 'Login'>>();
 
     const [inputs, setInputs] = React.useState({
-        email: 'testuser@email.com',
-        password: '12345678',
+        // email: 'testuser@email.com',
+        // email: 'vivek@vivek.com',
+        email: 'pankaj@kkuber.com',
+        password: '123456789',
     });
 
     const onForgot = () => navigate('ForgotPassword');
@@ -35,12 +38,13 @@ const useLogin = (): LoginReturnType => {
 
     const doLogin = async (): Promise<void> => {
         try {
-            const passwordEncrypted = await RSA.encrypt('a1b47f54ba2ac437' + '12345678', RSAPUBLICKEY);
+            const passwordEncrypted = await RSA.encrypt(uuid + inputs.password, RSAPUBLICKEY);
             const formData = new FormData();
             formData.append('email', inputs.email);
             formData.append('password', passwordEncrypted);
             formData.append('uuid', uuid);
             const response = await processDoLogin({ formData });
+            showToast(response.message);
             if (response.success === '1') {
                 await messaging()
                     .getToken()

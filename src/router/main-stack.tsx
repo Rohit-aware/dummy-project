@@ -12,9 +12,7 @@ const Stack = createNativeStackNavigator<MainStackProps>();
 const MainStack = () => {
 
     const { getStates } = useCommonStore();
-    const { updateDeviceId, token, deviceId: uuid, user_detail: userData } = useAuthStore();
-
-  
+    const { updateDeviceId, token } = useAuthStore();
 
     const getUuid = async () => {
         const deviceId = await DeviceInfo.getUniqueId();

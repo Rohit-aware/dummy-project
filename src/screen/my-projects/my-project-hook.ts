@@ -10,10 +10,9 @@ const useMyProjectHook = () => {
     const { user_detail: userData, deviceId: uuid, token } = useAuthStore();
     const { projectStatus } = useCommonStore();
 
-
-    const project_status = data.project_status;
-    const client_id = data.client_id;
-    const isProjectFilter = data.isProjectFilter;
+    const project_status: any = {};
+    const client_id = '';
+    const isProjectFilter: any = {};
 
     const [search, setSearch] = React.useState('');
     const [refresh, setRefresh] = React.useState(false);
@@ -56,7 +55,7 @@ const useMyProjectHook = () => {
             formData.append('page_number', page);
             formData.append('limit', 1);
             search && formData.append('search_key', search);
-            if (project_status !== null) {
+            if (!!project_status) {
                 client_id !== null && formData.append('client_id', client_id);
                 formData.append('project_status', getProjectStatus());
             } else {

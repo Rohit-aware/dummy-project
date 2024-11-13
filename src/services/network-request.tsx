@@ -7,7 +7,7 @@ import { Platform } from "react-native";
 
 const BASE_URLS = {
   STAGING: 'http://skyonliners.com/demo/clms-web/webservices/v1/',
-  VIVEK_LOCAL: 'https://ff5c-110-227-197-199.ngrok-free.app/webservices/v1/',
+  VIVEK_LOCAL: 'https://989a-110-227-197-199.ngrok-free.app/webservices/v1/',
   KAUSHIK_LOCAL: 'https://3575-110-227-197-199.ngrok-free.app/webservices/v1/',
 };
 

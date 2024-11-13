@@ -4,14 +4,13 @@ import { useAuthStore, useMyLeadStore } from '../../store';
 
 
 const useMyLeadHook = () => {
-
-    const { user_detail: userData, deviceId: uuid, token } = useAuthStore();
-    const { getLeads, isFinish, leadsData, page, loading, setMyLeadPage } = useMyLeadStore();
     const [search, setSearch] = React.useState('');
     const [refresh, setRefresh] = React.useState(false);
 
+    const { user_detail: userData, deviceId: uuid, token } = useAuthStore();
+    const { getLeads, isFinish, leadsData, page, loading, setMyLeadPage } = useMyLeadStore();
+
     const fetchLeads = async ({ page = 0 }: { page?: number }) => {
-        console.log("Initial fetch with page:", page);
         try {
             const fnName = 'getLeads';
             const hash_key = getHashString(
