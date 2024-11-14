@@ -54,7 +54,7 @@ const Home = () => {
     if (loading) return <Loader style={{ backgroundColor: Colors.white }} />
 
     return (
-        <View style={{ flex: 1 }}>
+        <View style={{ flex: 1, backgroundColor: Colors.white }}>
             <FlatList
                 data={[1]}
                 renderItem={_renderHome_}

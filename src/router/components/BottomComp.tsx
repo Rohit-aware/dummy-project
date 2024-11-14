@@ -4,34 +4,28 @@ import { Colors } from '../../constants';
 import BottomBack from '../../../assets/icons/BottomBack';
 import { BottomTabBarProps } from '@react-navigation/bottom-tabs';
 import { Home, Leads, Plus, Profile, Projects } from '../../../assets/icons';
-import { Dimensions, FlatList, Keyboard, Text, TouchableOpacity, View } from 'react-native';
+import { FlatList, Keyboard, Text, TouchableOpacity, View } from 'react-native';
 
 type LabelIconProps = { index: number, isFocused: boolean }
-const { height: SCREEN_HEIGHT } = Dimensions.get('screen')
 
 const BottomComp = (props: BottomTabBarProps) => {
     const { state, navigation } = props;
-    const route = state.routes[state.index].name;
+    // const route = state.routes[state.index].name;
     const [showBottomTab, setShowBottTab] = React.useState(true);
     const showtab = () => setShowBottTab(true);
     const hidetab = () => setShowBottTab(false);
 
     const handleTabPress = async (index: number) => {
-        if (index === 1) {
-            navigation.navigate('MyLeads');
-        };
         if (index === 2) return;
-        if (index === 3) {
-            navigation.navigate('MyProjects');
-        } else {
-            navigation.navigate(state.routeNames[index]);
-        };
+        if (index === 1) { navigation.navigate('MyLeads'); };
+        if (index === 3) { navigation.navigate('MyProjects'); }
+        else { navigation.navigate(state.routeNames[index]); };
     };
 
     React.useEffect(() => {
         const keyDidShow = Keyboard.addListener('keyboardDidShow', hidetab);
         const keyDidHide = Keyboard.addListener('keyboardDidHide', showtab);
-        return () => { keyDidHide.remove(); keyDidShow.remove() };
+        return () => { keyDidHide.remove(); keyDidShow.remove(); };
     }, []);
 
     const RenderIcon = React.memo(({ index, isFocused }: LabelIconProps) => {
@@ -57,13 +51,13 @@ const BottomComp = (props: BottomTabBarProps) => {
 
     return showBottomTab && (
         <View style={[styles.container]}>
-            {true && <BottomBack style={{ position: 'absolute', zIndex: -1, }} />}
+            <BottomBack style={{ position: 'absolute', zIndex: 1, }} />
             <View style={styles.tabWrapper}>
                 <FlatList
                     style={{ flex: 1 }}
+                    data={state.routeNames}
                     showsVerticalScrollIndicator={false}
                     contentContainerStyle={styles.tabContainer}
-                    data={state.routeNames}
                     renderItem={({ item, index }) => {
                         const isFocused = index === state.index;
                         return (
@@ -79,13 +73,11 @@ const BottomComp = (props: BottomTabBarProps) => {
                     }}
                     keyExtractor={(_, index) => index.toString()}
                 />
-                {true &&
-                    <TouchableOpacity style={styles.plusBtn} onPress={() => {
-                        navigation.navigate('AddLead');
-                    }}>
-                        <Plus height={23} />
-                    </TouchableOpacity>
-                }
+                <TouchableOpacity style={styles.plusBtn} onPress={() => {
+                    navigation.navigate('AddLead');
+                }}>
+                    <Plus height={23} />
+                </TouchableOpacity>
             </View>
         </View>
     );

@@ -8,7 +8,7 @@ interface ButtonProps {
   style?: ViewStyle;
   title: string;
   textStyle?: TextStyle;
-  loading: boolean;
+  loading?: boolean;
   hide?: boolean;
 }
 

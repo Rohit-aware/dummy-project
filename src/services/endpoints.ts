@@ -13,6 +13,7 @@ const endpoints = {
    getOutsiders:'getOutsiders',
    getMasterData:'getMasterData',
    getProjects:'getProjects',
-   
+   getPersonalDetails:'getPersonalDetails',
+   getWorkOverview:'getWorkOverview',
 };
 export { endpoints }

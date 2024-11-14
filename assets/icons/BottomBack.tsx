@@ -1,8 +1,9 @@
 import * as React from "react";
 import { Dimensions } from "react-native";
-import Svg, { Mask, Rect, Path, SvgProps } from "react-native-svg";
 import { moderateScale } from "../../src/constants";
-const { width: SCREEN_WIDTH, height: SCREEN_HEIGHT } = Dimensions.get('screen')
+const { width: SCREEN_WIDTH } = Dimensions.get('screen')
+import Svg, { Mask, Rect, Path, SvgProps } from "react-native-svg";
+
 const BottomBack = (props: SvgProps) => (
     <Svg
         width={SCREEN_WIDTH}

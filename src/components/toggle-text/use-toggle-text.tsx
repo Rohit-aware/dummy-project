@@ -23,7 +23,7 @@ type ReturnType = {
 const useToggleText = ({ input, maxLength = 60 }: ToggleTextProps): ReturnType => {
     const [state, setState] = React.useState({
         open: false,
-        displayValue: !input.length ? '-' : input.length >= maxLength ? input.substring(0, maxLength) + '...' : input,
+        displayValue: !input?.length ? '-' : input?.length >= maxLength ? input.substring(0, maxLength) + '...' : input,
     });
 
     // Memoize the getTruncatedValue function to avoid recreation on every render
