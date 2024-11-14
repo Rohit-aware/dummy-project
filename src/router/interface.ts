@@ -9,6 +9,7 @@ type MainStackProps = {
         MyProjects: undefined;
         MyProfile: undefined;
     };
+    LeadDetails:undefined;
 };
 
 export type { MainStackProps };

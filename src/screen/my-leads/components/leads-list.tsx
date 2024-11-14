@@ -2,6 +2,8 @@ import React from 'react';
 import LeadsCard from './lead-card';
 import { StyleSheet, FlatList } from 'react-native';
 import { Loader, BottomLoader, ListEmptyComponent } from '../../../components';
+import { useMyLeadStore } from '../../../store';
+import { useNavigation } from '@react-navigation/native';
 
 const EMPTY_IMAGE = require('../../../../assets/images/no_leads_record.png');
 interface LeadsListProps {
@@ -23,6 +25,8 @@ const LeadsList = ({
   onRefresh,
   onEndReached,
 }: LeadsListProps) => {
+  const { setLeadDetails } = useMyLeadStore();
+  const { navigate } = useNavigation<any>();
   const checkForEmpty = (value: any) => {
     const isEmpty =
       value == null || value == 'undefined' || value == undefined || value == '' || value == "null"
@@ -34,8 +38,8 @@ const LeadsList = ({
 
 
   const onLeadDetails = (data: any) => {
-    // dispatch(getMyLeadsDetail(data));
-    // navigation.navigate('LeadDetails');
+    setLeadDetails({ value: data });
+    navigate('LeadDetails');
   };
 
   const onAddProject = (data: any) => {
