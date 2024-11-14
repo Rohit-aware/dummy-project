@@ -1,7 +1,7 @@
 import React from "react";
 import { getHashString } from "../../utility/hashing";
 import { useNavigation } from "@react-navigation/native";
-import { useAuthStore, useCommonStore, useMyProjectStore } from "../../store";
+import { useAuthStore, useCommonStore, useMyProjectStore, useReloadStore } from "../../store";
 
 const useMyProjectHook = () => {
     const navigation = useNavigation<any>();
@@ -9,10 +9,11 @@ const useMyProjectHook = () => {
     const { projects: data, getProjects, page, isFinish, projectLoad, setMyProjectPage } = useMyProjectStore();
     const { user_detail: userData, deviceId: uuid, token } = useAuthStore();
     const { projectStatus } = useCommonStore();
+    const { reload } = useReloadStore();
 
-    const project_status: any = {};
+    const project_status: any ='';
     const client_id = '';
-    const isProjectFilter: any = {};
+    const isProjectFilter: any = '';
 
     const [search, setSearch] = React.useState('');
     const [refresh, setRefresh] = React.useState(false);
@@ -66,39 +67,28 @@ const useMyProjectHook = () => {
                 }
             }
             getProjects({ token, formData, projectPage: page });
-        } catch (error) { }
+        } catch (error) {
+            console.log("Error isnide fetchProject : ", error)
+        }
     };
-
-
-
-
-    React.useEffect(() => {
-        setMyProjectPage({ projectPage: 0 });
-        fetchProjects({ page: 0 });
-
-        const timeoutId = setTimeout(() => {
-            setMyProjectPage({ projectPage: 1 });
-        }, 1000);
-
-        return () => clearTimeout(timeoutId);
-    }, []);
 
 
     return {
         page,
         data,
         search,
+        reload,
         refresh,
         isFinish,
         onFilter,
         setSearch,
         onRefresh,
-        navigation,
         projectLoad,
         onEndReached,
-        projectStatus,
+        fetchProjects,
         project_status,
         isProjectFilter,
+        setMyProjectPage,
     };
 };
 export { useMyProjectHook };

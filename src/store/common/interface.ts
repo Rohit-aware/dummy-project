@@ -9,11 +9,13 @@ interface CommonStoreProps {
     call_status: Array<any>;
     cityData: Array<any>;
     outsiderData: Array<any>;
+    requirementTypes: Array<any>;
     organizationData: Array<any>;
-    getAllOrganization: () => void;
     getStates: () => void;
+    getAllOrganization: () => void;
     getCity: ({ token, formData }: { token: string, formData: {} }) => void;
     getOutsiders: ({ formData, token }: { formData: {}, token: string }) => void;
     getMasterData: ({ formData, token }: { formData: {}, token: string }) => void;
+    getRequirementType: ({ formData, token }: { formData: {}, token: string }) => void;
 }
 export type { CommonStoreProps }

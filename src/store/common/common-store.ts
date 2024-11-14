@@ -17,6 +17,7 @@ const useCommonStore = create<CommonStoreProps>()((set) => ({
     stateLoad: false,
     outsiderLoad: false,
     organizationData: [],
+    requirementTypes: [],
 
     getAllOrganization: async () => {
         try {
@@ -87,6 +88,16 @@ const useCommonStore = create<CommonStoreProps>()((set) => ({
                     sources: response.data.data.source,
                     call_status: response.data.data.call_status,
                 })
+            }
+        } catch (error: any) {
+            console.log('Error inside getMasterData function : ', error)
+        }
+    },
+    getRequirementType: async ({ token, formData }) => {
+        try {
+            const response = await networkRequest({ token }).post(endpoints.getRequirementType, formData);
+            if (response.data.success === '1') {
+                set({ requirementTypes: response.data.data })
             }
         } catch (error: any) {
             console.log('Error inside getMasterData function : ', error)

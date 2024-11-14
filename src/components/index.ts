@@ -9,6 +9,8 @@ export { default as SearchBar } from './serach-bar/search-bar';
 export { default as NumberInput } from './common/number-input';
 export { default as BottomLoader } from './loaders/bottom-loader';
 export { default as StateCityModal } from './modals/statecity-modal';
+export { default as UploadInput } from './file-inputes/upload-input';
+export { default as UploadFiles } from './file-inputes/uploaded-files';
 export { default as DropdownButton } from './dropdown/dropdown-button';
 export { default as useToggleText } from './toggle-text/use-toggle-text';
 export { default as ListEmptyComponent } from './empty-component/list-empty-comp';

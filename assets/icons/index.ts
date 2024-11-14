@@ -6,6 +6,7 @@ export { default as Play } from './Play';
 export { default as Back } from './Back';
 export { default as Dots } from './dots';  
 export { default as Call } from './Call';  
+export { default as File } from './FileIcon';  
 export { default as Share } from './Share';  
 export { default as Notes } from './Notes';  
 export { default as Filter } from './Filter';  

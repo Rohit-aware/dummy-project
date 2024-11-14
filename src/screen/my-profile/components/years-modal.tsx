@@ -14,7 +14,7 @@ interface YearsModalType {
 
 const YearsModal = ({ selectedyear, isVisible, close, changeYear }: YearsModalType) => {
     const { years } = useProfileStore();
-    const changeBackground = (new_year: any) => {
+    const changeBackground = (new_year: string) => {
         return {
             backgroundColor: new_year == selectedyear ? Colors.whiteGrey : Colors.white,
         };

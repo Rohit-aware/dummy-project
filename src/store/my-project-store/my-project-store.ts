@@ -9,7 +9,7 @@ const useMyProjectStore = create<UseMyProjectStoreProps>()((set, get) => ({
     projects: [],
     isFinish: false,
     projectLoad: false,
-    
+
     setIsFinish: ({ value }) => {
         set({ isFinish: value })
     },
@@ -19,12 +19,12 @@ const useMyProjectStore = create<UseMyProjectStoreProps>()((set, get) => ({
     getProjects: async ({ token, formData, projectPage }) => {
         set({ projectLoad: true })
         const response = await networkRequest({ token }).post(endpoints.getProjects, formData);
-        const currnetData = get().projects;
+        console.log(JSON.stringify(response.data,undefined,4), ' response.data ')
         if (response.data.success === '1') {
             if (projectPage === 0) {
                 set({ projects: response.data.data });
             } else {
-                set({ projects: [...currnetData, ...response.data.data] });
+                set((state) => ({ projects: [...state.projects, ...response.data.data] }));
             }
         }
         if (response.data.success === '0' && response.data.data?.length === 0 && response.data.total_record == 0) {

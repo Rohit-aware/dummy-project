@@ -1,26 +1,42 @@
 import React from 'react';
 import { View } from 'react-native';
 import { Colors } from '../../constants';
-import { Header, SearchBar } from '../../components';
+import { Header, Loader, SearchBar } from '../../components';
 import ProjectsList from './components/projects-list';
 import { useMyProjectHook } from './my-project-hook';
 
 const MyProjects = () => {
 
     const {
-        project_status,
-        isProjectFilter,
-        search,
+        page,
         data,
+        search,
+        reload,
+        refresh,
+        isFinish,
         onFilter,
         setSearch,
-        page,
-        isFinish,
+        onRefresh,
         projectLoad,
-        refresh,
         onEndReached,
-        onRefresh
+        fetchProjects,
+        project_status,
+        isProjectFilter,
+        setMyProjectPage,
     } = useMyProjectHook();
+
+
+    React.useEffect(() => {
+        setMyProjectPage({ projectPage: 0 });
+        fetchProjects({ page: 0 });
+
+        const timeoutId = setTimeout(() => {
+            setMyProjectPage({ projectPage: 1 });
+        }, 1000);
+
+        // return () => clearTimeout(timeoutId);
+    }, [reload]);
+
 
     return (
         <View style={{ flex: 1, backgroundColor: Colors.white }}>
