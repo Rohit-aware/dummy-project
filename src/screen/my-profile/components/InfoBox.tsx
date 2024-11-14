@@ -1,9 +1,9 @@
 import React from 'react';
-import { View, Text, StyleSheet } from 'react-native';
-import { fontStyles } from '../../../styles';
 import { helpers } from '../../../utility';
+import { fontStyles } from '../../../styles';
+import { View, Text, StyleSheet, ViewStyle } from 'react-native';
 
-export default ({ title, value, containerStyle }: any) => {
+export default ({ title, value, containerStyle }: { title: string, value: string, containerStyle?: ViewStyle }) => {
   const { checkForEmpty } = helpers;
   return (
     <View style={[styles.wrapper, containerStyle]}>

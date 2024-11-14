@@ -1,9 +1,9 @@
 import React from 'react';
-import { useNavigation } from '@react-navigation/native';
-import { View, Text, Linking, Platform, StyleSheet, TouchableOpacity } from 'react-native';
-import { Call, Dots, Notes, Share } from '../../../../assets/icons';
 import { fontStyles } from '../../../styles';
 import { useMyLeadStore } from '../../../store';
+import { useNavigation } from '@react-navigation/native';
+import { Call, Dots, Notes, Share } from '../../../../assets/icons';
+import { View, Text, Linking, Platform, StyleSheet, TouchableOpacity } from 'react-native';
 
 export default () => {
   const navigation = useNavigation<any>();
@@ -25,7 +25,7 @@ export default () => {
   const onShareButton = () => navigation.navigate('ShareLead', { client_id });
   const onNoteButton = () => navigation.navigate('Notes');
 
-  const ButtonTile = ({ onPress, icon, show }: any) => {
+  const ButtonTile = ({ onPress, icon, show }: { onPress: () => void, icon: React.ReactNode, show: boolean }) => {
     return show && (
       <TouchableOpacity onPress={onPress}>
         <View style={styles.icons}>

@@ -1,12 +1,18 @@
 import React from 'react';
 import Modal from 'react-native-modal';
 import { Colors } from '../../../constants';
-import { Dots } from '../../../../assets/icons';
 import { fontStyles } from '../../../styles';
-import { View, Text, StyleSheet, TouchableOpacity, ScrollView } from 'react-native';
+import { Dots } from '../../../../assets/icons';
 import { useProfileStore } from '../../../store';
+import { View, Text, StyleSheet, TouchableOpacity, ScrollView } from 'react-native';
+interface YearsModalType {
+    selectedyear: string;
+    isVisible: boolean;
+    close: () => void;
+    changeYear: (item: string) => void;
+}
 
-const YearsModal = ({ selectedyear, isVisible, close, changeYear }: any) => {
+const YearsModal = ({ selectedyear, isVisible, close, changeYear }: YearsModalType) => {
     const { years } = useProfileStore();
     const changeBackground = (new_year: any) => {
         return {

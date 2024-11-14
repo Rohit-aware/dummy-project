@@ -10,4 +10,5 @@ export { default as NumberInput } from './common/number-input';
 export { default as BottomLoader } from './loaders/bottom-loader';
 export { default as StateCityModal } from './modals/statecity-modal';
 export { default as DropdownButton } from './dropdown/dropdown-button';
+export { default as useToggleText } from './toggle-text/use-toggle-text';
 export { default as ListEmptyComponent } from './empty-component/list-empty-comp';

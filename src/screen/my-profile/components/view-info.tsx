@@ -1,11 +1,18 @@
 import React from 'react';
 import { helpers } from '../../../utility';
-import { View, Text, StyleSheet } from 'react-native';
-import { fontStyles } from '../../../styles';
 import { Colors } from '../../../constants';
+import { fontStyles } from '../../../styles';
+import { View, Text, StyleSheet, ViewStyle } from 'react-native';
+interface ViewInfoType {
+  title: string;
+  value: string;
+  onPress: () => void;
+  containerStyle?: ViewStyle;
+  file: string;
+}
 
 
-export default ({ title, value, onPress, containerStyle, file }: any) => {
+export default ({ title, value, onPress, containerStyle, file }: ViewInfoType) => {
   const { checkForEmpty } = helpers;
   return (
     <View style={[styles.wrapper, containerStyle]}>

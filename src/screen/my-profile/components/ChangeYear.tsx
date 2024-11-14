@@ -1,27 +1,20 @@
 import React from 'react';
-import {
-  StyleSheet,
-  View,
-  Text,
-  ActivityIndicator,
-  Pressable,
-  TouchableWithoutFeedback,
-} from 'react-native';
+import { Colors } from '../../../constants';
 import { fontStyles } from '../../../styles';
 import { DropDownIcon } from '../../../../assets/icons';
-import { Colors } from '../../../constants';
-// import
+import { StyleSheet, View, Text, ActivityIndicator, Pressable, TouchableOpacity } from 'react-native';
 
-export default ({loading, year,open}:any) => {
+
+export default ({ loading, year, open }: { loading: boolean, year: string, open: () => void }) => {
   return (
     <View style={styles.container}>
       <Text style={styles.hint}>{'Select Year'}</Text>
-      <TouchableWithoutFeedback onPress={open} >
+      <TouchableOpacity onPress={open} >
         <View style={styles.wrapper}>
           <Text style={styles.year}>{year}</Text>
           <Pressable
-          onPress={open}
-            android_ripple={{color: Colors.blue, borderless: true, radius: 15}}>
+            onPress={open}
+            android_ripple={{ color: Colors.blue, borderless: true, radius: 15 }}>
             {loading ? (
               <ActivityIndicator color={Colors.blue} size={20} />
             ) : (
@@ -29,7 +22,7 @@ export default ({loading, year,open}:any) => {
             )}
           </Pressable>
         </View>
-      </TouchableWithoutFeedback>
+      </TouchableOpacity>
     </View>
   );
 };

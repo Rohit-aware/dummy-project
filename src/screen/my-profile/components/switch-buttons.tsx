@@ -4,7 +4,7 @@ import { fontStyles } from '../../../styles';
 import { Colors } from '../../../constants';
 import { Dots } from '../../../../assets/icons';
 
-const SwitchButton = ({ setActive, active }: any) => {
+const SwitchButton = ({ setActive, active }: { setActive: (value: string) => void, active: string }) => {
 
   const changeColor = (title: string) => {
     return {

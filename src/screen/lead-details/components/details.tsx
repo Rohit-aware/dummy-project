@@ -1,10 +1,19 @@
 import React from 'react';
-import { View, StyleSheet, Text } from 'react-native';
-import useToggleText from '../../../components/toggle-text/use-toggle-text';
-import { Colors as color } from '../../../constants';
 import { fontStyles } from '../../../styles';
+import { useToggleText } from '../../../components';
+import { Colors as color } from '../../../constants';
+import { View, StyleSheet, Text, TextStyle } from 'react-native';
 
-const InfoText = ({ title, value = '', onPress, textStyle = {}, selectable, showMore = false }: any) => {
+interface InfoTextType {
+  title: string;
+  value: string;
+  onPress?: () => void;
+  textStyle?: TextStyle | null;
+  selectable?: boolean;
+  showMore?: boolean;
+}
+
+const InfoText = ({ title, value = '', onPress, textStyle = {}, selectable, showMore = false }: InfoTextType) => {
   const { ToggleText, textToShow } = useToggleText({ input: value, maxLength: 100 });
 
   return (
