@@ -1,9 +1,9 @@
 import React from 'react';
 import LeadsCard from './lead-card';
-import { StyleSheet, FlatList } from 'react-native';
-import { Loader, BottomLoader, ListEmptyComponent } from '../../../components';
 import { useMyLeadStore } from '../../../store';
+import { StyleSheet, FlatList } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
+import { Loader, BottomLoader, ListEmptyComponent } from '../../../components';
 
 const EMPTY_IMAGE = require('../../../../assets/images/no_leads_record.png');
 interface LeadsListProps {
@@ -36,16 +36,10 @@ const LeadsList = ({
     return isEmpty;
   };
 
-
-  const onLeadDetails = (data: any) => {
-    setLeadDetails({ value: data });
-    navigate('LeadDetails');
-  };
-
-  const onAddProject = (data: any) => {
-    // dispatch(getMyLeadsDetail(data));
-    // navigation.navigate('AddProject');
-  };
+  const onPress = (name: 'LeadDetails' | 'AddProject', item: any) => {
+    setLeadDetails({ value: item });
+    navigate(name);
+  }
 
   return (
     <>
@@ -97,8 +91,8 @@ const LeadsList = ({
                     `${city_name}, ${state_name}`
                 }
                 source={source}
-                onLeadDetails={() => onLeadDetails(item)}
-                onAddProject={() => onAddProject(item)}
+                onLeadDetails={() => onPress('LeadDetails', item)}
+                onAddProject={() => onPress('AddProject', item)}
               />
             );
           }}

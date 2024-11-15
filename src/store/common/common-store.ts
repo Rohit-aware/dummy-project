@@ -36,6 +36,7 @@ const useCommonStore = create<CommonStoreProps>()((set) => ({
     },
 
     getStates: async () => {
+        set({ stateLoad: true })
         try {
             const response = await networkRequest({}).post(endpoints.getAllState);
             if (response.data.success === '1') {
@@ -52,6 +53,7 @@ const useCommonStore = create<CommonStoreProps>()((set) => ({
     },
 
     getCity: async ({ token, formData }) => {
+        set({ cityLoad: true })
         try {
             const response = await networkRequest({ token }).post(endpoints.getAllCity, formData);
             if (response.data.success === '1') {
@@ -59,12 +61,9 @@ const useCommonStore = create<CommonStoreProps>()((set) => ({
                     cityData: response.data.data,
                     cityLoad: false,
                 });
-            } else {
-                set({ cityLoad: false });
             }
-        } catch (error: any) {
-
-        }
+            set({ cityLoad: false });
+        } catch (error) { }
     },
     getOutsiders: async ({ token, formData }) => {
         set({ outsiderLoad: true })

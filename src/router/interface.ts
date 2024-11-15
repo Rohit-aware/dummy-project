@@ -11,6 +11,7 @@ type MainStackProps = {
     };
     LeadDetails:undefined;
     AddProject:undefined;
+    EditLead:undefined;
 };
 
 export type { MainStackProps };

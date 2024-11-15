@@ -3,18 +3,15 @@ import { getHashString } from "../../utility/hashing";
 import { UseAddLeadHookReturnType } from "./interface";
 import { useNavigation } from "@react-navigation/native";
 import { useAddLeadStore, useAuthStore, useCommonStore } from "../../store";
+import { helpers } from "../../utility";
 
-const Prefix = {
-    linkedInprefix: "https://www.linkedin.com/in/",
-    websiteprefix: "https://",
-    httpPrefix: "http",
-}
 
 const useAddLeadHook = (): UseAddLeadHookReturnType => {
     const { navigate } = useNavigation<any>();
     const { createlead } = useAddLeadStore();
     const { outsiderData, cityData, stateData, sources, stateLoad, cityLoad, getCity } = useCommonStore();
     const { token, deviceId: uuid, user_detail: userData } = useAuthStore();
+    const { linkedInprefix, websiteprefix, httpPrefix, } = helpers;
 
     const checkForEmpty = (value: string) => {
         const isEmpty =
@@ -62,35 +59,35 @@ const useAddLeadHook = (): UseAddLeadHookReturnType => {
     const addPrefix = ({ name }: { name: string }) => {
         if (name == 'linkedIn') {
             if (
-                inputs.linkedIn == Prefix.linkedInprefix ||
+                inputs.linkedIn == linkedInprefix ||
                 inputs.linkedIn == '' ||
-                !inputs.linkedIn.includes(Prefix.linkedInprefix)
+                !inputs.linkedIn.includes(linkedInprefix)
             ) {
-                setInputs({ ...inputs, linkedIn: Prefix.linkedInprefix });
+                setInputs({ ...inputs, linkedIn: linkedInprefix });
             }
         }
         if (name == 'website_url') {
             if (
-                inputs.website_url == Prefix.websiteprefix ||
+                inputs.website_url == websiteprefix ||
                 inputs.website_url == '' ||
-                !inputs.website_url.includes(Prefix.httpPrefix)
+                !inputs.website_url.includes(httpPrefix)
             ) {
-                setInputs({ ...inputs, website_url: Prefix.websiteprefix });
+                setInputs({ ...inputs, website_url: websiteprefix });
             }
         }
     };
 
     const removePrefix = ({ name }: { name: string }) => {
         if (name == 'linkedIn') {
-            if (inputs.linkedIn == '' || inputs.linkedIn == Prefix.linkedInprefix) {
+            if (inputs.linkedIn == '' || inputs.linkedIn == linkedInprefix) {
                 setInputs({ ...inputs, linkedIn: '' });
             }
         }
         if (name == 'website_url') {
             if (
-                inputs.website_url == Prefix.websiteprefix ||
+                inputs.website_url == websiteprefix ||
                 inputs.website_url == '' ||
-                !inputs.website_url.includes(Prefix.httpPrefix)
+                !inputs.website_url.includes(httpPrefix)
             ) {
                 setInputs({ ...inputs, website_url: '' });
             }

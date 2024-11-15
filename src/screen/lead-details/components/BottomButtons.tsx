@@ -5,23 +5,24 @@ import { View, StyleSheet, } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 
 export default () => {
-  const navigation = useNavigation<any>();
+  const { navigate } = useNavigation<any>();
   const { leadDetails } = useMyLeadStore();
   const { edit_allowed } = leadDetails;
-  const onAddProject = () => navigation.navigate('AddProject');
-  const onEdit = () => navigation.navigate('EditLead');
+  
+  const onPress = (name: 'EditLead' | 'AddProject') => navigate(name);
+
 
   return (
     <View style={styles.container}>
       <Button
         style={styles.addbtn}
         title={'ADD PROJECT'}
-        onPress={onAddProject}
+        onPress={() => onPress('AddProject')}
       />
       <Button
         style={styles.editbtn}
         title={'EDIT'}
-        onPress={onEdit}
+        onPress={() => onPress('EditLead')}
         hide={edit_allowed == 'Y' ? false : true}
       />
     </View>

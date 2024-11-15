@@ -26,6 +26,7 @@ type LeadDetsilType = {
     edit_allowed: 'Y' | 'N',
     project_count: number;
     closed_projects: number;
+    is_owner?:'Y' | 'N',
 }
 
 interface UseMyLeadStore {

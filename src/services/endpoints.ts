@@ -16,6 +16,7 @@ const endpoints = {
    getPersonalDetails:'getPersonalDetails',
    getWorkOverview:'getWorkOverview',
    getRequirementType:'getRequirementType',
-   createProject:'createProject'
+   createProject:'createProject',
+   updateLead:'updateLead'
 };
 export { endpoints }
