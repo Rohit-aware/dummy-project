@@ -2,6 +2,7 @@ type MainStackProps = {
     Login: undefined;
     Register: undefined;
     ForgotPassword: undefined;
+    ForgotPassSuccess: undefined;
     AddLead: undefined;
     BottomTab: {
         Dashboard: undefined;

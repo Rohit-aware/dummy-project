@@ -6,7 +6,7 @@ import { getHashString } from '../utility/hashing';
 import { useAuthStore, useCommonStore } from '../store';
 import { NavigationContainer } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
-import { AddLead, AddNotes, AddProject, EditLead, LeadDetail, Login, Notes, Register } from '../screen';
+import { AddLead, AddNotes, AddProject, EditLead, ForgotPassSuccess, ForgotPassword, LeadDetail, Login, Notes, Register } from '../screen';
 
 const Stack = createNativeStackNavigator<MainStackProps>();
 
@@ -41,6 +41,8 @@ const MainStack = () => {
                     <Stack.Group>
                         <Stack.Screen name='Login' component={Login} />
                         <Stack.Screen name='Register' component={Register} />
+                        <Stack.Screen name='ForgotPassword' component={ForgotPassword} />
+                        <Stack.Screen name='ForgotPassSuccess' component={ForgotPassSuccess} />
                     </Stack.Group>
                     :
                     <Stack.Group>

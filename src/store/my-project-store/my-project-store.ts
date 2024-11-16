@@ -19,7 +19,6 @@ const useMyProjectStore = create<UseMyProjectStoreProps>()((set, get) => ({
     getProjects: async ({ token, formData, projectPage }) => {
         set({ projectLoad: true })
         const response = await networkRequest({ token }).post(endpoints.getProjects, formData);
-        console.log(JSON.stringify(response.data,undefined,4), ' response.data ')
         if (response.data.success === '1') {
             if (projectPage === 0) {
                 set({ projects: response.data.data });

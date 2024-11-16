@@ -19,6 +19,7 @@ interface User {
 // Define the AuthStore interface
 interface AuthStore {
     loader: boolean;
+    forgotLoad: boolean;
     user_detail: User;
     token: string;
     errorMessage: string | null;
@@ -26,6 +27,7 @@ interface AuthStore {
     updateDeviceId: ({ id }: { id: string }) => void;
     clearLoginData: () => void;
     processDoLogin: ({ formData }: { formData: {} }) => Promise<any>;
+    requestOtp: ({ formData }: { formData: {} }) => Promise<any>;
     updateMyDeviceId: ({ token, formData }: { token: string, formData: {} }) => void;
 }
 export type { AuthStore }

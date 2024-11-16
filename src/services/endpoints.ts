@@ -19,6 +19,7 @@ const endpoints = {
    createProject:'createProject',
    updateLead:'updateLead',
    getNotes:'getNotes',
-   addNotes:'addNotes'
+   addNotes:'addNotes',
+   requestOtp:'requestOtp'
 };
 export { endpoints }

@@ -9,6 +9,7 @@ const useAuthStore = create<AuthStore>()(
     persist(
         (set) => ({
             loader: false,
+            forgotLoad: false,
             user_detail: {},
             token: '',
             deviceId: '',
@@ -38,12 +39,23 @@ const useAuthStore = create<AuthStore>()(
                 } catch (error: any) {
                     set({ loader: false, errorMessage: 'Failed to load dashboard data' });
                 }
+                set({ loader: false });
+            },
+            requestOtp: async ({ formData }) => {
+                set({ forgotLoad: true });
+                try {
+                    const response = await networkRequest({}).post(endpoints.requestOtp, formData);
+                    return response.data;
+                } catch (error: any) {
+                    set({ loader: false, errorMessage: 'Failed to load dashboard data' });
+                }
+                set({ forgotLoad: false });
             },
             updateMyDeviceId: async ({ formData, token }) => {
                 try {
                     await networkRequest({ token }).post(endpoints.updateDeviceId, formData);
                 } catch (error: any) {
-                    console.log(JSON.stringify(error, undefined, 4), 'error in auth store inside updateMyDeviceId ')
+                    console.log(error, 'error in auth store inside updateMyDeviceId ')
 
                 }
             }

@@ -10,3 +10,5 @@ export { default as MyProjects } from './my-projects/my-projects-screen';
 export { default as LeadDetail } from './lead-details/lead-detail-screen';
 export { default as Register } from './auth-screens/register/register-screen';
 export { default as AddNotes } from './notes/screens/add-note/add-note-screen';
+export { default as ForgotPassword } from './auth-screens/forgot-password/forgot-password-screen';
+export { default as ForgotPassSuccess } from './auth-screens/forgot-success/forgot-pass-success-screen';

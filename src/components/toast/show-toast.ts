@@ -1,8 +1,8 @@
 import { ToastAndroid } from "react-native";
 
 
-const showToast = (message: string) => {
+const showToast = (message: string, long = false) => {
     return ToastAndroid.show((message),
-        ToastAndroid.SHORT);
+        long ? ToastAndroid.LONG : ToastAndroid.SHORT);
 };
 export default showToast;
