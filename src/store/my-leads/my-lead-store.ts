@@ -48,7 +48,6 @@ const useMyLeadStore = create<UseMyLeadStore>()((set, get) => ({
         set({ page: leadPage });
     },
     getLeads: async ({ formData, leadPage, token }) => {
-        const currnetData = get().leadsData;
         try {
             set({ loading: true })
             const response = await networkRequest({ token }).post(endpoints.getLeads, formData);
@@ -56,7 +55,9 @@ const useMyLeadStore = create<UseMyLeadStore>()((set, get) => ({
                 if (leadPage === 0) {
                     set({ leadsData: response.data.data });
                 } else {
-                    set({ leadsData: [...currnetData, ...response.data.data] });
+                    set((state) => ({
+                        leadsData: [...state.leadsData, ...response.data.data]
+                    }))
                 }
             }
             if (response.data.success === '0' && response.data.data?.length === 0 && response.data.total_record == 0) {

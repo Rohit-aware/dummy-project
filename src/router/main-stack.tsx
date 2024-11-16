@@ -2,11 +2,11 @@ import React from 'react';
 import BottomTab from './BottomTab';
 import { MainStackProps } from './interface';
 import DeviceInfo from 'react-native-device-info';
-import { AddLead, AddProject, EditLead, LeadDetail, Login, Register } from '../screen';
+import { getHashString } from '../utility/hashing';
 import { useAuthStore, useCommonStore } from '../store';
 import { NavigationContainer } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
-import { getHashString } from '../utility/hashing';
+import { AddLead, AddNotes, AddProject, EditLead, LeadDetail, Login, Notes, Register } from '../screen';
 
 const Stack = createNativeStackNavigator<MainStackProps>();
 
@@ -49,6 +49,8 @@ const MainStack = () => {
                         <Stack.Screen name="LeadDetails" component={LeadDetail} />
                         <Stack.Screen name="AddProject" component={AddProject} />
                         <Stack.Screen name="EditLead" component={EditLead} />
+                        <Stack.Screen name="Notes" component={Notes} />
+                        <Stack.Screen name="AddNotes" component={AddNotes} />
                     </Stack.Group>
                 }
             </Stack.Navigator>

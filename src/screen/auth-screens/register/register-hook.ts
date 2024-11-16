@@ -98,7 +98,7 @@ const useRegisterHook = (): useRegisterHookprops => {
             formdata.append('confirm_password', inputs.confirm_password);
             formdata.append('gender', getSelectedGender());
             formdata.append('designation', '');
-            formdata.append('address', null);
+            formdata.append('address', '');
             formdata.append('state_id', '');
             formdata.append('city_id', '');
             formdata.append('location', '');

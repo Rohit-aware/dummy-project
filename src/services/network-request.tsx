@@ -38,13 +38,13 @@ const networkRequest = (networkConfig: NetworkConfig) => {
   }, (error) => {
     return Promise.reject(error);
   });
+
   axiosInstance.interceptors.response.use((response: AxiosResponse) => {
     return response;
   }, (error) => {
     console.error('Response error: ', error);
     return Promise.reject(error);
   });
-
 
   return axiosInstance;
 }

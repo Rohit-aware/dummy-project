@@ -3,6 +3,7 @@ export { default as Plus } from './Plus';
 export { default as Leads } from './Lead';
 export { default as Moon } from './Moon';
 export { default as Play } from './Play';
+export { default as Pen } from './Pen';
 export { default as Back } from './Back';
 export { default as Dots } from './dots';  
 export { default as Call } from './Call';  
