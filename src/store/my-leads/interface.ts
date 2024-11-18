@@ -26,7 +26,7 @@ type LeadDetsilType = {
     edit_allowed: 'Y' | 'N',
     project_count: number;
     closed_projects: number;
-    is_owner?:'Y' | 'N',
+    is_owner?: 'Y' | 'N',
 }
 
 interface UseMyLeadStore {
@@ -39,6 +39,7 @@ interface UseMyLeadStore {
     setIsFinish: ({ value }: { value: boolean }) => void;
     setMyLeadPage: ({ leadPage }: { leadPage: number }) => void;
     getLeads: ({ formData, leadPage, token }: { formData: {}, leadPage: number, token: string }) => void;
+    getSingleLeads: ({ formData, token }: { formData: {}, token: string }) => void;
 };
 
 export type { UseMyLeadStore };

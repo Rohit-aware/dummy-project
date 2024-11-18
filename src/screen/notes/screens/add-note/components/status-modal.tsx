@@ -1,9 +1,9 @@
 import React from 'react';
 import Modal from 'react-native-modal';
-import { Colors } from '../../../../constants';
-import { fontStyles } from '../../../../styles';
-import { Dots } from '../../../../../assets/icons';
-import { useCommonStore } from '../../../../store';
+import { Colors } from '../../../../../constants';
+import { fontStyles } from '../../../../../styles';
+import { Dots } from '../../../../../../assets/icons';
+import { useCommonStore } from '../../../../../store';
 import { View, Text, StyleSheet, TouchableOpacity } from 'react-native';
 
 export default ({ show, close, onSelect }: { show: boolean, close: () => void, onSelect: (name: 'call_status', data: any) => void }) => {

@@ -1,12 +1,13 @@
 import React from 'react';
 import { fontStyles } from '../../../styles';
 import { useMyLeadStore } from '../../../store';
-import { useNavigation } from '@react-navigation/native';
+import { MainStackProps } from '../../../router/interface';
 import { Call, Dots, Notes, Share } from '../../../../assets/icons';
+import { NavigationProp, useNavigation } from '@react-navigation/native';
 import { View, Text, Linking, Platform, StyleSheet, TouchableOpacity } from 'react-native';
 
 export default () => {
-  const navigation = useNavigation<any>();
+  const navigation = useNavigation<NavigationProp<MainStackProps, 'LeadDetails'>>();
   const { leadDetails } = useMyLeadStore();
   const { contact_person, phone, country_id, share_allowed, client_id, company_name } = leadDetails;
   const diplay_number = `${contact_person}  |  +${country_id} ${phone}`;

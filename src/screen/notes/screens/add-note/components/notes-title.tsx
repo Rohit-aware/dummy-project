@@ -1,7 +1,7 @@
 import React from 'react';
-import { fontStyles } from '../../../../styles';
-import { useMyLeadStore } from '../../../../store';
-import { Dots } from '../../../../../assets/icons';
+import { fontStyles } from '../../../../../styles';
+import { useMyLeadStore } from '../../../../../store';
+import { Dots } from '../../../../../../assets/icons';
 import { View, Text, StyleSheet } from 'react-native';
 
 export default () => {

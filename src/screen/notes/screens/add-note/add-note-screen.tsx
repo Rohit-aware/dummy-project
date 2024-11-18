@@ -1,12 +1,11 @@
 import React from 'react';
 import color from '../../../../constants/colors';
 import { useAddNotehook } from './add-note-hook';
-import NotesTitle from '../components/notes-title';
-import StatusModal from '../components/status-modal';
+import NotesTitle from './components/notes-title';
+import StatusModal from './components/status-modal';
 import { View, StyleSheet, ScrollView } from 'react-native';
 import { Button, DateTimeInput, DropdownButton, Header, InputBox } from '../../../../components';
-
-export default () => {
+const AddNotes= () => {
     const {
         inputs,
         onSelect,
@@ -89,3 +88,4 @@ const styles = StyleSheet.create({
         justifyContent: 'flex-end',
     },
 });
+export default AddNotes; 

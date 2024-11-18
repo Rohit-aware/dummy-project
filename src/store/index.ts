@@ -7,6 +7,7 @@ export { default as useStartupStore } from './srtartup/startup-store';
 export { default as useAddLeadStore } from './add-lead/add-lead-store';
 export { default as useNoteListingStore } from './notes/note-listing-store';
 export { default as useProfileStore } from './profile-store/profile-.store';
+export { default as useShareLeadStore } from './share-lead/share-lead-store';
 export { default as useAddProjectSotre } from './add-project/add-project-store';
 export { default as useRegisterStore } from './registration/registration-store';
 export { default as useMyProjectStore } from './my-project-store/my-project-store';

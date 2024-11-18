@@ -20,6 +20,8 @@ const endpoints = {
    updateLead:'updateLead',
    getNotes:'getNotes',
    addNotes:'addNotes',
-   requestOtp:'requestOtp'
+   requestOtp:'requestOtp',
+   shareClient:'shareClient',
+   getShareClientTeam:'getShareClientTeam',
 };
 export { endpoints }

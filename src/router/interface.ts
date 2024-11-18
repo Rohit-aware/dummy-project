@@ -10,11 +10,14 @@ type MainStackProps = {
         MyProjects: undefined;
         MyProfile: undefined;
     };
-    LeadDetails:undefined;
-    AddProject:undefined;
-    EditLead:undefined;
-    Notes:undefined;
-    AddNotes:undefined;
+    LeadDetails: undefined;
+    AddProject: undefined;
+    EditLead: undefined;
+    Notes: undefined;
+    AddNotes: undefined;
+    ShareLead: {
+        client_id: string
+    };
 };
 
 export type { MainStackProps };
