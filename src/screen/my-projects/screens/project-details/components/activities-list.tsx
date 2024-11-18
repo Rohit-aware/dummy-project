@@ -1,7 +1,7 @@
 import React from 'react';
 import ActivityCard from './activity-card';
 
-const RenderActivityList = ({ item, index }: { item: any, index: number }) => {
+const RenderActivityList = ({ item, index, len }: { item: any, index: number, len: number }) => {
   const {
     activity_title,
     activity_date,
@@ -37,7 +37,7 @@ const RenderActivityList = ({ item, index }: { item: any, index: number }) => {
       datetime={`${activity_date} ${activity_time}`}
       remark={remark}
       Files={fileArray}
-      showdots={index + 1 != 1 ? true : false}
+      showdots={index + 1 !== len ? true : false}
     />
   )
 };

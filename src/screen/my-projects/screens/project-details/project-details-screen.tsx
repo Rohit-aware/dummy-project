@@ -31,6 +31,7 @@ const ProjectDetails = () => {
         upcActivityPage,
         onEndUpcActivity,
     } = useProjectDetailsHook();
+    let len = activities?.length
 
     const EmptyComp = React.useCallback(({ text }: { text: string }) => (
         <View style={styles.emptycontainer}>
@@ -56,7 +57,7 @@ const ProjectDetails = () => {
                                 ) : null;
                             }}
                             ListFooterComponent={() => activityLoad && activityPage !== 0 ? <BottomLoader /> : null}
-                            renderItem={({ item, index }) => <RenderActivityList {...{ item, index }} />}
+                            renderItem={({ item, index }) => <RenderActivityList {...{ item, index, len }} />}
                         />
                     :
                     (upcActivityLoad && upcActivityPage === 0) ?
