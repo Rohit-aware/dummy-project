@@ -10,7 +10,7 @@ const useProjectDetailsHook = () => {
     const [refresh, setRefresh] = React.useState(false);
     const { projectDetails: actionData } = useMyProjectStore();
     const onViewTeam = () => navigate('ViewTeam', { details: actionData });
-    
+
     const {
         activities,
         activityLoad,
@@ -22,6 +22,7 @@ const useProjectDetailsHook = () => {
         upcActivityPage,
         setActivityPage,
         upcActivityFinsih,
+        resetIsFinishPage,
         setUpActivityPage,
         getUpcomingActivities,
     } = useProjectDetailsStore()
@@ -46,7 +47,7 @@ const useProjectDetailsHook = () => {
             const formData = new FormData();
             formData.append('page_number', page);
             formData.append('project_id', actionData.project_id);
-            formData.append('limit', 1);
+            formData.append('limit', 10);
             formData.append('uuid', uuid);
             formData.append('hash_key', hash_key);
             formData.append('is_project', 'yes');
@@ -55,7 +56,7 @@ const useProjectDetailsHook = () => {
             console.log(error, 'error inside fetchActivities api');
         } finally {
             setRefresh(false);
-        }
+        };
 
     };
 
@@ -71,7 +72,7 @@ const useProjectDetailsHook = () => {
             const formData = new FormData();
             formData.append('page_number', page);
             formData.append('project_id', actionData.project_id);
-            formData.append('limit', 1);
+            formData.append('limit', 10);
             formData.append('uuid', uuid);
             formData.append('hash_key', hash_key);
             formData.append('is_project', 'yes');
@@ -80,7 +81,7 @@ const useProjectDetailsHook = () => {
             console.log(error, 'error inside fetchUpcoming api');
         } finally {
             setRefresh(false);
-        }
+        };
 
     };
 
@@ -99,8 +100,7 @@ const useProjectDetailsHook = () => {
         }
     }
     const onRefresh = async () => {
-        setActivityPage({ page: 0 });
-        setUpActivityPage({ page: 0 });
+        resetIsFinishPage();
         setRefresh(true);
         reloadPage();
     };
@@ -112,9 +112,14 @@ const useProjectDetailsHook = () => {
 
 
     return {
+        show,
+        close,
         open,
         active,
+        refresh,
+        onRefresh,
         setActive,
+        actionData,
         activities,
         onViewTeam,
         activityLoad,

@@ -1,52 +1,50 @@
 import React from 'react';
-import {StyleSheet, View, Text, TouchableWithoutFeedback} from 'react-native';
-import color from '../../../constants/color';
-import fonts from '../../../constants/fonts';
 import Modal from 'react-native-modal';
-import {useNavigation} from '@react-navigation/core';
-import Dots from '../../../assets/icons/dots';
-import {updateProjectDetail} from '../../../redux/slice/Activities';
-import {useDispatch, useSelector} from 'react-redux';
+import { useNavigation } from '@react-navigation/native';
+import { useStartupStore } from '../../../../../store';
+import { StyleSheet, View, Text, TouchableWithoutFeedback } from 'react-native';
+import { Dots } from '../../../../../../assets/icons';
+import { Colors } from '../../../../../constants';
+import { fontStyles } from '../../../../../styles';
 
 
 
-export default ({show, details, close, hideleadbutton, hideProjectbutton}) => {
-  const navigation = useNavigation();
-  const { data: { screens: { project_detail } = {}, edit_allowed, share_allowed } = {} } = useSelector((state) => state.startupSlice) || {};
-  const { share_project_action,add_activities,add_upcoming_activities,update_project_status,create_reminder } =project_detail || {};
+export default ({ show, details, close, hideleadbutton, hideProjectbutton }: any) => {
+  const navigation = useNavigation<any>();
+  const { data: { screens: { project_detail } = {}, edit_allowed, share_allowed } = {} } = useStartupStore();
+  const { share_project_action, add_activities, add_upcoming_activities, update_project_status, create_reminder } = project_detail || {};
 
   const data = [
     {
       title: 'Share Project',
       screen: 'ShareProject',
-      isVisible:share_project_action && share_allowed
+      isVisible: share_project_action && share_allowed
     },
     {
       title: 'Add Activites',
       screen: 'AddActivities',
-      isVisible:add_activities && edit_allowed
+      isVisible: add_activities && edit_allowed
     },
     {
       title: 'Add Upcoming Activities',
       screen: 'AddUpcomingActivities',
-      isVisible:add_upcoming_activities && edit_allowed
+      isVisible: add_upcoming_activities && edit_allowed
     },
     {
       title: 'Update Project Status',
       screen: 'UpdateProjectStatus',
-      isVisible:update_project_status && edit_allowed
+      isVisible: update_project_status && edit_allowed
     },
     {
       title: 'Create Reminder',
       screen: 'CreateReminder',
-      isVisible:create_reminder && edit_allowed
+      isVisible: create_reminder && edit_allowed
     },
   ];
-  
-  const dispatch = useDispatch();
-  const onItemClick = screen => {
+
+  const onItemClick = (screen: string) => {
     if (screen) {
-      dispatch(updateProjectDetail(details));
+      // setProjectDetail({});
       navigation.navigate(screen);
     }
     close()
@@ -88,7 +86,7 @@ const styles = StyleSheet.create({
     justifyContent: 'flex-end',
   },
   wrapper: {
-    backgroundColor: color.white,
+    backgroundColor: Colors.white,
     paddingVertical: 15,
     paddingHorizontal: 20,
     borderTopLeftRadius: 15,
@@ -106,7 +104,7 @@ const styles = StyleSheet.create({
     paddingVertical: 15,
   },
   title: {
-    ...fonts.r3,
+    ...fontStyles.r3,
     marginLeft: 40,
   },
 });

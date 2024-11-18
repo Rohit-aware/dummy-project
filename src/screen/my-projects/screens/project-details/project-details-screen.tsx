@@ -1,6 +1,7 @@
 import React from 'react';
 import { fontStyles } from '../../../../styles';
 import ListHeader from './components/list-header';
+import ActionsModal from './components/actions-modal';
 import { useProjectDetailsHook } from './project-detail-hook';
 import { Colors, moderateScale } from '../../../../constants';
 import RenderActivityList from './components/activities-list';
@@ -13,8 +14,13 @@ const ProjectDetails = () => {
 
     const {
         open,
+        show,
+        close,
         active,
+        refresh,
+        onRefresh,
         setActive,
+        actionData,
         onViewTeam,
         activities,
         activityLoad,
@@ -78,6 +84,8 @@ const ProjectDetails = () => {
             <Header title="Project Details" />
             <FlatList
                 data={[1]}
+                onRefresh={onRefresh}
+                refreshing={refresh}
                 ListHeaderComponent={() => (
                     <ListHeader
                         active={active}
@@ -88,6 +96,13 @@ const ProjectDetails = () => {
                 )}
                 renderItem={_renderProjectDetails_}
                 contentContainerStyle={{ paddingVertical: moderateScale(15) }}
+            />
+            <ActionsModal
+                show={show}
+                details={actionData}
+                close={close}
+                hideleadbutton={actionData.is_share_lead == 'Y' ? false : true}
+                hideProjectbutton={actionData.is_update_status == 'Y' ? false : true}
             />
         </View>
     )

@@ -17,7 +17,7 @@ const useMyProjectStore = create<UseMyProjectStoreProps>()((set, get) => ({
     setMyProjectPage: ({ projectPage }) => {
         set({ page: projectPage });
     },
-    getProjectDetail: ({ data }) => {
+    setProjectDetail: ({ data }) => {
         set({ projectDetails: data })
     },
     getProjects: async ({ token, formData, projectPage }) => {

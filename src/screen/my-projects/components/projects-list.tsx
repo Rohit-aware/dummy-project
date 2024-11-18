@@ -20,11 +20,11 @@ const ProjectsList = ({
   onEndReached,
 }: ProjectsListProps) => {
   const navigation = useNavigation<any>();
-  const { getProjectDetail } = useMyProjectStore();
+  const { setProjectDetail } = useMyProjectStore();
   const { resetIsFinishPage } = useProjectDetailsStore();
   const onProjectDetail = (data: Partial<ProjectDataType>) => {
     resetIsFinishPage();
-    getProjectDetail({ data })
+    setProjectDetail({ data })
     navigation.navigate('ProjectDetails');
   };
 

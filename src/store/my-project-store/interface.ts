@@ -41,7 +41,7 @@ interface UseMyProjectStoreProps {
   projects: Array<ProjectDataType>;
   projectDetails: Partial<ProjectDataType>;
   setIsFinish: () => void;
-  getProjectDetail: ({ data }: { data: Partial<ProjectDataType> }) => void;
+  setProjectDetail: ({ data }: { data: Partial<ProjectDataType> }) => void;
   setMyProjectPage: ({ projectPage }: { projectPage: number }) => void;
   getProjects: ({ token, formData, projectPage }: { token: string, formData: {}, projectPage: number }) => Promise<any>;
 };

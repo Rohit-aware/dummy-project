@@ -55,7 +55,7 @@ const useMyProjectHook = () => {
             formData.append('uuid', uuid);
             formData.append('hash_key', hash_key);
             formData.append('page_number', page);
-            formData.append('limit', 1);
+            formData.append('limit', 10);
             search && formData.append('search_key', search);
             if (!!project_status) {
                 client_id !== null && formData.append('client_id', client_id);
