@@ -1,7 +1,7 @@
 import React from "react";
 import { useNavigation } from "@react-navigation/native";
 import { getHashString } from "../../../../utility/hashing";
-import { useAuthStore, useMyProjectStore, useProjectDetailsStore, useReloadStore, useStartupStore } from "../../../../store";
+import { useAuthStore, useMyProjectStore, useProjectDetailsStore, useReloadStore, useStartupStore, useViewTeamStore } from "../../../../store";
 
 
 const useProjectDetailsHook = () => {
@@ -9,7 +9,10 @@ const useProjectDetailsHook = () => {
     const [show, setShow] = React.useState(false);
     const [refresh, setRefresh] = React.useState(false);
     const { projectDetails: actionData } = useMyProjectStore();
-    const onViewTeam = () => navigate('ViewTeam', { details: actionData });
+    const onViewTeam = () => {
+        resetViewTeamFinishPage()
+        navigate('ViewTeam', { details: actionData });
+    }
 
     const {
         activities,
@@ -28,6 +31,7 @@ const useProjectDetailsHook = () => {
     } = useProjectDetailsStore()
 
     const { reloadPage, reload } = useReloadStore();
+    const { resetViewTeamFinishPage } = useViewTeamStore();
     const { deviceId: uuid, user_detail: userData, token } = useAuthStore();
     const { data: { screens: { project_detail } = {} } = {} } = useStartupStore();
     const [active, setActive] = React.useState<'Activities' | 'Upcoming' | ''>(project_detail?.activity ? 'Activities' : project_detail?.upcoming_activity ? 'Upcoming' : '');

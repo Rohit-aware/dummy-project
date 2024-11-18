@@ -10,8 +10,8 @@ interface UseProjectDetailsStore {
     activityLoad: boolean;
     activityFinsih: boolean;
     upcActivities: Array<any>;
-    upcActivityLoad: Boolean;
-    upcActivityFinsih: Boolean;
+    upcActivityLoad: boolean;
+    upcActivityFinsih: boolean;
     upcActivityPage: number;
     resetIsFinishPage: () => void;
     setActivityPage: ({ page }: { page: number }) => void;

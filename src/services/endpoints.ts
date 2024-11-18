@@ -26,5 +26,6 @@ const endpoints = {
    getLeadUsers:'getLeadUsers',
    getActivities:'getActivities',
    getUpcomingActivities:'getUpcomingActivities',
+   viewTeam:'viewTeam'
 };
 export { endpoints }
