@@ -3,7 +3,7 @@ import { getHashString } from "../../utility/hashing";
 import { useAuthStore, useProfileStore } from "../../store";
 
 const useProfileHook = () => {
-    const { getPersonalDetails, loading: profileLoad, getWorkOverview, achieved, target } = useProfileStore();
+    const { getPersonalDetails, loading: profileLoad, getWorkOverview } = useProfileStore();
     const { user_detail: userData, token, deviceId: uuid } = useAuthStore();
     const [loading, setLoading] = React.useState(false);
     const [refresh, setRefresh] = React.useState(false);
@@ -22,7 +22,9 @@ const useProfileHook = () => {
     const onRefresh = () => {
         setRefresh(true);
         const timeoute = setTimeout(() => {
-            setRefresh(false)
+            setRefresh(false);
+            getProfileDetails();
+            fetchWorkoverview();
         }, 1000);
         return clearTimeout(timeoute)
     };
@@ -56,7 +58,6 @@ const useProfileHook = () => {
 
     React.useEffect(() => {
         fetchWorkoverview();
-        getProfileDetails();
     }, []);
 
     return {

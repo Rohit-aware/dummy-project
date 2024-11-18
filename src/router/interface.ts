@@ -18,6 +18,9 @@ type MainStackProps = {
     ShareLead: {
         client_id: string
     };
+    ViewLeads: {
+        client_id: string
+    };
 };
 
 export type { MainStackProps };

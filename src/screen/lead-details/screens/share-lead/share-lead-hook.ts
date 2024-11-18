@@ -42,7 +42,7 @@ const useShareLeadHook = () => {
     };
 
     const onEndReached = () => {
-        if (!isFinish) {
+        if (!isFinish && teams.length > 0) {
             setPage({ page: page + 1 });
             fetchTeam({ page: page + 1 });
         }
@@ -116,7 +116,7 @@ const useShareLeadHook = () => {
 
 
     React.useEffect(() => {
-        const delay = search == '' ? 0 : 500;
+        const delay = search == '' ? 0 : 1000;
         const delayDebounceFn = setTimeout(() => {
             setUsers([]);
             setPage({ page: 0 });

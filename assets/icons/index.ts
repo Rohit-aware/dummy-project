@@ -11,6 +11,7 @@ export { default as Share } from './Share';
 export { default as Notes } from './Notes';  
 export { default as Filter } from './Filter';  
 export { default as File } from './FileIcon';  
+export { default as Creator } from './Creator';  
 export { default as Profile } from './Profile';
 export { default as Projects } from './Projects';
 export { default as EmailSvg } from './email-svg';  

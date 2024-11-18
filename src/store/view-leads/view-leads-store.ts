@@ -2,35 +2,28 @@ import { create } from "zustand";
 import { networkRequest } from "../../services/network-request";
 import { endpoints } from "../../services/endpoints";
 
-interface useShareLeadStoreProps {
+interface useViewLeadStoreProps {
     page: number;
-    shareTeamLoad: boolean;
+    teamLoad: boolean;
     isFinish: boolean;
     teamsData: Array<any>;
     setPage: ({ page }: { page: number }) => void;
-    shareClient: ({ token, formData }: { token: string, formData: {} }) => Promise<any>;
-    getShareClientTeam: ({ token, formData, teamPage }: { token: string, formData: {}, teamPage: number }) => void;
+    getLeadUsers: ({ token, formData, teamPage }: { token: string, formData: {}, teamPage: number }) => void;
 
 }
 
-const useShareLeadStore = create<useShareLeadStoreProps>()((set) => ({
+const useViewLeadStore = create<useViewLeadStoreProps>()((set) => ({
     page: 0,
     teamsData: [],
     isFinish: false,
-    shareTeamLoad: false,
+    teamLoad: false,
     setPage: ({ page }) => {
         set({ page: page })
     },
-    shareClient: async ({ token, formData }) => {
+    getLeadUsers: async ({ token, formData, teamPage }) => {
+        set({ teamLoad: true });
         try {
-            const repsonse = await networkRequest({ token }).post(endpoints.shareClient, formData);
-            return repsonse.data;
-        } catch (error) { };
-    },
-    getShareClientTeam: async ({ token, formData, teamPage }) => {
-        set({ shareTeamLoad: true });
-        try {
-            const response = await networkRequest({ token }).post(endpoints.getShareClientTeam, formData);
+            const response = await networkRequest({ token }).post(endpoints.getLeadUsers, formData);
             if (response.data.success === '1') {
                 if (teamPage === 0) {
                     set({ teamsData: response.data.data });
@@ -44,8 +37,8 @@ const useShareLeadStore = create<useShareLeadStoreProps>()((set) => ({
                 }
                 set({ isFinish: true });
             }
-            set({ shareTeamLoad: false });
+            set({ teamLoad: false });
         } catch (error) { };
     },
 }));
-export default useShareLeadStore;
+export default useViewLeadStore;

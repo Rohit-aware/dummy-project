@@ -3,15 +3,16 @@ import BottomTab from './BottomTab';
 import { MainStackProps } from './interface';
 import DeviceInfo from 'react-native-device-info';
 import { getHashString } from '../utility/hashing';
-import { useAuthStore, useCommonStore } from '../store';
 import { NavigationContainer } from '@react-navigation/native';
+import { useAuthStore, useCommonStore, useProfileStore } from '../store';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
-import { AddLead, AddNotes, AddProject, EditLead, ForgotPassSuccess, ForgotPassword, LeadDetail, Login, Notes, Register, ShareLead } from '../screen';
+import { AddLead, AddNotes, AddProject, EditLead, ForgotPassSuccess, ForgotPassword, LeadDetail, Login, Notes, Register, ShareLead, ViewLead } from '../screen';
 
 const Stack = createNativeStackNavigator<MainStackProps>();
 
 const MainStack = () => {
 
+    const { getPersonalDetails } = useProfileStore();
     const { getStates, getRequirementType } = useCommonStore();
     const { updateDeviceId, token, user_detail: userData, deviceId: uuid } = useAuthStore();
 
@@ -19,6 +20,13 @@ const MainStack = () => {
         const deviceId = await DeviceInfo.getUniqueId();
         updateDeviceId({ id: deviceId });
     };
+    const getProfileDetails = async () => {
+        const fnName = 'getPersonalDetails';
+        const hash_key = getHashString(userData.mkey!, userData.msalt!, uuid, fnName);
+        const formData = { uuid, hash_key };
+        getPersonalDetails({ token, formData });
+    };
+
     const getRequirements = () => {
         if (token) {
             let fnName = 'getRequirementType';
@@ -32,6 +40,7 @@ const MainStack = () => {
         getUuid();
         getStates();
         getRequirements();
+        getProfileDetails();
     }, []);
 
     return (
@@ -54,6 +63,7 @@ const MainStack = () => {
                         <Stack.Screen name="Notes" component={Notes} />
                         <Stack.Screen name="AddNotes" component={AddNotes} />
                         <Stack.Screen name="ShareLead" component={ShareLead} />
+                        <Stack.Screen name="ViewLeads" component={ViewLead} />
                     </Stack.Group>
                 }
             </Stack.Navigator>

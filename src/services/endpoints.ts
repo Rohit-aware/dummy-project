@@ -23,5 +23,6 @@ const endpoints = {
    requestOtp:'requestOtp',
    shareClient:'shareClient',
    getShareClientTeam:'getShareClientTeam',
+   getLeadUsers:'getLeadUsers',
 };
 export { endpoints }

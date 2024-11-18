@@ -6,6 +6,7 @@ export { default as useMyLeadStore } from './my-leads/my-lead-store';
 export { default as useStartupStore } from './srtartup/startup-store';
 export { default as useAddLeadStore } from './add-lead/add-lead-store';
 export { default as useNoteListingStore } from './notes/note-listing-store';
+export { default as useViewLeadStore } from './view-leads/view-leads-store';
 export { default as useProfileStore } from './profile-store/profile-.store';
 export { default as useShareLeadStore } from './share-lead/share-lead-store';
 export { default as useAddProjectSotre } from './add-project/add-project-store';

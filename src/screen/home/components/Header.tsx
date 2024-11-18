@@ -2,10 +2,10 @@ import Box from './box';
 import React from 'react';
 import { Colors } from '../../../constants';
 import { fontStyles } from '../../../styles';
-import { useAuthStore, useHomeStore } from '../../../store';
 import FastImage from 'react-native-fast-image';
 import { useNavigation } from '@react-navigation/native';
 import moderateScale, { SCREEN_WIDTH } from '../../../constants/dimenssion';
+import { useAuthStore, useHomeStore, useProfileStore } from '../../../store';
 import { View, Text, StyleSheet, ImageBackground, Pressable, Alert } from 'react-native';
 
 
@@ -16,6 +16,12 @@ const Header = () => {
   const { navigate } = useNavigation<any>();
   const { data, processLogout } = useHomeStore();
   const { token, clearLoginData } = useAuthStore();
+  const { personalDetails: userData } = useProfileStore();
+  const { first_name, phone, phone_code, designation } = userData;
+  const display_detail =
+    `${designation == undefined ? '' : designation + ' |'}  ${phone_code == undefined ? '' : '+' + phone_code
+    } ${phone == undefined ? '' : phone}`;
+
 
   const onLeads = () => navigate('MyLeads');
 
@@ -27,7 +33,7 @@ const Header = () => {
       if (res.success === "1") {
         clearLoginData();
       } else {
-        console.log("response failed : ",res)
+        console.log("response failed : ", res)
       }
     } catch (error: any) {
       console.log('Error inside doLogout Api in Header.js : ', error.message)
@@ -59,9 +65,9 @@ const Header = () => {
           </Pressable>
           <Text style={styles.textcontainer}>
             <Text style={styles.welcome}>{'Welcome !! '}</Text>
-            <Text style={styles.name}>{'Name'}</Text>
+            <Text style={styles.name}>{first_name}</Text>
           </Text>
-          <Text style={styles.number}>{'Bla Bla Blaa'}</Text>
+          <Text style={styles.number}>{display_detail}</Text>
         </View>
       </ImageBackground>
       <View style={styles.btncontainer}>

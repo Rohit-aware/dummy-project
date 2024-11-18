@@ -15,9 +15,9 @@ const ShareLead = ({ route }: any) => {
         onCheck,
         btnload,
         onRefresh,
-        setSearch,
         shareLeads,
         onEndReached,
+        setSearch,
     } = useShareLeadHook();
 
     return (
@@ -25,9 +25,9 @@ const ShareLead = ({ route }: any) => {
             <Header title={'Share Leads'} />
             <SearchBar
                 hide
-                textinputStyle={styles.searchinput}
-                onChangeText={setSearch}
                 value={search}
+                onChangeText={setSearch}
+                textinputStyle={styles.searchinput}
             />
             <EmployeesList
                 data={teams}
