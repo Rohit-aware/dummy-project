@@ -12,3 +12,4 @@ export { default as useShareLeadStore } from './share-lead/share-lead-store';
 export { default as useAddProjectSotre } from './add-project/add-project-store';
 export { default as useRegisterStore } from './registration/registration-store';
 export { default as useMyProjectStore } from './my-project-store/my-project-store';
+export { default as useProjectDetailsStore } from './project-details/project-details-store';

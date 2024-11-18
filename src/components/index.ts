@@ -10,6 +10,7 @@ export { default as NumberInput } from './common/number-input';
 export { default as BottomLoader } from './loaders/bottom-loader';
 export { default as DateTimeInput } from './common/date-time-input';
 export { default as UploadInput } from './file-inputes/upload-input';
+export { default as RadioButton } from './radio-button/radio-button';
 export { default as StateCityModal } from './modals/statecity-modal';
 export { default as UploadFiles } from './file-inputes/uploaded-files';
 export { default as DropdownButton } from './dropdown/dropdown-button';

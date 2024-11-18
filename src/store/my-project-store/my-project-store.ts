@@ -7,14 +7,18 @@ import { networkRequest } from "../../services/network-request";
 const useMyProjectStore = create<UseMyProjectStoreProps>()((set, get) => ({
     page: 0,
     projects: [],
+    projectDetails: {},
     isFinish: false,
     projectLoad: false,
 
-    setIsFinish: ({ value }) => {
-        set({ isFinish: value })
+    setIsFinish: () => {
+        set({ isFinish: false })
     },
     setMyProjectPage: ({ projectPage }) => {
         set({ page: projectPage });
+    },
+    getProjectDetail: ({ data }) => {
+        set({ projectDetails: data })
     },
     getProjects: async ({ token, formData, projectPage }) => {
         set({ projectLoad: true })

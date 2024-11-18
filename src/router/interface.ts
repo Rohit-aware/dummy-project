@@ -1,3 +1,5 @@
+import { ProjectDataType } from "../store/my-project-store/interface";
+
 type MainStackProps = {
     Login: undefined;
     Register: undefined;
@@ -21,6 +23,10 @@ type MainStackProps = {
     ViewLeads: {
         client_id: string
     };
+    ViewTeam: {
+        details: Partial<ProjectDataType>
+    }
+    ProjectDetails: undefined;
 };
 
 export type { MainStackProps };

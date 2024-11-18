@@ -14,3 +14,4 @@ export { default as ViewLead } from './lead-details/screens/view-leads/view-lead
 export { default as ShareLead } from './lead-details/screens/share-lead/share-lead-screen';
 export { default as ForgotPassword } from './auth-screens/forgot-password/forgot-password-screen';
 export { default as ForgotPassSuccess } from './auth-screens/forgot-success/forgot-pass-success-screen';
+export { default as ProjectDetails } from './my-projects/screens/project-details/project-details-screen';

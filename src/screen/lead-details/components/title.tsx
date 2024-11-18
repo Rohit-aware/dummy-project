@@ -5,23 +5,16 @@ import { MainStackProps } from '../../../router/interface';
 import { Call, Dots, Notes, Share } from '../../../../assets/icons';
 import { NavigationProp, useNavigation } from '@react-navigation/native';
 import { View, Text, Linking, Platform, StyleSheet, TouchableOpacity } from 'react-native';
+import { helpers } from '../../../utility';
 
 export default () => {
   const navigation = useNavigation<NavigationProp<MainStackProps, 'LeadDetails'>>();
+  const { openCall } = helpers;
   const { leadDetails } = useMyLeadStore();
   const { contact_person, phone, country_id, share_allowed, client_id, company_name } = leadDetails;
   const diplay_number = `${contact_person}  |  +${country_id} ${phone}`;
-
-  const openCall = () => {
-    const phone = `+${leadDetails.country_id}${leadDetails.phone}`;
-    let phoneNumber;
-    Platform.OS == 'ios' ? phoneNumber = `telprompt:${phone}` : phoneNumber = `tel:${phone}`;
-    Linking.openURL(phoneNumber)
-      .then(supported => {
-        supported ? Linking.openURL(phoneNumber) : console.log('Phone number is not available');
-      })
-      .catch(err => console.log('Error inside openCall function : ', err));
-  };
+  const phoneNo = `+${leadDetails.country_id}${leadDetails.phone}`;
+  const handleCall = () => openCall({ phone: phoneNo })
 
   const onShareButton = () => navigation.navigate('ShareLead', { client_id });
   const onNoteButton = () => navigation.navigate('Notes');
@@ -41,7 +34,7 @@ export default () => {
       <Text style={styles.companyname}>{company_name}</Text>
       <Text style={styles.phoneno}>{diplay_number}</Text>
       <View style={styles.container}>
-        <ButtonTile icon={<Call width={25} height={25} />} onPress={openCall} show={true} />
+        <ButtonTile icon={<Call width={25} height={25} />} onPress={handleCall} show={true} />
         <ButtonTile icon={<Share width={25} height={25} />} onPress={onShareButton} show={share_allowed == 'Y'} />
         <ButtonTile icon={<Notes width={25} height={25} />} onPress={onNoteButton} show={true} />
       </View>

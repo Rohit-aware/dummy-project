@@ -6,10 +6,10 @@ import { useAuthStore, useMyLeadStore, useReloadStore } from '../../store';
 const useMyLeadHook = () => {
     const [search, setSearch] = React.useState('');
     const [refresh, setRefresh] = React.useState(false);
-    const { reload} = useReloadStore();
+    const { reload } = useReloadStore();
 
     const { user_detail: userData, deviceId: uuid, token } = useAuthStore();
-    const { getLeads, isFinish, leadsData, page, loading, setMyLeadPage } = useMyLeadStore();
+    const { getLeads, isFinish, leadsData, page, loading, setMyLeadPage, setIsFinish } = useMyLeadStore();
 
     const fetchLeads = async ({ page = 0 }: { page?: number }) => {
         try {
@@ -27,6 +27,7 @@ const useMyLeadHook = () => {
             formData.append('limit', 2);
             formData.append('search_key', search);
             getLeads({ token, formData, leadPage: page })
+            setRefresh(false);
         } catch (error: any) {
             console.log("error isnide fetchLead : ", error);
         }
@@ -47,6 +48,7 @@ const useMyLeadHook = () => {
 
     const onRefresh = () => {
         setRefresh(true);
+        setIsFinish({ value: false })
         setMyLeadPage({ leadPage: 0 });
         fetchLeads({});
     };

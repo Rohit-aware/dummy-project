@@ -24,5 +24,7 @@ const endpoints = {
    shareClient:'shareClient',
    getShareClientTeam:'getShareClientTeam',
    getLeadUsers:'getLeadUsers',
+   getActivities:'getActivities',
+   getUpcomingActivities:'getUpcomingActivities',
 };
 export { endpoints }

@@ -6,12 +6,12 @@ import { useAuthStore, useCommonStore, useMyProjectStore, useReloadStore } from 
 const useMyProjectHook = () => {
     const navigation = useNavigation<any>();
 
-    const { projects: data, getProjects, page, isFinish, projectLoad, setMyProjectPage } = useMyProjectStore();
+    const { projects: data, getProjects, page, isFinish, projectLoad, setMyProjectPage, setIsFinish } = useMyProjectStore();
     const { user_detail: userData, deviceId: uuid, token } = useAuthStore();
     const { projectStatus } = useCommonStore();
     const { reload } = useReloadStore();
 
-    const project_status: any ='';
+    const project_status: any = '';
     const client_id = '';
     const isProjectFilter: any = '';
 
@@ -32,6 +32,7 @@ const useMyProjectHook = () => {
 
     const onRefresh = () => {
         setRefresh(true);
+        setIsFinish()
         setMyProjectPage({ projectPage: 0 });
         fetchProjects({ page: 0 });
     };
@@ -67,6 +68,7 @@ const useMyProjectHook = () => {
                 }
             }
             getProjects({ token, formData, projectPage: page });
+            setRefresh(false);
         } catch (error) {
             console.log("Error isnide fetchProject : ", error)
         }

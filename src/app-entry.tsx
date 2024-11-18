@@ -1,12 +1,14 @@
 import React from 'react';
-import { StyleSheet } from 'react-native';
 import MainStack from './router/main-stack';
+import { StyleSheet, LogBox } from 'react-native';
+import { useAuthStore, useStartupStore } from './store';
 import { GestureHandlerRootView } from 'react-native-gesture-handler';
 import { useNotificationPermission } from './hooks/notification-permission';
-import { useAuthStore, useStartupStore } from './store';
+
+LogBox.ignoreAllLogs()
 
 const AppEntry = () => {
-    
+
     const { token } = useAuthStore();
     const { fetchStartup } = useStartupStore();
     const { requestPermission } = useNotificationPermission();

@@ -1,3 +1,4 @@
+import { Linking, Platform } from "react-native";
 
 
 
@@ -22,6 +23,15 @@ const helpers = {
                 ? true
                 : false;
         return result;
+    },
+    openCall: ({ phone }: { phone: string }) => {
+        let phoneNumber;
+        Platform.OS == 'ios' ? phoneNumber = `telprompt:${phone}` : phoneNumber = `tel:${phone}`;
+        Linking.openURL(phoneNumber)
+            .then(supported => {
+                supported ? Linking.openURL(phoneNumber) : console.log('Phone number is not available');
+            })
+            .catch(err => console.log('Error inside openCall function : ', err));
     },
     linkedInprefix: "https://www.linkedin.com/in/",
     websiteprefix: "https://",

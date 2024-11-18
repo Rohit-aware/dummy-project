@@ -4,6 +4,8 @@ import { ProjectsListProps } from '../interface';
 import { StyleSheet, FlatList, } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 import { BottomLoader, ListEmptyComponent, Loader } from '../../../components';
+import { ProjectDataType } from '../../../store/my-project-store/interface';
+import { useMyProjectStore, useProjectDetailsStore } from '../../../store';
 
 const EMPTY_IMAGE = require('../../../../assets/images/no_project_record.png');
 
@@ -18,8 +20,11 @@ const ProjectsList = ({
   onEndReached,
 }: ProjectsListProps) => {
   const navigation = useNavigation<any>();
-
-  const onProjectDetail = (data: any) => {
+  const { getProjectDetail } = useMyProjectStore();
+  const { resetIsFinishPage } = useProjectDetailsStore();
+  const onProjectDetail = (data: Partial<ProjectDataType>) => {
+    resetIsFinishPage();
+    getProjectDetail({ data })
     navigation.navigate('ProjectDetails');
   };
 
