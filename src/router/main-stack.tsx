@@ -6,7 +6,7 @@ import { getHashString } from '../utility/hashing';
 import { NavigationContainer } from '@react-navigation/native';
 import { useAuthStore, useCommonStore, useProfileStore } from '../store';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
-import { AddActivities, AddLead, AddNotes, AddProject, EditLead, ForgotPassSuccess, ForgotPassword, LeadDetail, Login, Notes, ProjectDetails, Register, ShareLead, ViewLead, ViewTeam } from '../screen';
+import { AddActivities, AddLead, AddNotes, AddProject, EditLead, ForgotPassSuccess, ForgotPassword, LeadDetail, Login, Notes, ProjectDetails, Register, ShareLead, ShareProject, ViewLead, ViewTeam } from '../screen';
 
 const Stack = createNativeStackNavigator<MainStackProps>();
 
@@ -20,6 +20,7 @@ const MainStack = () => {
         const deviceId = await DeviceInfo.getUniqueId();
         updateDeviceId({ id: deviceId });
     };
+    
     const getProfileDetails = async () => {
         const fnName = 'getPersonalDetails';
         const hash_key = getHashString(userData.mkey!, userData.msalt!, uuid, fnName);
@@ -28,20 +29,20 @@ const MainStack = () => {
     };
 
     const getRequirements = () => {
-        if (token) {
-            let fnName = 'getRequirementType';
-            let hash_key = getHashString(userData.mkey!, userData.msalt!, uuid, fnName);
-            const formData = { uuid, hash_key };
-            getRequirementType({ token, formData });
-        }
+        let fnName = 'getRequirementType';
+        let hash_key = getHashString(userData.mkey!, userData.msalt!, uuid, fnName);
+        const formData = { uuid, hash_key };
+        getRequirementType({ token, formData });
     };
 
     React.useEffect(() => {
         getUuid();
         getStates();
-        getRequirements();
-        getProfileDetails();
-    }, []);
+        if (token) {
+            getRequirements();
+            getProfileDetails();
+        };
+    }, [token]);
 
     return (
         <NavigationContainer >
@@ -67,6 +68,7 @@ const MainStack = () => {
                         <Stack.Screen name="ViewTeam" component={ViewTeam} />
                         <Stack.Screen name="ProjectDetails" component={ProjectDetails} />
                         <Stack.Screen name="AddActivities" component={AddActivities} />
+                        <Stack.Screen name="ShareProject" component={ShareProject} />
                     </Stack.Group>
                 }
             </Stack.Navigator>

@@ -27,11 +27,13 @@ const ProjectDetails = () => {
         activityPage,
         onEndActivity,
         upcActivities,
+        project_detail,
         upcActivityLoad,
         upcActivityPage,
         onEndUpcActivity,
     } = useProjectDetailsHook();
     let len = activities?.length
+
 
     const EmptyComp = React.useCallback(({ text }: { text: string }) => (
         <View style={styles.emptycontainer}>
@@ -41,7 +43,7 @@ const ProjectDetails = () => {
     ), []);
 
     const _renderProjectDetails_ = () => {
-        return (
+        return (project_detail?.activity || project_detail?.upcoming_activity) ? (
             <>
                 {active == 'Activities' ?
                     (activityLoad && activityPage === 0) ?
@@ -78,6 +80,8 @@ const ProjectDetails = () => {
                 }
             </>
         )
+            :
+            <></>
     };
 
     return (
@@ -114,11 +118,11 @@ export default ProjectDetails;
 const styles = StyleSheet.create({
     emptycontainer: {
         alignItems: 'center',
-        marginVertical: 30,
+        marginVertical: moderateScale(30),
     },
     emptytext: {
         ...fontStyles.r3,
-        marginTop: 20,
+        marginTop: moderateScale(20),
         textTransform: 'capitalize',
     },
 });

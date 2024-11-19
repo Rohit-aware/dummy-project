@@ -5,10 +5,8 @@ import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 
 const Tabs = createBottomTabNavigator();
 const Empty: React.FC = () => null;
-interface BottomTabProps { }
 
-const BottomTab: React.FC<BottomTabProps> = () => {
-
+const BottomTab = () => {
 
     const renderTab = (name: string, component: React.ComponentType, condition: boolean) => {
         return condition ? (

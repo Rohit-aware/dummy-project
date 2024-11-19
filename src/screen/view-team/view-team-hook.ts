@@ -1,7 +1,7 @@
 import React from "react";
-import { useAuthStore, useViewTeamStore } from "../../store";
 import { useRoute } from "@react-navigation/native";
 import { getHashString } from "../../utility/hashing";
+import { useAuthStore, useViewTeamStore } from "../../store";
 
 
 

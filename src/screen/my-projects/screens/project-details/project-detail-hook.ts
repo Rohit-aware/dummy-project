@@ -130,6 +130,7 @@ const useProjectDetailsHook = () => {
         activityPage,
         onEndActivity,
         upcActivities,
+        project_detail,
         upcActivityLoad,
         upcActivityPage,
         onEndUpcActivity,

@@ -28,6 +28,7 @@ type MainStackProps = {
     }
     ProjectDetails: undefined;
     AddActivities: undefined;
+    ShareProject: undefined;
 };
 
 export type { MainStackProps };

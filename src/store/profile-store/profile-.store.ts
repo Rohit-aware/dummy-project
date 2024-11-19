@@ -38,7 +38,6 @@ const useProfileStore = create<UseProfileStoreProps>()((set) => ({
         try {
             set({ loading: true });
             const resp = await networkRequest({ token }).post(endpoints.getPersonalDetails, formData);
-            console.log(JSON.stringify(resp,undefined,4), ' Logged ')
             if (resp.data.success === '1') {
                 set({ personalDetails: { ...resp.data.data[0] }, });
                 set((state) => {
