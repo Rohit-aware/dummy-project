@@ -1,7 +1,7 @@
 import React from 'react';
 import Modal from 'react-native-modal';
 import { useNavigation } from '@react-navigation/native';
-import { useStartupStore } from '../../../../../store';
+import { useProjectDetailsStore, useStartupStore } from '../../../../../store';
 import { StyleSheet, View, Text, TouchableWithoutFeedback } from 'react-native';
 import { Dots } from '../../../../../../assets/icons';
 import { Colors } from '../../../../../constants';
@@ -11,6 +11,7 @@ import { fontStyles } from '../../../../../styles';
 
 export default ({ show, details, close, hideleadbutton, hideProjectbutton }: any) => {
   const navigation = useNavigation<any>();
+  const { updateProjectDetail } = useProjectDetailsStore();
   const { data: { screens: { project_detail } = {}, edit_allowed, share_allowed } = {} } = useStartupStore();
   const { share_project_action, add_activities, add_upcoming_activities, update_project_status, create_reminder } = project_detail || {};
 
@@ -44,7 +45,7 @@ export default ({ show, details, close, hideleadbutton, hideProjectbutton }: any
 
   const onItemClick = (screen: string) => {
     if (screen) {
-      // setProjectDetail({});
+      updateProjectDetail({ data: details });
       navigation.navigate(screen);
     }
     close()

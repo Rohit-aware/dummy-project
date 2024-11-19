@@ -27,6 +27,7 @@ type MainStackProps = {
         details: Partial<ProjectDataType>
     }
     ProjectDetails: undefined;
+    AddActivities: undefined;
 };
 
 export type { MainStackProps };

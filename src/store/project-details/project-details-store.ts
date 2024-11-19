@@ -1,6 +1,7 @@
 import { create } from "zustand";
 import { endpoints } from "../../services/endpoints";
 import { networkRequest } from "../../services/network-request";
+import { ProjectDataType } from "../my-project-store/interface";
 
 type Payload = { token: string, formData: {}, page: number };
 
@@ -11,13 +12,15 @@ interface UseProjectDetailsStore {
     activityFinsih: boolean;
     upcActivities: Array<any>;
     upcActivityLoad: boolean;
-    upcActivityFinsih: boolean;
     upcActivityPage: number;
+    upcActivityFinsih: boolean;
     resetIsFinishPage: () => void;
+    projectDetail: Partial<ProjectDataType>
     setActivityPage: ({ page }: { page: number }) => void;
     setUpActivityPage: ({ page }: { page: number }) => void;
     getActivities: ({ token, formData, page }: Payload) => Promise<any>;
     getUpcomingActivities: ({ token, formData, page }: Payload) => Promise<any>;
+    updateProjectDetail: ({ data }: { data: Partial<ProjectDataType> }) => void;
 }
 
 const useProjectDetailsStore = create<UseProjectDetailsStore>()((set) => ({
@@ -30,6 +33,10 @@ const useProjectDetailsStore = create<UseProjectDetailsStore>()((set) => ({
     upcActivityLoad: false,
     upcActivityFinsih: false,
     upcActivityPage: 0,
+    projectDetail: {},
+    updateProjectDetail: ({ data }) => {
+        set({ projectDetail: data })
+    },
     resetIsFinishPage: () => {
         set({
             activityPage: 0,
