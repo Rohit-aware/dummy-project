@@ -18,3 +18,4 @@ export { default as AddActivities } from './action-screens/add-activities/add-ac
 export { default as ForgotPassword } from './auth-screens/forgot-password/forgot-password-screen';
 export { default as ForgotPassSuccess } from './auth-screens/forgot-success/forgot-pass-success-screen';
 export { default as ProjectDetails } from './my-projects/screens/project-details/project-details-screen';
+export { default as AddUpcomingActivities } from './action-screens/add-upcoming-activities/add-upc-activities.screen';

@@ -15,7 +15,7 @@ interface UseProjectDetailsStore {
     upcActivityPage: number;
     upcActivityFinsih: boolean;
     resetIsFinishPage: () => void;
-    projectDetail: Partial<ProjectDataType>
+    projectDetail: Partial<ProjectDataType>;
     setActivityPage: ({ page }: { page: number }) => void;
     setUpActivityPage: ({ page }: { page: number }) => void;
     getActivities: ({ token, formData, page }: Payload) => Promise<any>;

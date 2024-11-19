@@ -30,5 +30,6 @@ const endpoints = {
    addActivity:'addActivity',
    shareLead:'shareLead',
    getMyTeam:'getMyTeam',
+   addUpcomingActivity:'addUpcomingActivity'
 };
 export { endpoints }
