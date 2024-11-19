@@ -7,8 +7,16 @@ import { BottomLoader, ListEmptyComponent, Loader } from '../../../../components
 const EMPTY_IMG = require('../../../../../assets/images/no_leads_record.png');
 const EMPTY_MSG = 'No Team Member Found';
 
+type DataType = {
+  user_id: string;
+  name: string;
+  phone: string;
+  designation: string;
+  email: string;
+}
+
 interface EmployeesListProps {
-  data: Array<any>;
+  data: Array<DataType>;
   page: number;
   loading: boolean;
   refresh: boolean;
