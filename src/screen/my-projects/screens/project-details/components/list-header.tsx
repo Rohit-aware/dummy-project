@@ -85,10 +85,9 @@ const styles = StyleSheet.create({
     margin: moderateScale(15),
   },
   headercontainer: {
-    paddingBottom: moderateScale(15),
     borderBottomWidth: 4,
+    padding: moderateScale(16),
     borderBottomColor: Colors.lightblue,
-    marginTop: moderateScale(25),
   },
   title: {
     textAlign: 'center',
