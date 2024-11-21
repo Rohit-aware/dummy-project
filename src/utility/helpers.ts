@@ -1,11 +1,12 @@
 import { Linking, Platform } from 'react-native';
 import notifee, { AndroidImportance, TriggerType } from '@notifee/react-native';
+import { MainStackNavigatorRef } from '../hooks/mainstack-navigation-ref';
 
 interface NotificationInputs {
-    activity_type: "Online Meeting" | "Client Meeting" | "";
-    agenda: string;
+    title: string;
+    body: string;
     project_id?: string | number
-    client_id?: string | number 
+    client_id?: string | number
 }
 interface Helpers {
     httpPrefix: string;
@@ -16,7 +17,8 @@ interface Helpers {
     checkForEmpty: (value: string) => boolean;
     openCall: ({ phone }: { phone: string }) => void;
     createNotificationChannel: () => Promise<string | ''>;
-    scheduleNotification: ({ inputs, now }: { inputs: NotificationInputs, now: number }) => Promise<void>;
+    navigateThroughFCM: (name?: string | any, params?: object | undefined | any) => void;
+    scheduleNotification: ({ inputs, scheduleTime }: { inputs: NotificationInputs, scheduleTime: number }) => Promise<void>;
 }
 
 const helpers: Helpers = {
@@ -36,13 +38,16 @@ const helpers: Helpers = {
         return existingChannel?.id;
     },
 
-    scheduleNotification: async ({ inputs, now }): Promise<void> => {
-        const { activity_type, project_id, client_id, agenda } = inputs;
+    navigateThroughFCM: (name, params) => {
+        MainStackNavigatorRef.current?.navigate(name, params);
+    },
+    scheduleNotification: async ({ inputs, scheduleTime }): Promise<void> => {
+        const { title, project_id, client_id, body } = inputs;
         const channelId = await helpers.createNotificationChannel();
         await notifee.createTriggerNotification(
             {
-                title: activity_type,
-                body: agenda,
+                title,
+                body,
                 android: {
                     channelId: channelId,
                     smallIcon: 'ic_launcher',
@@ -60,7 +65,7 @@ const helpers: Helpers = {
             },
             {
                 type: TriggerType.TIMESTAMP,
-                timestamp: Date.now() + now * 100,
+                timestamp: Date.now() + scheduleTime * 100,
             }
         );
     },

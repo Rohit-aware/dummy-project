@@ -5,7 +5,7 @@ import { fontStyles } from '../../../styles';
 import FastImage from 'react-native-fast-image';
 import { useNavigation } from '@react-navigation/native';
 import moderateScale, { SCREEN_WIDTH } from '../../../constants/dimenssion';
-import { useAuthStore, useHomeStore, useProfileStore } from '../../../store';
+import { useAuthStore, useHomeStore, useProfileStore, useStartupStore } from '../../../store';
 import { View, Text, StyleSheet, ImageBackground, Pressable, Alert } from 'react-native';
 
 
@@ -16,6 +16,7 @@ const Header = () => {
   const { navigate } = useNavigation<any>();
   const { data, processLogout } = useHomeStore();
   const { token, clearLoginData } = useAuthStore();
+  const { resetStartup } = useStartupStore();
   const { personalDetails: userData } = useProfileStore();
   const { first_name, phone, phone_code, designation } = userData;
   const display_detail =
@@ -32,6 +33,7 @@ const Header = () => {
       const res = await processLogout({ token });
       if (res.success === "1") {
         clearLoginData();
+        resetStartup();
       } else {
         console.log("response failed : ", res)
       }

@@ -3,12 +3,11 @@ import BottomTab from './BottomTab';
 import { MainStackProps } from './interface';
 import DeviceInfo from 'react-native-device-info';
 import { getHashString } from '../utility/hashing';
-import { notificationHandler } from '../hooks/messaging-hook';
 import { NavigationContainer } from '@react-navigation/native';
 import { useAuthStore, useCommonStore, useProfileStore } from '../store';
-import { createNativeStackNavigator } from '@react-navigation/native-stack';
-import { AddActivities, AddLead, AddNotes, AddProject, AddUpcomingActivities, EditLead, ForgotPassSuccess, ForgotPassword, LeadDetail, Login, Notes, ProjectDetails, Register, ShareLead, ShareProject, ViewLead, ViewTeam } from '../screen';
 import { MainStackNavigatorRef } from '../hooks/mainstack-navigation-ref';
+import { createNativeStackNavigator } from '@react-navigation/native-stack';
+import { AddActivities, AddLead, AddNotes, AddProject, AddUpcomingActivities, CreateReminder, EditLead, ForgotPassSuccess, ForgotPassword, LeadDetail, Login, Notes, ProjectDetails, Register, ShareLead, ShareProject, UpdateProjectStatus, ViewLead, ViewTeam } from '../screen';
 
 const Stack = createNativeStackNavigator<MainStackProps>();
 
@@ -44,7 +43,6 @@ const MainStack = () => {
             getRequirements();
             getProfileDetails();
         };
-        notificationHandler();
     }, [token]);
 
     return (
@@ -72,6 +70,8 @@ const MainStack = () => {
                         <Stack.Screen name="ProjectDetails" component={ProjectDetails} />
                         <Stack.Screen name="AddActivities" component={AddActivities} />
                         <Stack.Screen name="ShareProject" component={ShareProject} />
+                        <Stack.Screen name="CreateReminder" component={CreateReminder} />
+                        <Stack.Screen name="UpdateProjectStatus" component={UpdateProjectStatus} />
                         <Stack.Screen name="AddUpcomingActivities" component={AddUpcomingActivities} />
                     </Stack.Group>
                 }

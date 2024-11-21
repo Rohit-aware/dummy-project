@@ -14,6 +14,8 @@ interface UseActionStore {
     shareLeads: ({ token, formData }: { token: string; formData: {} }) => Promise<any>;
     addActivity: ({ token, formData }: { token: string; formData: {} }) => Promise<any>;
     addUpcomingActivity: ({ token, formData }: { token: string; formData: {} }) => Promise<any>;
+    updateProjectStatus: ({ token, formData }: { token: string; formData: {} }) => Promise<any>;
+    createReminder: ({ token, formData }: { token: string; formData: {} }) => Promise<any>;
     getTeams: ({ token, formData, page }: { token: string; formData: {}, page: number }) => Promise<any>;
 }
 
@@ -63,6 +65,24 @@ const useActionStore = create<UseActionStore>((set) => ({
         } catch (error: any) {
             console.error("Error inside addActivity of action store:", error);
             set({ upcomActivityLoad: false });
+            return Promise.reject(error);
+        }
+    },
+    createReminder: async ({ token, formData }) => {
+        try {
+            const response = await networkRequest({ token }).post(endpoints.createReminder, formData);
+            return response.data;
+        } catch (error: any) {
+            console.error("Error inside addActivity of action store:", error);
+            return Promise.reject(error);
+        }
+    },
+    updateProjectStatus: async ({ token, formData }) => {
+        try {
+            const response = await networkRequest({ token }).post(endpoints.updateProjectStatus, formData);
+            return response.data;
+        } catch (error: any) {
+            console.error("Error inside addActivity of action store:", error);
             return Promise.reject(error);
         }
     },

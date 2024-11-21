@@ -30,6 +30,8 @@ const endpoints = {
    addActivity:'addActivity',
    shareLead:'shareLead',
    getMyTeam:'getMyTeam',
-   addUpcomingActivity:'addUpcomingActivity'
+   addUpcomingActivity:'addUpcomingActivity',
+   updateProjectStatus:'updateProjectStatus',
+   createReminder:'createReminder',
 };
 export { endpoints }

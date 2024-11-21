@@ -114,15 +114,15 @@ const useAddUpcomActivityHook = () => {
                 showToast(response.message);
                 if (response.success == 1) {
                     if (is_set_reminder == 'yes') {
-                        const now = moment(`${inputs.activity_date} ${inputs.activity_time}`).diff(
+                        const scheduleTime = moment(`${inputs.activity_date} ${inputs.activity_time}`).diff(
                             moment(new Date()),
                             'seconds',
                         );
                         await scheduleNotification({
-                            now,
+                            scheduleTime,
                             inputs: {
-                                activity_type: inputs.activity_type,
-                                agenda: inputs.agenda,
+                                title: inputs.activity_type,
+                                body: inputs.agenda,
                                 project_id: project_id,
                                 client_id: ''
                             }

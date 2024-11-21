@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useCallback } from 'react';
 import { fontStyles } from '../../../../styles';
 import ListHeader from './components/list-header';
 import ActionsModal from './components/actions-modal';
@@ -42,7 +42,7 @@ const ProjectDetails = () => {
         </View>
     ), []);
 
-    const _renderProjectDetails_ = () => {
+    const _renderProjectDetails_ = useCallback(() => {
         return (project_detail?.activity || project_detail?.upcoming_activity) ? (
             <>
                 {active == 'Activities' ?
@@ -82,7 +82,18 @@ const ProjectDetails = () => {
         )
             :
             <></>
-    };
+    }, [
+        project_detail,
+        active,
+        activityLoad,
+        upcActivityLoad,
+        activityPage,
+        upcActivityPage,
+        activities,
+        upcActivities,
+        onEndActivity,
+        onEndUpcActivity,
+    ]);
 
     return (
         <View style={{ flex: 1, backgroundColor: Colors.white }}>
