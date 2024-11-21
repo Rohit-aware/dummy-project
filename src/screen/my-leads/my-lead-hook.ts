@@ -48,7 +48,7 @@ const useMyLeadHook = () => {
 
     const onRefresh = () => {
         setRefresh(true);
-        setIsFinish({ value: false })
+        setIsFinish()
         setMyLeadPage({ leadPage: 0 });
         fetchLeads({});
     };

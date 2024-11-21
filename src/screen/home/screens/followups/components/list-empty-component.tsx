@@ -7,7 +7,7 @@ export default () => {
   return (
     <View style={styles.container}>
       <NoUpcomingActivities width={110} height={110} />
-      <Text style={styles.text}>{' no activities found'}</Text>
+      <Text style={styles.text}>{'no Follow-ups found'}</Text>
     </View>
   );
 };

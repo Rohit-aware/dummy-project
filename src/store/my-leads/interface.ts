@@ -35,7 +35,7 @@ interface UseMyLeadStore {
     isFinish: boolean;
     loading: boolean;
     leadDetails: LeadDetsilType;
-    setIsFinish: ({ value }: { value: boolean }) => void;
+    setIsFinish: () => void;
     setMyLeadPage: ({ leadPage }: { leadPage: number }) => void;
     setLeadDetails: ({ value }: { value: LeadDetsilType }) => void;
     getSingleLeads: ({ formData, token }: { formData: {}, token: string }) => Promise<any>;

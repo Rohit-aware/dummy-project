@@ -30,7 +30,7 @@ const useUpdateLeadDetails = () => {
     };
 
     return {
-        updateLeadDetail,
+        updateLeadDetail
     }
 }
 

@@ -1,20 +1,29 @@
 import React from 'react';
 import ActvityCard from './actvity-card';
 import { useNavigation } from '@react-navigation/native';
-import ListEmptyComponent from './list-empty-component';
 import { useUpdateProjectDetail } from '../../../../../hooks';
-import { View, StyleSheet, FlatList, Linking } from 'react-native';
-import { BottomLoader, Loader, showToast } from '../../../../../components';
+import { StyleSheet, FlatList, Linking } from 'react-native';
 import { useProjectDetailsStore } from '../../../../../store';
+import { BottomLoader, Loader, showToast } from '../../../../../components';
+import ListEmptyComponent from '../../followups/components/list-empty-component';
+
+interface ActivityListProps {
+  data: Array<any>
+  page: number;
+  refresh: boolean;
+  loading: boolean;
+  onRefresh: () => void;
+  onEndReached: () => void;
+}
 
 export default ({
   data,
   page,
   refresh,
-  onEndReached,
-  onRefresh,
   loading,
-}: any) => {
+  onRefresh,
+  onEndReached,
+}: ActivityListProps) => {
   const { navigate } = useNavigation<any>();
   const [loader, setLoader] = React.useState(false);
   const { resetIsFinishPage } = useProjectDetailsStore();

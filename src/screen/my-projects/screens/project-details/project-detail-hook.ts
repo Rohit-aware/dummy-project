@@ -14,8 +14,6 @@ const useProjectDetailsHook = () => {
         navigate('ViewTeam', { details: actionData });
     };
 
-    console.log(JSON.stringify(actionData,undefined,4), 'actionData ')
-
     const {
         activities,
         activityLoad,

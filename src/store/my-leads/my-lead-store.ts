@@ -41,8 +41,8 @@ const useMyLeadStore = create<UseMyLeadStore>()((set, get) => ({
     setLeadDetails: ({ value }) => {
         set({ leadDetails: { ...value } })
     },
-    setIsFinish: ({ value }) => {
-        set({ isFinish: value })
+    setIsFinish: () => {
+        set({ isFinish: false })
     },
     setMyLeadPage: ({ leadPage }) => {
         set({ page: leadPage });
@@ -76,7 +76,7 @@ const useMyLeadStore = create<UseMyLeadStore>()((set, get) => ({
             set({ loading: true })
             const response = await networkRequest({ token }).post(endpoints.getLeads, formData);
             if (response.data.success == 1) {
-                set({ leadDetails:{ ...response.data.data[0]} });
+                set({ leadDetails: { ...response.data.data[0] } });
             }
             set({ loading: false })
         } catch (error: any) {
