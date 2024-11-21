@@ -49,10 +49,11 @@ const helpers: Helpers = {
                 title,
                 body,
                 android: {
+                    color: '#F5F5F5',
+                    sound: 'default',
                     channelId: channelId,
                     smallIcon: 'ic_launcher',
                     largeIcon: 'ic_launcher',
-                    sound: 'default',
                     importance: AndroidImportance.HIGH,
                 },
                 ios: {

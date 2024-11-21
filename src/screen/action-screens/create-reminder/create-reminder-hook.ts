@@ -18,8 +18,8 @@ const useCreateReminderHook = () => {
     const [inputs, setInputs] = React.useState({
         title: '',
         description: '',
-        reminder_date: '',//moment().add(1, 'day').format('YYYY-MM-DD')
-        reminder_time: '',//moment().format('HH:mm:ss')
+        reminder_date: '',
+        reminder_time: '',
     });
     const onChangeText = (name: string, value: string) => setInputs({ ...inputs, [name]: value });
 
@@ -72,6 +72,7 @@ const useCreateReminderHook = () => {
                 console.log(e, "error at onCreate")
             }
         }
+        setLoading(false);
     };
 
 
