@@ -77,7 +77,7 @@ const useProjectDetailsStore = create<UseProjectDetailsStore>()((set) => ({
             const response = await networkRequest({ token }).post(endpoints.getUpcomingActivities, formData);
             if (response.data.success === '1') {
                 if (page === 0) {
-                    set({ activities: response.data.data });
+                    set({ upcActivities: response.data.data });
                 } else {
                     set((state) => ({ upcActivities: [...state.upcActivities, ...response.data.data] }));
                 }
