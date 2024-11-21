@@ -1,6 +1,7 @@
 import { getHashString } from "../../utility/hashing";
-import { useAuthStore, useCommonStore, useHomeStore } from "../../store";
 import { DashboardData } from "../../store/home/interface";
+import { useAuthStore, useCommonStore, useHomeStore } from "../../store";
+import { useNavigation } from "@react-navigation/native";
 interface UseHomeReturnProps {
     data: DashboardData;
     loading: boolean;
@@ -11,14 +12,13 @@ interface UseHomeReturnProps {
 }
 
 const useHome = (): UseHomeReturnProps => {
+    const { navigate } = useNavigation<any>();
+    const { getOutsiders, getMasterData } = useCommonStore();
     const { getDashboardData, data, loading } = useHomeStore();
     const { user_detail, deviceId: uuid, token } = useAuthStore();
-    const { getStates, getOutsiders, getMasterData } = useCommonStore();
     const { mkey, msalt } = user_detail;
 
-    const onNavigator = (name: string) => {
-
-    };
+    const onNavigator = (name: string) => navigate(name);
 
     const fetchOutsiders = async () => {
         if (token) {

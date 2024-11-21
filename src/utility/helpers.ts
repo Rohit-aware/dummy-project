@@ -14,6 +14,7 @@ interface Helpers {
     linkedInprefix: string;
     isEmpty: (value: string) => string;
     emailCheck: (value: string) => boolean;
+    getDateString: (value: string) => string;
     checkForEmpty: (value: string) => boolean;
     openCall: ({ phone }: { phone: string }) => void;
     createNotificationChannel: () => Promise<string | ''>;
@@ -22,6 +23,10 @@ interface Helpers {
 }
 
 const helpers: Helpers = {
+    getDateString: (dateString: String) => {
+        let date = dateString.split(" ")
+        return `${date[2]}-${date[1]}-${date[3]}`
+    },
     createNotificationChannel: async (): Promise<string | 'clms'> => {
         const existingChannel = await notifee.getChannel('clms');
         if (!existingChannel) {

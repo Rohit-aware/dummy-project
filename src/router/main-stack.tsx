@@ -7,7 +7,7 @@ import { NavigationContainer } from '@react-navigation/native';
 import { useAuthStore, useCommonStore, useProfileStore } from '../store';
 import { MainStackNavigatorRef } from '../hooks/mainstack-navigation-ref';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
-import { AddActivities, AddLead, AddNotes, AddProject, AddUpcomingActivities, CreateReminder, EditLead, ForgotPassSuccess, ForgotPassword, LeadDetail, Login, Notes, ProjectDetails, Register, ShareLead, ShareProject, UpdateProjectStatus, ViewLead, ViewTeam } from '../screen';
+import { Activities, AddActivities, AddLead, AddNotes, AddProject, AddUpcomingActivities, CreateReminder, EditLead, FollowUpToday, ForgotPassSuccess, ForgotPassword, LeadDetail, Login, Notes, ProjectDetails, Register, Reminders, ShareLead, ShareProject, UpdateProjectStatus, ViewLead, ViewTeam } from '../screen';
 
 const Stack = createNativeStackNavigator<MainStackProps>();
 
@@ -58,19 +58,22 @@ const MainStack = () => {
                     :
                     <Stack.Group>
                         <Stack.Screen name="BottomTab" component={BottomTab} />
-                        <Stack.Screen name="AddLead" component={AddLead} />
-                        <Stack.Screen name="LeadDetails" component={LeadDetail} />
-                        <Stack.Screen name="AddProject" component={AddProject} />
-                        <Stack.Screen name="EditLead" component={EditLead} />
                         <Stack.Screen name="Notes" component={Notes} />
+                        <Stack.Screen name="AddLead" component={AddLead} />
+                        <Stack.Screen name="EditLead" component={EditLead} />
                         <Stack.Screen name="AddNotes" component={AddNotes} />
-                        <Stack.Screen name="ShareLead" component={ShareLead} />
-                        <Stack.Screen name="ViewLeads" component={ViewLead} />
                         <Stack.Screen name="ViewTeam" component={ViewTeam} />
-                        <Stack.Screen name="ProjectDetails" component={ProjectDetails} />
-                        <Stack.Screen name="AddActivities" component={AddActivities} />
+                        <Stack.Screen name="ViewLeads" component={ViewLead} />
+                        <Stack.Screen name="ShareLead" component={ShareLead} />
+                        <Stack.Screen name="AddProject" component={AddProject} />
+                        <Stack.Screen name="LeadDetails" component={LeadDetail} />
                         <Stack.Screen name="ShareProject" component={ShareProject} />
+                        <Stack.Screen name="AddActivities" component={AddActivities} />
+                        <Stack.Screen name="Activities" component={Activities} />
+                        <Stack.Screen name="Reminders" component={Reminders} />
+                        <Stack.Screen name="FollowUpToday" component={FollowUpToday} />
                         <Stack.Screen name="CreateReminder" component={CreateReminder} />
+                        <Stack.Screen name="ProjectDetails" component={ProjectDetails} />
                         <Stack.Screen name="UpdateProjectStatus" component={UpdateProjectStatus} />
                         <Stack.Screen name="AddUpcomingActivities" component={AddUpcomingActivities} />
                     </Stack.Group>

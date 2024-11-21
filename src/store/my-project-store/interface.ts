@@ -39,10 +39,11 @@ interface UseMyProjectStoreProps {
   isFinish: boolean;
   projectLoad: boolean;
   projects: Array<ProjectDataType>;
-  projectDetails: Partial<ProjectDataType>;
   setIsFinish: () => void;
+  projectDetails: Partial<ProjectDataType>;
   setProjectDetail: ({ data }: { data: Partial<ProjectDataType> }) => void;
   setMyProjectPage: ({ projectPage }: { projectPage: number }) => void;
+  getSingleProject: ({ token, formData }: { token: string, formData: {} }) => Promise<any>;
   getProjects: ({ token, formData, projectPage }: { token: string, formData: {}, projectPage: number }) => Promise<any>;
 };
 export type { UseMyProjectStoreProps };

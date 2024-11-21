@@ -1,6 +1,4 @@
 import { ViewStyle } from "react-native/types";
-import { Colors } from "../constants";
-import moderateScale from "../constants/dimenssion";
 
 interface commonStyles {
   flexOne: ViewStyle;

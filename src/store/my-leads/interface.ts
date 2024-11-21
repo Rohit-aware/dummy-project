@@ -35,11 +35,11 @@ interface UseMyLeadStore {
     isFinish: boolean;
     loading: boolean;
     leadDetails: LeadDetsilType;
-    setLeadDetails: ({ value }: { value: LeadDetsilType }) => void;
     setIsFinish: ({ value }: { value: boolean }) => void;
     setMyLeadPage: ({ leadPage }: { leadPage: number }) => void;
+    setLeadDetails: ({ value }: { value: LeadDetsilType }) => void;
+    getSingleLeads: ({ formData, token }: { formData: {}, token: string }) => Promise<any>;
     getLeads: ({ formData, leadPage, token }: { formData: {}, leadPage: number, token: string }) => void;
-    getSingleLeads: ({ formData, token }: { formData: {}, token: string }) => void;
 };
 
 export type { UseMyLeadStore };

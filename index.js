@@ -16,10 +16,10 @@ messaging().setBackgroundMessageHandler(async (remoteMessage) => {
             helpers.navigateThroughFCM("ProjectDetails", remoteMessage.data.project_id);
         } else if (remoteMessage.data?.client_id) {
             helpers.navigateThroughFCM("LeadDetails", remoteMessage.data.client_id);
-        }
+        };
     } catch (error) {
         console.error("Error handling background notification:", error);
-    }
+    };
 });
 
 AppRegistry.registerComponent(appName, () => App);

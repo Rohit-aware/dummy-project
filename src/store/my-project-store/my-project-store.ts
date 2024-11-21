@@ -20,6 +20,11 @@ const useMyProjectStore = create<UseMyProjectStoreProps>()((set, get) => ({
     setProjectDetail: ({ data }) => {
         set({ projectDetails: data })
     },
+    getSingleProject: async ({ token, formData }) => {
+        set({ projectLoad: true })
+        const response = await networkRequest({ token }).post(endpoints.getProjects, formData);
+        return response.data;
+    },
     getProjects: async ({ token, formData, projectPage }) => {
         set({ projectLoad: true })
         const response = await networkRequest({ token }).post(endpoints.getProjects, formData);
