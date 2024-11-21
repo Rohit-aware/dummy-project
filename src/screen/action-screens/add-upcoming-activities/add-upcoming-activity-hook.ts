@@ -122,10 +122,12 @@ const useAddUpcomActivityHook = () => {
                             now,
                             inputs: {
                                 activity_type: inputs.activity_type,
-                                agenda: inputs.agenda
+                                agenda: inputs.agenda,
+                                project_id: project_id,
+                                client_id: ''
                             }
-                        })
-                    }
+                        });
+                    };
                     reloadPage();
                     resetIsFinishPage();
                     navigation.navigate('ProjectDetails');

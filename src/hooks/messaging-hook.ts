@@ -1,12 +1,12 @@
-import React, { useEffect } from "react";
+import React from "react";
 import { MainStackNavigatorRef } from "./mainstack-navigation-ref";
 import messaging, { FirebaseMessagingTypes } from "@react-native-firebase/messaging";
 
 const navigateThroughFCM = (name?: string | any, params?: object | undefined | any) => {
     MainStackNavigatorRef.current?.navigate(name, params);
 }
-const notificationHandler = (): void => {
-    useEffect(() => {
+const notificationHandler = () => {
+    React.useEffect(() => {
         // Handling notification when the app is launched from a terminated state
         messaging().getInitialNotification().then((remoteMessage: FirebaseMessagingTypes.RemoteMessage | null) => {
             try {

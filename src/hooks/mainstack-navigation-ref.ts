@@ -1,9 +1,7 @@
-import { NavigationContainerRef } from "@react-navigation/native";
-import { createRef } from "react";
+import React from "react";
 import { MainStackProps } from "../router/interface";
+import { NavigationContainerRef } from "@react-navigation/native";
 
 
-const MainStackNavigatorRef = createRef<NavigationContainerRef<MainStackProps>>()
-
-
+const MainStackNavigatorRef = React.createRef<NavigationContainerRef<MainStackProps>>()
 export { MainStackNavigatorRef }

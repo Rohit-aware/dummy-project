@@ -4,6 +4,8 @@ import notifee, { AndroidImportance, TriggerType } from '@notifee/react-native';
 interface NotificationInputs {
     activity_type: "Online Meeting" | "Client Meeting" | "";
     agenda: string;
+    project_id?: string | number
+    client_id?: string | number 
 }
 interface Helpers {
     httpPrefix: string;
@@ -17,7 +19,6 @@ interface Helpers {
     scheduleNotification: ({ inputs, now }: { inputs: NotificationInputs, now: number }) => Promise<void>;
 }
 
-// Implement the helpers object with the defined types
 const helpers: Helpers = {
     createNotificationChannel: async (): Promise<string | 'clms'> => {
         const existingChannel = await notifee.getChannel('clms');
@@ -27,8 +28,8 @@ const helpers: Helpers = {
                 name: 'CLMS Notifications',
                 sound: 'default',
                 vibration: true,
-                // vibrationPattern: [10, 20, 30, 40], // Vibration pattern for Android
-                importance: AndroidImportance.HIGH, // Importance level for Android
+                // vibrationPattern: [10, 20, 30, 40],
+                importance: AndroidImportance.HIGH,
             });
             return channelId;
         }
@@ -36,21 +37,25 @@ const helpers: Helpers = {
     },
 
     scheduleNotification: async ({ inputs, now }): Promise<void> => {
+        const { activity_type, project_id, client_id, agenda } = inputs;
         const channelId = await helpers.createNotificationChannel();
         await notifee.createTriggerNotification(
             {
-                title: inputs.activity_type,
-                body: inputs.agenda,
+                title: activity_type,
+                body: agenda,
                 android: {
-                    channelId: channelId, // Ensure that there's a valid channelId
-                    smallIcon: 'ic_launcher', // Ensure this icon is available in drawable
-                    largeIcon: 'ic_launcher', // Ensure this icon is available in drawable
-                    // vibrationPattern: [10, 20, 30, 40],
-                    sound: 'default', // Use default sound
+                    channelId: channelId,
+                    smallIcon: 'ic_launcher',
+                    largeIcon: 'ic_launcher',
+                    sound: 'default',
                     importance: AndroidImportance.HIGH,
                 },
                 ios: {
-                    sound: 'default', // Use default sound for iOS
+                    sound: 'default',
+                },
+                data: {
+                    project_id: project_id!,
+                    client_id: client_id!,
                 },
             },
             {
@@ -59,6 +64,7 @@ const helpers: Helpers = {
             }
         );
     },
+
 
     checkForEmpty: (value: string): boolean => {
         return value == null || value === 'undefined' || value === '' || value === 'null';
