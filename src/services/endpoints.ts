@@ -33,5 +33,6 @@ const endpoints = {
    addUpcomingActivity:'addUpcomingActivity',
    updateProjectStatus:'updateProjectStatus',
    createReminder:'createReminder',
+   getReminders:'getReminders'
 };
 export { endpoints }

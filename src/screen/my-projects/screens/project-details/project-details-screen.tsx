@@ -117,8 +117,8 @@ const ProjectDetails = () => {
                 show={show}
                 details={actionData}
                 close={close}
-                hideleadbutton={actionData.is_share_lead == 'Y' ? false : true}
-                hideProjectbutton={actionData.is_update_status == 'Y' ? false : true}
+                hideleadbutton={actionData?.is_share_lead == 'Y' ? false : true}
+                hideProjectbutton={actionData?.is_update_status == 'Y' ? false : true}
             />
         </View>
     )

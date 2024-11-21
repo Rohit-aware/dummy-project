@@ -1,30 +1,32 @@
 import { useAuthStore, useMyProjectStore } from "../store";
 import { getHashString } from '../utility/hashing';
 
-const updateProjectDetail = async (project_id: string | number) => {
+const useUpdateProjectDetail = () => {
+    const { token, user_detail, deviceId } = useAuthStore();
+    const { getSingleProject, setProjectDetail } = useMyProjectStore();
 
-    try {
-        const storeData = useAuthStore();
-        const { getSingleProject, setProjectDetail } = useMyProjectStore();
-        let userData;
-        let uuid;
-        if (storeData.user_detail.token !== undefined) {
-            userData = storeData.user_detail;
-            uuid = storeData.deviceId;
+    const updateProjectDetail = async (project_id: string | number) => {
+        try {
+            let userData = user_detail;
+            let uuid = deviceId;
 
-            let fnName = "getProjects";
-            let hash_key = getHashString(userData?.mkey!, userData?.msalt!, uuid!, fnName);
-            let formData;
-            formData = { uuid, hash_key, project_id: project_id, }
+            if (token !== undefined) {
+                let fnName = "getProjects";
+                let hash_key = getHashString(userData?.mkey!, userData?.msalt!, uuid!, fnName);
+                let formData = { uuid, hash_key, project_id };
 
-            const response = await getSingleProject({ token: storeData?.token, formData, });
-            if (response.success == 1) {
-                setProjectDetail(response.data[0]);
-                return true
+                const response = await getSingleProject({ token: token, formData });
+                if (response.success == 1) {
+                    setProjectDetail({ data: { ...response.data[0] } });
+                    return true;
+                }
             }
+        } catch (error) {
+            console.log('Error inside updateProject details Hook ', error);
+            return false;
         }
-    } catch (error) {
-        return false
-    }
-}
-export default updateProjectDetail;
+    };
+
+    return { updateProjectDetail };
+};
+export default useUpdateProjectDetail;

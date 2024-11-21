@@ -21,7 +21,7 @@ const useActivitiesHook = () => {
 
     const [refresh, setRefresh] = React.useState(false);
     const [showDate, setShowDate] = React.useState(getDateString(new Date().toDateString()));
-    const [selectedDate, setSelectedDate] = React.useState(moment(new Date()).format('YYYY-MM-DD'),);
+    const [selectedDate, setSelectedDate] = React.useState(moment(new Date()).format('YYYY-MM-DD'));
 
     const fetchActivities = async ({ page }: { page: number }) => {
         try {

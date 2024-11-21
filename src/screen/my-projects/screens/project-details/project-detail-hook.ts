@@ -12,7 +12,9 @@ const useProjectDetailsHook = () => {
     const onViewTeam = () => {
         resetViewTeamFinishPage()
         navigate('ViewTeam', { details: actionData });
-    }
+    };
+
+    console.log(JSON.stringify(actionData,undefined,4), 'actionData ')
 
     const {
         activities,

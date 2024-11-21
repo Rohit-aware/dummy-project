@@ -2,9 +2,10 @@ import React from 'react';
 import ActvityCard from './actvity-card';
 import { useNavigation } from '@react-navigation/native';
 import ListEmptyComponent from './list-empty-component';
-import { updateProjectDetail } from '../../../../../hooks';
+import { useUpdateProjectDetail } from '../../../../../hooks';
 import { View, StyleSheet, FlatList, Linking } from 'react-native';
 import { BottomLoader, Loader, showToast } from '../../../../../components';
+import { useProjectDetailsStore } from '../../../../../store';
 
 export default ({
   data,
@@ -16,7 +17,8 @@ export default ({
 }: any) => {
   const { navigate } = useNavigation<any>();
   const [loader, setLoader] = React.useState(false);
-
+  const { resetIsFinishPage } = useProjectDetailsStore();
+  const { updateProjectDetail } = useUpdateProjectDetail();
   const onJoinMeeting = async (url: string) => {
     try {
       Linking.openURL(url).catch(error => showToast(`Error: ${error.message}`));
@@ -29,6 +31,7 @@ export default ({
     setLoader(true);
     const result = await updateProjectDetail(project_id);
     if (result) {
+      resetIsFinishPage();
       navigate('ProjectDetails');
     }
     setLoader(false);
@@ -76,6 +79,8 @@ export default ({
           }}
         />
       )}
+
+      {loader && <BottomLoader />}
     </>
   );
 };

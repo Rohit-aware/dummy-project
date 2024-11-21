@@ -24,7 +24,7 @@ const ProjectsList = ({
   const { resetIsFinishPage } = useProjectDetailsStore();
   const onProjectDetail = (data: Partial<ProjectDataType>) => {
     resetIsFinishPage();
-    setProjectDetail({ data })
+    setProjectDetail({ data });
     navigation.navigate('ProjectDetails');
   };
 

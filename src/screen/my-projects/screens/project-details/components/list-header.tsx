@@ -22,8 +22,8 @@ export default ({ setActive, active, open, onViewTeam }: ListHeaderProps) => {
   return (
     <View style={styles.rootcontainer}>
       <View style={styles.headercontainer}>
-        <Text style={styles.title}>{data.project_title}</Text>
-        <Text style={styles.companyname}>{data.company_name}</Text>
+        <Text style={styles.title}>{data?.project_title}</Text>
+        <Text style={styles.companyname}>{data?.company_name}</Text>
         {(edit_allowed || share_allowed) &&
           actions &&
           <Text style={styles.actions} onPress={open}>
@@ -32,23 +32,23 @@ export default ({ setActive, active, open, onViewTeam }: ListHeaderProps) => {
         }
       </View>
       <View style={styles.wrapper}>
-        <EmployeeInfo title="Contact Name" value={data.contact_person!} />
+        <EmployeeInfo title="Contact Name" value={data?.contact_person!} />
         <EmployeeInfo
           title="Contact Number"
-          value={`+${data.country_id} ${data.phone}`}
+          value={`+${data?.country_id} ${data?.phone}`}
           call={call_icon}
         />
         <EmployeeInfo
           title="Location"
           value={
-            !data.city_name || !data.state_name
-              ? data.country_name
-              : `${data.city_name}, ${data.state_name}`
+            !data?.city_name || !data?.state_name
+              ? data?.country_name
+              : `${data?.city_name}, ${data?.state_name}`
           }
         />
-        <EmployeeInfo title="Source" value={data.source} />
-        <EmployeeInfo title="Type" value={data.category_name} />
-        <EmployeeInfo title="Status" value={data.project_status} />
+        <EmployeeInfo title="Source" value={data?.source} />
+        <EmployeeInfo title="Type" value={data?.category_name} />
+        <EmployeeInfo title="Status" value={data?.project_status} />
         {view_team &&
           <Text style={styles.viewteam} onPress={onViewTeam}>
             {'View Team'}
