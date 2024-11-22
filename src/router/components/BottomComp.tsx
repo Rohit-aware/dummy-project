@@ -13,7 +13,7 @@ const BottomComp = (props: BottomTabBarProps) => {
     const { state, navigation } = props;
     // const route = state.routes[state.index].name;
     const { FilterProjects, enableProjectFilter } = useMyProjectStore();
-    const { FilterLeads } = useMyLeadStore();
+    const { FilterLeads, } = useMyLeadStore();
     const [showBottomTab, setShowBottTab] = React.useState(true);
     const showtab = () => setShowBottTab(true);
     const hidetab = () => setShowBottTab(false);
@@ -21,11 +21,11 @@ const BottomComp = (props: BottomTabBarProps) => {
     const handleTabPress = async (index: number) => {
         if (index === 2) return;
         if (index === 1) {
-            FilterLeads({})
+            FilterLeads(null)
             navigation.navigate('MyLeads');
         };
         if (index === 3) {
-            FilterProjects({})
+            FilterProjects(null)
             enableProjectFilter({ project_status: null, client_id: null })
             navigation.navigate('MyProjects');
         }
