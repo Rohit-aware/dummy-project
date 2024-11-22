@@ -35,5 +35,6 @@ const endpoints = {
    createReminder:'createReminder',
    getReminders:'getReminders',
    updateProfile:'updateProfile',
+   updatePassword:'updatePassword',
 };
 export { endpoints }

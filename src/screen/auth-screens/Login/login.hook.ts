@@ -28,7 +28,7 @@ const useLogin = (): LoginReturnType => {
 
     const [inputs, setInputs] = React.useState({
         email: __DEV__ ? 'pankaj@kkuber.com' : '',
-        password: __DEV__ ? '123456789' : '',
+        password: __DEV__ ? '12345678' : '',
     });
 
     const onForgot = () => navigate('ForgotPassword');

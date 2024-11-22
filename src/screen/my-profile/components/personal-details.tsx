@@ -31,7 +31,7 @@ export default () => {
     pancard: pan_file_name,
     aadhar_card: aadhar_file_name,
   } = personalDetails;
-  
+
   const { ToggleText, textToShow } = useToggleText({ input: address, maxLength: 60 });
   const { checkForEmpty } = helpers;
   const username = checkForEmpty(first_name)

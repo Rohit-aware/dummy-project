@@ -17,6 +17,7 @@ type MainStackProps = {
     EditLead: undefined;
     Notes: undefined;
     AddNotes: undefined;
+    ChangePassword: undefined;
     ShareLead: {
         client_id: string
     };
