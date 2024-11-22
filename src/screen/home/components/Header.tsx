@@ -5,7 +5,7 @@ import { fontStyles } from '../../../styles';
 import FastImage from 'react-native-fast-image';
 import { useNavigation } from '@react-navigation/native';
 import moderateScale, { SCREEN_WIDTH } from '../../../constants/dimenssion';
-import { useAuthStore, useHomeStore, useProfileStore, useStartupStore } from '../../../store';
+import { useAuthStore, useHomeStore, useMyProjectStore, useProfileStore, useReloadStore, useStartupStore } from '../../../store';
 import { View, Text, StyleSheet, ImageBackground, Pressable, Alert } from 'react-native';
 
 
@@ -14,9 +14,12 @@ const LOGOUT_ICON = require('../../../../assets/images/logout.png');
 
 const Header = () => {
   const { navigate } = useNavigation<any>();
+  const { resetStartup } = useStartupStore();
+  const { reloadPage } = useReloadStore();
   const { data, processLogout } = useHomeStore();
   const { token, clearLoginData } = useAuthStore();
-  const { resetStartup } = useStartupStore();
+  const { FilterProjects, enableProjectFilter } = useMyProjectStore();
+
   const { personalDetails: userData } = useProfileStore();
   const { first_name, phone, phone_code, designation } = userData;
   const display_detail =
@@ -24,9 +27,16 @@ const Header = () => {
     } ${phone == undefined ? '' : phone}`;
 
 
-  const onLeads = () => navigate('MyLeads');
+  const onLeads = () => {
+    reloadPage();
+    navigate('MyLeads');
+  }
 
-  const onMyProjects = () => navigate('MyProjects');
+  const onMyProjects = () => {
+    FilterProjects({});
+    enableProjectFilter({ project_status: null, client_id: null });
+    navigate('MyProjects');
+  }
 
   const doLogout = async () => {
     try {

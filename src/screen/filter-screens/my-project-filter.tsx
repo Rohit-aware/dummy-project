@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React from "react";
 import { fontStyles } from "../../styles";
 import { Colors } from "../../constants";
 import { Dots } from "../../../assets/icons";
@@ -11,13 +11,12 @@ import { View, Text, TouchableWithoutFeedback, ScrollView, StyleSheet, Keyboard 
 const FilterMyProjects = () => {
     const { navigate } = useNavigation<any>();
     const { reloadPage } = useReloadStore();
-    const { projectStatus, sources, requirementTypes } = useCommonStore();
     const { isProjectFilter } = useMyProjectStore();
+    const { projectStatus, sources, requirementTypes } = useCommonStore();
     const { enableProjectFilter, FilterProjects, project_status } = useMyProjectStore();
 
-
-    const [search, setSearch] = useState("")
-    const [selectedCountry, setSelectedCountry] = useState<Array<any>>([]);
+    const [search, setSearch] = React.useState("")
+    const [selectedCountry, setSelectedCountry] = React.useState<Array<any>>([]);
 
     const Filtertype = React.useMemo(() => [
         { title: "Project Status", data: projectStatus },
@@ -26,12 +25,12 @@ const FilterMyProjects = () => {
         { title: "Country", data: selectedCountry }
     ], [projectStatus, requirementTypes, sources, selectedCountry]);
 
-    const [active, setActive] = useState(0)
-    const [filters, setFilters] = useState(projectStatus);
-    const [countryModal, setCountryModal] = useState(false);
+    const [active, setActive] = React.useState(0)
+    const [filters, setFilters] = React.useState(projectStatus);
+    const [countryModal, setCountryModal] = React.useState(false);
     const { countryName, country_id, project_category_id, project_status: oldProject_status, requirement_type, source } = isProjectFilter! || {};
 
-    var [enableFilter, setEnableFilter] = useState({
+    var [enableFilter, setEnableFilter] = React.useState({
         project_status: oldProject_status ? oldProject_status : (oldProject_status !== null && oldProject_status !== "Projects" && project_status !== '') ? projectStatus.find(e => e.project_status == project_status)?.['id'] : "",
         requirement_type: requirement_type ? requirement_type : "",
         source: source ? source : "",
@@ -39,7 +38,6 @@ const FilterMyProjects = () => {
         countryName: countryName ? countryName : "",
         project_category_id: project_category_id ? project_category_id : ""
     });
-
 
     const apply = () => {
         if (enableFilter.project_status !== "" || enableFilter.requirement_type != "" || enableFilter.source != "" || enableFilter.countryCode != "" || enableFilter.project_category_id != "") {
@@ -49,27 +47,24 @@ const FilterMyProjects = () => {
             enableFilter.source != "" && Object.assign(data, { source: enableFilter.source })
             enableFilter.countryCode != "" && Object.assign(data, { country_id: enableFilter.countryCode, countryName: enableFilter.countryName })
             enableFilter.project_category_id != "" && Object.assign(data, { project_category_id: enableFilter.project_category_id })
-            enableProjectFilter({ project_status: '', client_id: '' })
+            enableProjectFilter({ project_status: null, client_id: null })
             FilterProjects(data)
             reloadPage()
-            navigate('BottomTab', { screen: 'MyProjects' })
+            navigate('BottomTab', { screen: 'MyProjects' });
         }
         else {
-            enableProjectFilter({ project_status: '', client_id: '' })
+            enableProjectFilter({ project_status: null, client_id: null })
             FilterProjects({})
             reloadPage()
-            navigate('BottomTab', { screen: 'MyProjects' })
+            navigate('BottomTab', { screen: 'MyProjects' });
         }
-
     }
     const clear = () => {
-        enableProjectFilter({ project_status: '', client_id: '' })
+        enableProjectFilter({ project_status: null, client_id: null })
         FilterProjects({})
         reloadPage()
-        navigate("MyProjects")
-
+        navigate('BottomTab', { screen: 'MyProjects' });
     }
-
 
     const onSearch = React.useCallback((text: string) => {
         setSearch(text);
@@ -159,11 +154,9 @@ const FilterMyProjects = () => {
                         <ScrollView style={{ marginTop: 15 }}>
                             {
                                 filters.map((item: any, i: number) => {
-
                                     return (
-
                                         <TouchableWithoutFeedback key={i} onPress={() => {
-                                            // setActive(i)
+                                            setActive(i)
                                             if (active == 0) {
                                                 typeof (item) == "object" && enableFilter?.project_status == item.id ? setEnableFilter({ ...enableFilter, project_status: "" }) : setEnableFilter({ ...enableFilter, project_status: item.id })
                                             }

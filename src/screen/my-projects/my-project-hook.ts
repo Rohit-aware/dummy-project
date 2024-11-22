@@ -36,12 +36,13 @@ const useMyProjectHook = () => {
         fetchProjects({ page: 0 });
     };
 
-    const getProjectStatus = async () => {
-        if (!project_status) return ''
-        return projectStatus.find(e => e.project_status?.toLowerCase() === project_status.toLowerCase())['id'] ?? '';
+    const getProjectStatus = () => {
+        if (!project_status) return '';
+        const status = projectStatus.find(e => e.project_status?.toLowerCase() === project_status.toLowerCase());
+        return status ? status.id : '';
     };
-
     const fetchProjects = async ({ page }: { page: number }) => {
+        const statusId = getProjectStatus();
         try {
             const fnName = 'getProjects';
             const hash_key = getHashString(
@@ -57,8 +58,8 @@ const useMyProjectHook = () => {
             formData.append('limit', 10);
             search && formData.append('search_key', search);
             if (project_status !== null) {
-                client_id && formData.append('client_id', client_id);
-                formData.append('project_status', getProjectStatus());
+                !!client_id && formData.append('client_id', client_id);
+                !!statusId && formData.append('project_status', statusId);
             } else {
                 if (isProjectFilter !== null) {
                     for (let key in isProjectFilter) {

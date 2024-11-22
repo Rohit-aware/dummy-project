@@ -20,7 +20,7 @@ const ProjectBox = ({ discussion, converted }: { discussion: string, converted: 
     reloadPage();
     enableProjectFilter({
       project_status: status,
-      client_id: '',
+      client_id: null,
     }),
       navigation.navigate('MyProjects');
   };
