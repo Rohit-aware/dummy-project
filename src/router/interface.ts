@@ -38,6 +38,7 @@ type MainStackProps = {
     Reminders: undefined;
     FollowUpToday: undefined;
     FilterMyProjects: undefined;
+    FilterMyLeads: undefined;
 };
 
 export type { MainStackProps };

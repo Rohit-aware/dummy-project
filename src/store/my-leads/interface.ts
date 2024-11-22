@@ -22,24 +22,34 @@ type LeadDetsilType = {
     shared_count: string;
     client_id: string;
     country_id: string;
-    share_allowed: 'Y' | 'N',
-    edit_allowed: 'Y' | 'N',
+    share_allowed: 'Y' | 'N' | '',
+    edit_allowed: 'Y' | 'N' | '',
     project_count: number;
     closed_projects: number;
     is_owner?: 'Y' | 'N',
+};
+
+type IsLeadsFilterType = {
+    source: string;
+    country_id: string;
+    countryName: string;
+    from: string;
+    to: string;
 }
 
 interface UseMyLeadStore {
     leadsData: any[];
     page: number;
-    isFinish: boolean;
     loading: boolean;
-    leadDetails: LeadDetsilType;
+    isFinish: boolean;
     setIsFinish: () => void;
+    leadDetails: LeadDetsilType;
+    leadsFilter: Partial<IsLeadsFilterType> | null;
+    FilterLeads: (data: Partial<IsLeadsFilterType> | null) => void;
     setMyLeadPage: ({ leadPage }: { leadPage: number }) => void;
     setLeadDetails: ({ value }: { value: LeadDetsilType }) => void;
     getSingleLeads: ({ formData, token }: { formData: {}, token: string }) => Promise<any>;
     getLeads: ({ formData, leadPage, token }: { formData: {}, leadPage: number, token: string }) => void;
 };
 
-export type { UseMyLeadStore };
+export type { UseMyLeadStore, IsLeadsFilterType };

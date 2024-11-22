@@ -1,15 +1,19 @@
 import React from 'react';
 import { getHashString } from '../../utility/hashing';
 import { useAuthStore, useMyLeadStore, useReloadStore } from '../../store';
+import { useNavigation } from '@react-navigation/native';
+import { IsLeadsFilterType } from '../../store/my-leads/interface';
 
 
 const useMyLeadHook = () => {
     const [search, setSearch] = React.useState('');
     const [refresh, setRefresh] = React.useState(false);
+
     const { reload } = useReloadStore();
+    const { navigate } = useNavigation<any>();
 
     const { user_detail: userData, deviceId: uuid, token } = useAuthStore();
-    const { getLeads, isFinish, leadsData, page, loading, setMyLeadPage, setIsFinish } = useMyLeadStore();
+    const { getLeads, isFinish, leadsData, page, loading, setMyLeadPage, setIsFinish, leadsFilter } = useMyLeadStore();
 
     const fetchLeads = async ({ page = 0 }: { page?: number }) => {
         try {
@@ -25,9 +29,13 @@ const useMyLeadHook = () => {
             formData.append('hash_key', hash_key);
             formData.append('page_number', page);
             formData.append('limit', 2);
-            formData.append('search_key', search);
+            search && formData.append('search_key', search);
+            if (leadsFilter !== null) {
+                for (let key in leadsFilter) {
+                    formData.append(key, leadsFilter[key as keyof IsLeadsFilterType]);
+                }
+            }
             getLeads({ token, formData, leadPage: page })
-            setRefresh(false);
         } catch (error: any) {
             console.log("error isnide fetchLead : ", error);
         }
@@ -35,7 +43,7 @@ const useMyLeadHook = () => {
     };
 
     const onEndReached = async () => {
-        if (!isFinish) {
+        if (!isFinish && leadsData.length > 0 && !loading) {
             setMyLeadPage({ leadPage: page + 1 });
             fetchLeads({ page: page + 1 });
         }
@@ -43,7 +51,7 @@ const useMyLeadHook = () => {
 
     const onFilter = () => {
         setSearch('');
-        // navigation.navigate('FilterMyLeads');
+        navigate('FilterMyLeads');
     };
 
     const onRefresh = () => {
@@ -54,15 +62,18 @@ const useMyLeadHook = () => {
     };
 
     React.useEffect(() => {
-        setMyLeadPage({ leadPage: 0 });
-        fetchLeads({ page: 0 });
+        const delay = search == '' ? 0 : 500;
+        const debounce = setTimeout(() => {
+            setMyLeadPage({ leadPage: 0 });
+            fetchLeads({ page: 0 });
+        }, delay);
 
         const timeoutId = setTimeout(() => {
             setMyLeadPage({ leadPage: 1 });
         }, 1000);
 
-        return () => clearTimeout(timeoutId);
-    }, [reload]);
+        return () => { clearTimeout(timeoutId); clearTimeout(debounce) };
+    }, [reload, search]);
 
 
     return {
@@ -75,6 +86,7 @@ const useMyLeadHook = () => {
         onRefresh,
         leadsData,
         setSearch,
+        leadsFilter,
         onEndReached,
     };
 };

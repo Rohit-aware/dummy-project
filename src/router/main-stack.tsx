@@ -7,7 +7,7 @@ import { NavigationContainer } from '@react-navigation/native';
 import { useAuthStore, useCommonStore, useProfileStore } from '../store';
 import { MainStackNavigatorRef } from '../hooks/mainstack-navigation-ref';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
-import { Activities, AddActivities, AddLead, AddNotes, AddProject, AddUpcomingActivities, CreateReminder, EditLead, FilterMyProjects, FollowUpToday, ForgotPassSuccess, ForgotPassword, LeadDetail, Login, Notes, ProjectDetails, Register, Reminders, ShareLead, ShareProject, UpdateProjectStatus, ViewLead, ViewTeam } from '../screen';
+import { Activities, AddActivities, AddLead, AddNotes, AddProject, AddUpcomingActivities, CreateReminder, EditLead, FilterMyLeads, FilterMyProjects, FollowUpToday, ForgotPassSuccess, ForgotPassword, LeadDetail, Login, Notes, ProjectDetails, Register, Reminders, ShareLead, ShareProject, UpdateProjectStatus, ViewLead, ViewTeam } from '../screen';
 
 const Stack = createNativeStackNavigator<MainStackProps>();
 
@@ -70,6 +70,7 @@ const MainStack = () => {
                         <Stack.Screen name="AddProject" component={AddProject} />
                         <Stack.Screen name="LeadDetails" component={LeadDetail} />
                         <Stack.Screen name="ShareProject" component={ShareProject} />
+                        <Stack.Screen name="FilterMyLeads" component={FilterMyLeads} />
                         <Stack.Screen name="AddActivities" component={AddActivities} />
                         <Stack.Screen name="FollowUpToday" component={FollowUpToday} />
                         <Stack.Screen name="CreateReminder" component={CreateReminder} />

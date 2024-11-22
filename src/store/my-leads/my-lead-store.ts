@@ -9,6 +9,7 @@ const useMyLeadStore = create<UseMyLeadStore>()((set, get) => ({
     leadsData: [],
     loading: false,
     isFinish: false,
+    leadsFilter: null,
     leadDetails: {
         company_name: '',
         contact_person: '',
@@ -37,6 +38,9 @@ const useMyLeadStore = create<UseMyLeadStore>()((set, get) => ({
         edit_allowed: 'Y',
         closed_projects: 0,
         project_count: 0,
+    },
+    FilterLeads(data) {
+        set({ leadsFilter: data })
     },
     setLeadDetails: ({ value }) => {
         set({ leadDetails: { ...value } })

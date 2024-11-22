@@ -67,7 +67,6 @@ const useMyProjectHook = () => {
                     }
                 }
             }
-            console.log(JSON.stringify(formData, undefined, 4), ' : formData ')
             getProjects({ token, formData, projectPage: page });
             setRefresh(false);
         } catch (error) {
@@ -76,15 +75,18 @@ const useMyProjectHook = () => {
     };
 
     React.useEffect(() => {
-        setMyProjectPage({ projectPage: 0 });
-        fetchProjects({ page: 0 });
+        const delay = search == '' ? 0 : 500;
+        const debounce = setTimeout(() => {
+            setMyProjectPage({ projectPage: 0 });
+            fetchProjects({ page: 0 });
+        }, delay);
 
         const timeoutId = setTimeout(() => {
             setMyProjectPage({ projectPage: 1 });
         }, 1000);
 
-        return () => clearTimeout(timeoutId);
-    }, [reload]);
+        return () => { clearTimeout(timeoutId); clearTimeout(debounce) };
+    }, [reload,search]);
 
     return {
         page,

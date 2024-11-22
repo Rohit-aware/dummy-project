@@ -9,6 +9,7 @@ export { default as Login } from './auth-screens/Login/login-screen';
 export { default as AddProject } from './add-project/add-project-screen';
 export { default as MyProjects } from './my-projects/my-projects-screen';
 export { default as LeadDetail } from './lead-details/lead-detail-screen';
+export { default as FilterMyLeads } from './filter-screens/my-lead-filter';
 export { default as Register } from './auth-screens/register/register-screen';
 export { default as AddNotes } from './notes/screens/add-note/add-note-screen';
 export { default as Reminders } from './home/screens/reminders/reminder-screen';

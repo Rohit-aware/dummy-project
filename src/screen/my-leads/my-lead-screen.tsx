@@ -17,6 +17,7 @@ const MyLeads = () => {
         onRefresh,
         leadsData,
         setSearch,
+        leadsFilter,
         onEndReached,
     } = useMyLeadHook();
 
@@ -28,7 +29,7 @@ const MyLeads = () => {
                 onPress={onFilter}
                 onChangeText={setSearch}
                 value={search}
-                enabled={true}
+                enabled={leadsFilter !== null ? true : false}
             />
             <LeadsList
                 data={leadsData}
