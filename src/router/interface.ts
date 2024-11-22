@@ -39,6 +39,7 @@ type MainStackProps = {
     FollowUpToday: undefined;
     FilterMyProjects: undefined;
     FilterMyLeads: undefined;
+    EditProfile: undefined;
 };
 
 export type { MainStackProps };

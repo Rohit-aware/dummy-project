@@ -9,8 +9,8 @@ interface ProfileDetailsTypes {
     designation: string;
     location: string;
     address: string;
-    state_id: number;
-    city_id: number;
+    state_id: number |string;
+    city_id: number |string;
     state_name: string;
     city_name: string;
     account_number: string;

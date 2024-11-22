@@ -9,10 +9,14 @@ interface NotificationInputs {
     client_id?: string | number
 }
 interface Helpers {
-    httpPrefix: string;
-    regexEmail: RegExp;
     phoneno: RegExp;
     aadharno: RegExp;
+    Genders: Array<{
+        short_name: string;
+        full_name: string;
+    }>
+    regexEmail: RegExp;
+    httpPrefix: string;
     websiteprefix: string;
     linkedInprefix: string;
     isEmpty: (value: string) => string;
@@ -105,6 +109,11 @@ const helpers: Helpers = {
             })
             .catch(err => console.log('Error inside openCall function: ', err));
     },
+    Genders: [
+        { short_name: "M", full_name: "Male" },
+        { short_name: "F", full_name: "Female" },
+        { short_name: "O", full_name: "Others" },
+    ],
 
     linkedInprefix: "https://www.linkedin.com/in/",
     websiteprefix: "https://",

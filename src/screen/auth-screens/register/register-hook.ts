@@ -58,15 +58,10 @@ const useRegisterHook = (): useRegisterHookprops => {
         organization_name: '',
         countrycode: '91',
     });
-    const { checkForEmpty, regexEmail, phoneno } = helpers;
+    const { checkForEmpty, regexEmail, phoneno,Genders } = helpers;
 
     const closeModal = () => setShow(false);
     const showModal = () => setShow(true);
-    const Genders = [
-        { short_name: "M", full_name: "Male" },
-        { short_name: "F", full_name: "Female" },
-        { short_name: "O", full_name: "Others" },
-    ];
 
     const onChangeText = (name: string, value: string) => setInputs({ ...inputs, [name]: value });
     const onSelectCountry = (country: any) => {

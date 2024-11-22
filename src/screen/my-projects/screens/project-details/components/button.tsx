@@ -3,7 +3,7 @@ import { Colors } from '../../../../../constants';
 import { fontStyles } from '../../../../../styles';
 import { Text, StyleSheet, TouchableWithoutFeedback } from 'react-native';
 
-export default ({ title, onPress, active }: { title: string, onPress: () => void, active: string }) => {
+export default ({ title, onPress, active }: { title: string, onPress: () => void, active?: string }) => {
   const textStyle = { color: active == title ? Colors.yellow : Colors.black }
   return (
     <TouchableWithoutFeedback onPress={onPress}>

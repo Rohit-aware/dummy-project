@@ -33,6 +33,7 @@ const endpoints = {
    addUpcomingActivity:'addUpcomingActivity',
    updateProjectStatus:'updateProjectStatus',
    createReminder:'createReminder',
-   getReminders:'getReminders'
+   getReminders:'getReminders',
+   updateProfile:'updateProfile',
 };
 export { endpoints }
