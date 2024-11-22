@@ -50,6 +50,7 @@ interface UseMyProjectStoreProps {
   isFinish: boolean;
   projectLoad: boolean;
   setIsFinish: () => void;
+  resetProjectsData: () => void;
   FilterProjects: (data: Partial<IsProjectFilterType> | null) => void;
   enableProjectFilter: (inputes: Inputes) => void;
   client_id: string;

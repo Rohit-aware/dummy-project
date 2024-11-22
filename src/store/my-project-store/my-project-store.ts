@@ -29,6 +29,9 @@ const useMyProjectStore = create<UseMyProjectStoreProps>()((set, get) => ({
     setProjectDetail: ({ data }) => {
         set({ projectDetails: data })
     },
+    resetProjectsData: () => {
+        set({ projects: [] })
+    },
     getSingleProject: async ({ token, formData }) => {
         set({ projectLoad: true })
         const response = await networkRequest({ token }).post(endpoints.getProjects, formData);

@@ -11,10 +11,10 @@ export default () => {
   const { leadDetails } = useMyLeadStore();
   const { reloadPage } = useReloadStore();
   const { project_count, closed_projects, client_id } = leadDetails;
-  const { enableProjectFilter } = useMyProjectStore();
+  const { enableProjectFilter, resetProjectsData } = useMyProjectStore();
 
   const onClick = (project_status: string | null) => {
-    // reloadPage();
+    resetProjectsData();
     enableProjectFilter({
       project_status,
       client_id,

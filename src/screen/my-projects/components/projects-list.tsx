@@ -21,6 +21,7 @@ const ProjectsList = ({
   const navigation = useNavigation<any>();
   const { setProjectDetail } = useMyProjectStore();
   const { resetIsFinishPage } = useProjectDetailsStore();
+  
   const onProjectDetail = (data: Partial<ProjectDataType>) => {
     resetIsFinishPage();
     setProjectDetail({ data });
@@ -46,11 +47,10 @@ const ProjectsList = ({
           }}
           ListEmptyComponent={() => {
             return (
-              (!loading && data?.length === 0) ? <ListEmptyComponent
+              <ListEmptyComponent
                 image={EMPTY_IMAGE}
                 title={'No Record Available'}
               />
-                : <View />
             );
           }}
           renderItem={({ item, index }) => {
