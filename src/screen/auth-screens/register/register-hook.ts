@@ -1,6 +1,8 @@
 import React from "react";
 import { useNavigation } from "@react-navigation/native";
 import { useCommonStore, useRegisterStore } from "../../../store";
+import { helpers } from "../../../utility";
+import { showToast } from "../../../components";
 
 interface useRegisterHookprops {
     inputs: {
@@ -21,8 +23,8 @@ interface useRegisterHookprops {
         short_name: string;
         full_name: string;
     }[];
-    show: boolean; 
-    loading: boolean; 
+    show: boolean;
+    loading: boolean;
     orgLoad: boolean;
     closeModal: () => void;
     showModal: () => void;
@@ -43,19 +45,20 @@ const useRegisterHook = (): useRegisterHookprops => {
 
     const [show, setShow] = React.useState(false);
     const [inputs, setInputs] = React.useState({
-        first_name: 'Test',
-        last_name: 'User',
-        phone_number: '1234567895',
-        email: 'testuser@email.com',
+        first_name: '',
+        last_name: '',
+        phone_number: '',
+        email: '',
         address: '',
-        password: '12345678',
-        confirm_password: '12345678',
+        password: '',
+        confirm_password: '',
         state_id: '',
         city_id: '',
         gender: '',
         organization_name: '',
         countrycode: '91',
     });
+    const { checkForEmpty, regexEmail, phoneno } = helpers;
 
     const closeModal = () => setShow(false);
     const showModal = () => setShow(true);
@@ -75,6 +78,9 @@ const useRegisterHook = (): useRegisterHookprops => {
         });
     };
 
+    const passwordCheck = () =>
+        inputs.password == inputs.confirm_password ? false : true;
+
     const onOrgnizationSelect = (name: string, data: any) =>
         setInputs({ ...inputs, [name]: data['organization_name'] });
 
@@ -87,29 +93,58 @@ const useRegisterHook = (): useRegisterHookprops => {
     const getSelectedGender = () => (inputs.gender === 'Male' ? 'M' : 'F');
 
     const onRegister = async (): Promise<void> => {
-        try {
-            const formdata = new FormData();
-            formdata.append('first_name', inputs.first_name);
-            formdata.append('last_name', inputs.last_name);
-            formdata.append('phone_code', inputs.countrycode);
-            formdata.append('phone_number', inputs.phone_number);
-            formdata.append('email', inputs.email);
-            formdata.append('password', inputs.password);
-            formdata.append('confirm_password', inputs.confirm_password);
-            formdata.append('gender', getSelectedGender());
-            formdata.append('designation', '');
-            formdata.append('address', '');
-            formdata.append('state_id', '');
-            formdata.append('city_id', '');
-            formdata.append('location', '');
-            formdata.append('organization_id', getOrgnization(inputs.organization_name));
-            const response = await processRegistration({ formdata });
-            if (response.success == 1) {
-                goBack();
-            }
-        } catch (error) {
-            console.log(error, 'error at onRegister');
+        if (checkForEmpty(inputs.first_name)) {
+            showToast('Please enter first name');
+        } else if (checkForEmpty(inputs.last_name)) {
+            showToast('Please enter last name');
+        } else if (checkForEmpty(inputs.phone_number)) {
+            showToast('Please enter phone number');
+        } else if (inputs.phone_number.length < 10 && inputs.countrycode == '91') {
+            showToast('Please enter 10 digit phone number');
         }
+        else if (!phoneno.test(inputs.phone_number)) {
+            showToast('Please enter valid phone number');
+        } else if (checkForEmpty(inputs.email)) {
+            showToast('Please enter official email id');
+        } else if (!regexEmail.test(inputs.email)) {
+            showToast('Please enter valid official email id');
+        } else if (checkForEmpty(inputs.password)) {
+            showToast('Please enter password');
+        } else if (checkForEmpty(inputs.confirm_password)) {
+            showToast('Please enter confirm password');
+        } else if (checkForEmpty(inputs.confirm_password)) {
+            showToast('Please enter confirm password');
+        } else if (passwordCheck()) {
+            showToast('password and confirm password should match');
+        } else if (checkForEmpty(inputs.gender)) {
+            showToast('Please select gender');
+        } else if (checkForEmpty(inputs.organization_name)) {
+            showToast('Please select orgnization');
+        } else {
+            try {
+                const formdata = new FormData();
+                formdata.append('first_name', inputs.first_name);
+                formdata.append('last_name', inputs.last_name);
+                formdata.append('phone_code', inputs.countrycode);
+                formdata.append('phone_number', inputs.phone_number);
+                formdata.append('email', inputs.email);
+                formdata.append('password', inputs.password);
+                formdata.append('confirm_password', inputs.confirm_password);
+                formdata.append('gender', getSelectedGender());
+                formdata.append('designation', '');
+                formdata.append('address', '');
+                formdata.append('state_id', '');
+                formdata.append('city_id', '');
+                formdata.append('location', '');
+                formdata.append('organization_id', getOrgnization(inputs.organization_name));
+                const response = await processRegistration({ formdata });
+                if (response.success == 1) {
+                    goBack();
+                }
+            } catch (error) {
+                console.log(error, 'error at onRegister');
+            };
+        };
     };
 
     return {

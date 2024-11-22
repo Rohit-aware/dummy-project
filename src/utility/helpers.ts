@@ -10,6 +10,9 @@ interface NotificationInputs {
 }
 interface Helpers {
     httpPrefix: string;
+    regexEmail: RegExp;
+    phoneno: RegExp;
+    aadharno: RegExp;
     websiteprefix: string;
     linkedInprefix: string;
     isEmpty: (value: string) => string;
@@ -104,10 +107,11 @@ const helpers: Helpers = {
     },
 
     linkedInprefix: "https://www.linkedin.com/in/",
-
     websiteprefix: "https://",
-
     httpPrefix: "http",
+    regexEmail: /\w+([-+.']\w+)*@\w+([-.]\w+)*\.\w+([-.]\w+)*/,
+    phoneno: /^\d{1,17}$/,
+    aadharno: /^\d{12}$/,
 };
 
 export default helpers;

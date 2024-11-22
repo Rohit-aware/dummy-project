@@ -1,9 +1,9 @@
 import React from "react";
+import { helpers } from "../../utility";
 import { getHashString } from "../../utility/hashing";
 import { UseAddLeadHookReturnType } from "./interface";
 import { useNavigation } from "@react-navigation/native";
 import { useAddLeadStore, useAuthStore, useCommonStore } from "../../store";
-import { helpers } from "../../utility";
 
 
 const useAddLeadHook = (): UseAddLeadHookReturnType => {
@@ -13,22 +13,7 @@ const useAddLeadHook = (): UseAddLeadHookReturnType => {
     const { token, deviceId: uuid, user_detail: userData } = useAuthStore();
     const { linkedInprefix, websiteprefix, httpPrefix, } = helpers;
 
-    const checkForEmpty = (value: string) => {
-        const isEmpty =
-            value == null || value == 'undefined' || value == undefined || value == '' || value == "null"
-                ? true
-                : false;
-
-        return isEmpty;
-    };
-
-    const emailCheck = (value: string) => {
-        const result =
-            value !== '' && !(/\w+([-+.']\w+)*@\w+([-.]\w+)*\.\w+([-.]\w+)*/).test(value) && value !== undefined
-                ? true
-                : false;
-        return result;
-    };
+    const { checkForEmpty, emailCheck } = helpers;
 
     const [countryModal, setcountryModal] = React.useState(false);
     const [inputs, setInputs] = React.useState({
