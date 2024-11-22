@@ -10,7 +10,16 @@ const useMyProjectStore = create<UseMyProjectStoreProps>()((set, get) => ({
     projectDetails: {},
     isFinish: false,
     projectLoad: false,
-
+    isProjectFilter: null,
+    project_status: '',
+    client_id: '',
+    enableProjectFilter: (inputes) => {
+        const { project_status, client_id } = inputes;
+        set({ project_status, client_id })
+    },
+    FilterProjects: (data) => {
+        set({ isProjectFilter: data })
+    },
     setIsFinish: () => {
         set({ isFinish: false })
     },

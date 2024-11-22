@@ -13,6 +13,7 @@ const Home = () => {
         fetchHomeData,
         fetchOutsiders,
         fetchmaster_data,
+        resetIsFinishPage,
     } = useHome();
 
     React.useEffect(() => {
@@ -33,6 +34,7 @@ const Home = () => {
                     title={'Today’s Activities'}
                     value={data?.activitiesToday}
                     onPress={() => {
+                        resetIsFinishPage();
                         onNavigator('Activities');
                     }}
                 />

@@ -5,7 +5,7 @@ import { Text, TouchableOpacity, StyleSheet, ActivityIndicator, ViewStyle, TextS
 
 interface ButtonProps {
   onPress: () => void;
-  style?: ViewStyle;
+  style?: ViewStyle | Array<ViewStyle>;
   title: string;
   textStyle?: TextStyle;
   loading?: boolean;

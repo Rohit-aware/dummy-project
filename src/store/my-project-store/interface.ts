@@ -32,18 +32,34 @@ export interface ProjectDataType {
   country_name: string;
 }
 
+type IsProjectFilterType = {
+  project_status: string;
+  requirement_type: string;
+  source: string;
+  country_id: string;
+  countryName: string;
+  project_category_id: string;
+}
 
-
+type Inputes = {
+  client_id: string;
+  project_status: string;
+}
 interface UseMyProjectStoreProps {
   page: number,
   isFinish: boolean;
   projectLoad: boolean;
-  projects: Array<ProjectDataType>;
   setIsFinish: () => void;
+  FilterProjects: (data: Partial<IsProjectFilterType>) => void;
+  enableProjectFilter: (inputes: Inputes) => void;
+  client_id: string;
+  project_status: string;
+  projects: Array<ProjectDataType>;
+  isProjectFilter: Partial<IsProjectFilterType> | null;
   projectDetails: Partial<ProjectDataType>;
   setProjectDetail: ({ data }: { data: Partial<ProjectDataType> }) => void;
   setMyProjectPage: ({ projectPage }: { projectPage: number }) => void;
   getSingleProject: ({ token, formData }: { token: string, formData: {} }) => Promise<any>;
   getProjects: ({ token, formData, projectPage }: { token: string, formData: {}, projectPage: number }) => Promise<any>;
 };
-export type { UseMyProjectStoreProps };
+export type { UseMyProjectStoreProps, IsProjectFilterType };

@@ -8,43 +8,34 @@ import {
 import { useNavigation } from '@react-navigation/native';
 import { Colors } from '../../../constants';
 import { fontStyles } from '../../../styles';
+import { useMyProjectStore, useReloadStore } from '../../../store';
 
 const spacing = 15;
 
 const ProjectBox = ({ discussion, converted }: { discussion: string, converted: string }) => {
   const navigation = useNavigation<any>();
-
-  const onDiscussion = () => {
-    // dispatch(
-    //   enableProjectFilter({
-    //     project_status: 'Requirement Discussion',
-    //     client_id: null,
-    //   }),
-    // );
-    navigation.navigate('MyProjects');
-  };
-
-  const onConverted = () => {
-    // dispatch(
-    //   enableProjectFilter({
-    //     project_status: 'Converted',
-    //     client_id: null,
-    //   }),
-    // );
-    navigation.navigate('MyProjects');
+  const { enableProjectFilter } = useMyProjectStore();
+  const { reloadPage } = useReloadStore();
+  const handlePress = (status: 'Requirement Discussion' | 'Converted') => {
+    reloadPage();
+    enableProjectFilter({
+      project_status: status,
+      client_id: '',
+    }),
+      navigation.navigate('MyProjects');
   };
 
   return (
     <View style={styles.wrapper}>
       <View style={styles.container}>
-        <TouchableWithoutFeedback onPress={onDiscussion}>
+        <TouchableWithoutFeedback onPress={() => handlePress('Requirement Discussion')}>
           <View style={styles.btncontainer}>
             <Text style={styles.value}>{discussion}</Text>
             <Text style={styles.title}>{'Discussion'}</Text>
           </View>
         </TouchableWithoutFeedback>
 
-        <TouchableWithoutFeedback onPress={onConverted}>
+        <TouchableWithoutFeedback onPress={() => handlePress('Converted')}>
           <View style={styles.btncontainer}>
             <Text style={styles.value}>{converted}</Text>
             <Text style={styles.title}>{'Converted'}</Text>

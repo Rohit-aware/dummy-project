@@ -1,6 +1,7 @@
 import React from "react";
 import { getHashString } from "../../utility/hashing";
 import { useNavigation } from "@react-navigation/native";
+import { IsProjectFilterType } from "../../store/my-project-store/interface";
 import { useAuthStore, useCommonStore, useMyProjectStore, useReloadStore } from "../../store";
 
 const useMyProjectHook = () => {
@@ -8,12 +9,10 @@ const useMyProjectHook = () => {
 
     const { projects: data, getProjects, page, isFinish, projectLoad, setMyProjectPage, setIsFinish } = useMyProjectStore();
     const { user_detail: userData, deviceId: uuid, token } = useAuthStore();
-    const { projectStatus } = useCommonStore();
     const { reload } = useReloadStore();
-
-    const project_status: any = '';
-    const client_id = '';
-    const isProjectFilter: any = '';
+    const { projectStatus } = useCommonStore();
+    const { isProjectFilter } = useMyProjectStore();
+    const { client_id, project_status } = useMyProjectStore();
 
     const [search, setSearch] = React.useState('');
     const [refresh, setRefresh] = React.useState(false);
@@ -37,9 +36,9 @@ const useMyProjectHook = () => {
         fetchProjects({ page: 0 });
     };
 
-    const getProjectStatus = () => {
+    const getProjectStatus = async () => {
         if (!project_status) return ''
-        return projectStatus.find(e => e.project_status?.toLowerCase() === project_status?.toLowerCase())['id'];
+        return projectStatus.find(e => e.project_status?.toLowerCase() === project_status.toLowerCase())['id'] ?? '';
     };
 
     const fetchProjects = async ({ page }: { page: number }) => {
@@ -57,16 +56,17 @@ const useMyProjectHook = () => {
             formData.append('page_number', page);
             formData.append('limit', 10);
             search && formData.append('search_key', search);
-            if (!!project_status) {
-                client_id !== null && formData.append('client_id', client_id);
+            if (project_status) {
+                client_id && formData.append('client_id', client_id);
                 formData.append('project_status', getProjectStatus());
             } else {
-                if (isProjectFilter !== '') {
+                if (isProjectFilter !== null) {
                     for (let key in isProjectFilter) {
-                        formData.append(key, isProjectFilter[key]);
+                        formData.append(key, isProjectFilter[key as keyof IsProjectFilterType]);
                     }
                 }
             }
+            console.log(JSON.stringify(formData, undefined, 4), ' : formData ')
             getProjects({ token, formData, projectPage: page });
             setRefresh(false);
         } catch (error) {
@@ -74,12 +74,21 @@ const useMyProjectHook = () => {
         }
     };
 
+    React.useEffect(() => {
+        setMyProjectPage({ projectPage: 0 });
+        fetchProjects({ page: 0 });
+
+        const timeoutId = setTimeout(() => {
+            setMyProjectPage({ projectPage: 1 });
+        }, 1000);
+
+        return () => clearTimeout(timeoutId);
+    }, [reload]);
 
     return {
         page,
         data,
         search,
-        reload,
         refresh,
         isFinish,
         onFilter,
@@ -87,10 +96,8 @@ const useMyProjectHook = () => {
         onRefresh,
         projectLoad,
         onEndReached,
-        fetchProjects,
         project_status,
         isProjectFilter,
-        setMyProjectPage,
     };
 };
 export { useMyProjectHook };

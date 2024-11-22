@@ -1,9 +1,9 @@
 import React from 'react';
 import { View } from 'react-native';
 import { Colors } from '../../constants';
-import { Header, Loader, SearchBar } from '../../components';
-import ProjectsList from './components/projects-list';
 import { useMyProjectHook } from './my-project-hook';
+import { Header,  SearchBar } from '../../components';
+import ProjectsList from './components/projects-list';
 
 const MyProjects = () => {
 
@@ -11,7 +11,6 @@ const MyProjects = () => {
         page,
         data,
         search,
-        reload,
         refresh,
         isFinish,
         onFilter,
@@ -19,23 +18,11 @@ const MyProjects = () => {
         onRefresh,
         projectLoad,
         onEndReached,
-        fetchProjects,
         project_status,
         isProjectFilter,
-        setMyProjectPage,
     } = useMyProjectHook();
 
 
-    React.useEffect(() => {
-        setMyProjectPage({ projectPage: 0 });
-        fetchProjects({ page: 0 });
-
-        const timeoutId = setTimeout(() => {
-            setMyProjectPage({ projectPage: 1 });
-        }, 1000);
-
-        // return () => clearTimeout(timeoutId);
-    }, [reload]);
 
 
     return (

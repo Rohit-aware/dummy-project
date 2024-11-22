@@ -12,6 +12,7 @@ export { default as LeadDetail } from './lead-details/lead-detail-screen';
 export { default as Register } from './auth-screens/register/register-screen';
 export { default as AddNotes } from './notes/screens/add-note/add-note-screen';
 export { default as Reminders } from './home/screens/reminders/reminder-screen';
+export { default as FilterMyProjects } from './filter-screens/my-project-filter';
 export { default as Activities } from './home/screens/activities/activities-screen';
 export { default as FollowUpToday } from './home/screens/followups/followups-screen';
 export { default as ViewLead } from './lead-details/screens/view-leads/view-lead-listing';
