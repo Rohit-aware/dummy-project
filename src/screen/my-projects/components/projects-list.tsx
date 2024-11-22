@@ -1,7 +1,7 @@
 import React from 'react';
 import ProjectsCard from './projects-card';
 import { ProjectsListProps } from '../interface';
-import { StyleSheet, FlatList, } from 'react-native';
+import { StyleSheet, FlatList, View, } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 import { BottomLoader, ListEmptyComponent, Loader } from '../../../components';
 import { ProjectDataType } from '../../../store/my-project-store/interface';
@@ -13,7 +13,6 @@ const EMPTY_IMAGE = require('../../../../assets/images/no_project_record.png');
 const ProjectsList = ({
   page,
   data,
-  finish,
   loading,
   refresh,
   onRefresh,
@@ -43,14 +42,15 @@ const ProjectsList = ({
           showsVerticalScrollIndicator={false}
           contentContainerStyle={[styles.contentContainerStyle]}
           ListFooterComponent={() => {
-            return !finish && data.length !== 0 ? <BottomLoader /> : null;
+            return (loading && page !== 0) ? <BottomLoader /> : null;
           }}
           ListEmptyComponent={() => {
             return (
-              <ListEmptyComponent
+              (!loading && data?.length === 0) ? <ListEmptyComponent
                 image={EMPTY_IMAGE}
                 title={'No Record Available'}
               />
+                : <View />
             );
           }}
           renderItem={({ item, index }) => {

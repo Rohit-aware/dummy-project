@@ -50,6 +50,7 @@ const useMyProjectStore = create<UseMyProjectStoreProps>()((set, get) => ({
             }
             set({ isFinish: true });
         }
+        set({ projectLoad: false })
     },
 }));
 export default useMyProjectStore;

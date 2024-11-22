@@ -23,7 +23,7 @@ const useMyProjectHook = () => {
     };
 
     const onEndReached = () => {
-        if (!isFinish) {
+        if (!isFinish && !projectLoad && data.length > 0) {
             setMyProjectPage({ projectPage: page + 1 });
             fetchProjects({ page: page + 1 });
         }
@@ -35,14 +35,11 @@ const useMyProjectHook = () => {
         setMyProjectPage({ projectPage: 0 });
         fetchProjects({ page: 0 });
     };
-
     const getProjectStatus = () => {
         if (!project_status) return '';
-        const status = projectStatus.find(e => e.project_status?.toLowerCase() === project_status.toLowerCase());
-        return status ? status.id : '';
+        return projectStatus.find(e => e.project_status?.toLowerCase() === project_status?.toLowerCase())?.['id'];
     };
     const fetchProjects = async ({ page }: { page: number }) => {
-        const statusId = getProjectStatus();
         try {
             const fnName = 'getProjects';
             const hash_key = getHashString(
@@ -58,20 +55,20 @@ const useMyProjectHook = () => {
             formData.append('limit', 10);
             search && formData.append('search_key', search);
             if (project_status !== null) {
-                !!client_id && formData.append('client_id', client_id);
-                !!statusId && formData.append('project_status', statusId);
+                client_id !== null && formData.append('client_id', client_id);
+                formData.append('project_status', getProjectStatus());
             } else {
                 if (isProjectFilter !== null) {
                     for (let key in isProjectFilter) {
                         formData.append(key, isProjectFilter[key as keyof IsProjectFilterType]);
                     }
                 }
-            }
+            };
             getProjects({ token, formData, projectPage: page });
-            setRefresh(false);
         } catch (error) {
             console.log("Error isnide fetchProject : ", error)
         }
+        setRefresh(false);
     };
 
     React.useEffect(() => {
@@ -86,7 +83,7 @@ const useMyProjectHook = () => {
         }, 1000);
 
         return () => { clearTimeout(timeoutId); clearTimeout(debounce) };
-    }, [reload,search]);
+    }, [reload, search]);
 
     return {
         page,

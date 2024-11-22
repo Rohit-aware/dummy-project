@@ -41,6 +41,9 @@ type MainStackProps = {
     FilterMyProjects: undefined;
     FilterMyLeads: undefined;
     EditProfile: undefined;
+    FileViewer: {
+        data: { filePath: string, filename: string },
+    };
 };
 
 export type { MainStackProps };

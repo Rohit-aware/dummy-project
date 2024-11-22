@@ -2,28 +2,29 @@ import React from 'react';
 import { Colors } from '../../../constants';
 import { fontStyles } from '../../../styles';
 import { Dots } from '../../../../assets/icons';
-import { useMyLeadStore } from '../../../store';
+import { useMyLeadStore, useMyProjectStore, useReloadStore } from '../../../store';
 import { useNavigation } from '@react-navigation/native';
 import { View, StyleSheet, Text, TouchableOpacity, } from 'react-native';
 
 export default () => {
-  const navigation = useNavigation<any>();
+  const { navigate } = useNavigation<any>();
   const { leadDetails } = useMyLeadStore();
+  const { reloadPage } = useReloadStore();
   const { project_count, closed_projects, client_id } = leadDetails;
-  
-  const onClick = (project_status: any) => {
-    // dispatch(
-    //   enableProjectFilter({
-    //     project_status,
-    //     client_id,
-    //   }),
-    // );
-    navigation.navigate('MyProjects');
+  const { enableProjectFilter } = useMyProjectStore();
+
+  const onClick = (project_status: string | null) => {
+    // reloadPage();
+    enableProjectFilter({
+      project_status,
+      client_id,
+    }),
+      navigate('BottomTab', { screen: 'MyProjects' });
   };
 
   return (
     <View style={styles.container}>
-      <TouchableOpacity onPress={() => onClick('')} style={styles.leftbox}>
+      <TouchableOpacity onPress={() => onClick(null)} style={styles.leftbox}>
         <Text style={styles.projectcount}>{project_count}</Text>
         <Text style={styles.projecttitle}>{'Projects'}</Text>
       </TouchableOpacity>

@@ -28,7 +28,7 @@ const useMyLeadHook = () => {
             formData.append('uuid', uuid);
             formData.append('hash_key', hash_key);
             formData.append('page_number', page);
-            formData.append('limit', 2);
+            formData.append('limit', 10);
             search && formData.append('search_key', search);
             if (leadsFilter !== null) {
                 for (let key in leadsFilter) {
