@@ -1,23 +1,19 @@
 import React from 'react';
-import {
-  View,
-  Text,
-  StyleSheet,
-  TouchableWithoutFeedback,
-} from 'react-native';
-import { useNavigation } from '@react-navigation/native';
 import { Colors } from '../../../constants';
 import { fontStyles } from '../../../styles';
+import { useNavigation } from '@react-navigation/native';
 import { useMyProjectStore, useReloadStore } from '../../../store';
+import { View, Text, StyleSheet, TouchableWithoutFeedback } from 'react-native';
 
 const spacing = 15;
 
 const ProjectBox = ({ discussion, converted }: { discussion: string, converted: string }) => {
   const navigation = useNavigation<any>();
-  const { enableProjectFilter } = useMyProjectStore();
   const { reloadPage } = useReloadStore();
+  const { enableProjectFilter, resetProjectsData } = useMyProjectStore();
   const handlePress = (status: 'Requirement Discussion' | 'Converted') => {
     reloadPage();
+    resetProjectsData();
     enableProjectFilter({
       project_status: status,
       client_id: null,

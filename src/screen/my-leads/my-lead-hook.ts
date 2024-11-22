@@ -34,8 +34,8 @@ const useMyLeadHook = () => {
                 for (let key in leadsFilter) {
                     formData.append(key, leadsFilter[key as keyof IsLeadsFilterType]);
                 }
-            }
-            getLeads({ token, formData, leadPage: page })
+            };
+            getLeads({ token, formData, leadPage: page });
         } catch (error: any) {
             console.log("error isnide fetchLead : ", error);
         }
@@ -61,20 +61,28 @@ const useMyLeadHook = () => {
         fetchLeads({});
     };
 
+    // React.useEffect(() => {
+    //     const delay = search == '' ? 0 : 500;
+    //     const debounce = setTimeout(() => {
+    //         setMyLeadPage({ leadPage: 0 });
+    //         fetchLeads({ page: 0 });
+    //     }, delay);
+
+    //     const timeoutId = setTimeout(() => {
+    //         setMyLeadPage({ leadPage: 1 });
+    //     }, 1000);
+
+    //     return () => { clearTimeout(timeoutId); clearTimeout(debounce) };
+    // }, [reload, search]);
+
     React.useEffect(() => {
         const delay = search == '' ? 0 : 500;
         const debounce = setTimeout(() => {
             setMyLeadPage({ leadPage: 0 });
             fetchLeads({ page: 0 });
         }, delay);
-
-        const timeoutId = setTimeout(() => {
-            setMyLeadPage({ leadPage: 1 });
-        }, 1000);
-
-        return () => { clearTimeout(timeoutId); clearTimeout(debounce) };
+        return () => clearTimeout(debounce);
     }, [reload, search]);
-
 
     return {
         page,

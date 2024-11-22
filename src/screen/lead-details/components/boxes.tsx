@@ -2,14 +2,13 @@ import React from 'react';
 import { Colors } from '../../../constants';
 import { fontStyles } from '../../../styles';
 import { Dots } from '../../../../assets/icons';
-import { useMyLeadStore, useMyProjectStore, useReloadStore } from '../../../store';
 import { useNavigation } from '@react-navigation/native';
+import { useMyLeadStore, useMyProjectStore } from '../../../store';
 import { View, StyleSheet, Text, TouchableOpacity, } from 'react-native';
 
 export default () => {
   const { navigate } = useNavigation<any>();
   const { leadDetails } = useMyLeadStore();
-  const { reloadPage } = useReloadStore();
   const { project_count, closed_projects, client_id } = leadDetails;
   const { enableProjectFilter, resetProjectsData } = useMyProjectStore();
 
