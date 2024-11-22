@@ -1,18 +1,34 @@
 import React from 'react';
 import BottomTab from './BottomTab';
+import notifee from '@notifee/react-native';
 import { MainStackProps } from './interface';
 import DeviceInfo from 'react-native-device-info';
+import RNBootSplash from "react-native-bootsplash";
 import { getHashString } from '../utility/hashing';
 import { NavigationContainer } from '@react-navigation/native';
-import { useAuthStore, useCommonStore, useProfileStore } from '../store';
-import { MainStackNavigatorRef } from '../hooks/mainstack-navigation-ref';
+import { useAuthStore, useCommonStore, useProfileStore, useStartupStore } from '../store';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
+import useNavigationFunction, { MainStackNavigatorRef, } from '../hooks/mainstack-navigation-ref';
 import { Activities, AddActivities, AddLead, AddNotes, AddProject, AddUpcomingActivities, ChangePassword, CreateReminder, EditLead, EditProfile, FilterMyLeads, FilterMyProjects, FollowUpToday, ForgotPassSuccess, ForgotPassword, LeadDetail, Login, Notes, ProjectDetails, Register, Reminders, ShareLead, ShareProject, UpdateProjectStatus, ViewLead, ViewTeam } from '../screen';
 
 const Stack = createNativeStackNavigator<MainStackProps>();
+const { navigate } = useNavigationFunction();
+const getInitialNotification = async () => {
+    const remoteMessage = await notifee.getInitialNotification();
+    if (remoteMessage) {
+        console.log(JSON.stringify(remoteMessage, undefined, 4), 'inside the getInitialNotification ')
+        const { project_id, client_id } = remoteMessage?.notification?.data?.screen as any;
+        if (project_id) {
+            navigate("ProjectDetails", project_id)
+        }
+        else if (client_id) {
+            navigate("LeadDetails", client_id)
+        };
+    };
+};
 
 const MainStack = () => {
-
+    const { fetchStartup } = useStartupStore();
     const { getPersonalDetails } = useProfileStore();
     const { getStates, getRequirementType } = useCommonStore();
     const { updateDeviceId, token, user_detail: userData, deviceId: uuid } = useAuthStore();
@@ -36,13 +52,27 @@ const MainStack = () => {
         getRequirementType({ token, formData });
     };
 
+    const initialiseApp = async () => {
+        try {
+            await getUuid();
+            await getStates();
+            if (token) {
+                await Promise.all([
+                    getRequirements(),
+                    getProfileDetails(),
+                    getInitialNotification(),
+                    fetchStartup({ token })
+
+                ])
+            };
+            await RNBootSplash.hide({ fade: true });
+        } catch (error: any) {
+            console.log('Error while initialising app : ', error);
+        }
+    }
+
     React.useEffect(() => {
-        getUuid();
-        getStates();
-        if (token) {
-            getRequirements();
-            getProfileDetails();
-        };
+        initialiseApp();
     }, [token]);
 
     return (

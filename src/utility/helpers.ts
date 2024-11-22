@@ -55,7 +55,7 @@ const helpers: Helpers = {
     },
     scheduleNotification: async ({ inputs, scheduleTime }): Promise<void> => {
         const { title, project_id, client_id, body } = inputs;
-        const channelId = await helpers.createNotificationChannel();
+        // const channelId = await helpers.createNotificationChannel();
         await notifee.createTriggerNotification(
             {
                 title,
@@ -63,10 +63,14 @@ const helpers: Helpers = {
                 android: {
                     color: '#F5F5F5',
                     sound: 'default',
-                    channelId: channelId,
+                    channelId: 'clms',
                     smallIcon: 'ic_launcher',
                     largeIcon: 'ic_launcher',
                     importance: AndroidImportance.HIGH,
+                    pressAction: {
+                        id: 'default',
+                        launchActivity: 'default',
+                    },
                 },
                 ios: {
                     sound: 'default',

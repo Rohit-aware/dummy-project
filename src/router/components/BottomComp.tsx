@@ -5,7 +5,7 @@ import BottomBack from '../../../assets/icons/BottomBack';
 import { BottomTabBarProps } from '@react-navigation/bottom-tabs';
 import { Home, Leads, Plus, Profile, Projects } from '../../../assets/icons';
 import { FlatList, Keyboard, Text, TouchableOpacity, View } from 'react-native';
-import { useMyLeadStore, useMyProjectStore } from '../../store';
+import { useMyLeadStore, useMyProjectStore, useReloadStore } from '../../store';
 
 type LabelIconProps = { index: number, isFocused: boolean }
 
@@ -13,7 +13,8 @@ const BottomComp = (props: BottomTabBarProps) => {
     const { state, navigation } = props;
     // const route = state.routes[state.index].name;
     const { FilterProjects, enableProjectFilter } = useMyProjectStore();
-    const { FilterLeads, } = useMyLeadStore();
+    const { FilterLeads } = useMyLeadStore();
+    const { reloadPage } = useReloadStore();
     const [showBottomTab, setShowBottTab] = React.useState(true);
     const showtab = () => setShowBottTab(true);
     const hidetab = () => setShowBottTab(false);
@@ -27,6 +28,7 @@ const BottomComp = (props: BottomTabBarProps) => {
         if (index === 3) {
             FilterProjects(null)
             enableProjectFilter({ project_status: null, client_id: null })
+            reloadPage();
             navigation.navigate('MyProjects');
         }
         else { navigation.navigate(state.routeNames[index]); };

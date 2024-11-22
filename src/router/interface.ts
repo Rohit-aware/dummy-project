@@ -27,9 +27,7 @@ type MainStackProps = {
     ViewTeam: {
         details: Partial<ProjectDataType>
     }
-    ProjectDetails: {
-        project_id?: string | number
-    };
+    ProjectDetails: undefined;
     AddActivities: undefined;
     ShareProject: undefined;
     AddUpcomingActivities: undefined;
