@@ -56,7 +56,7 @@ const useMyProjectHook = () => {
             formData.append('page_number', page);
             formData.append('limit', 10);
             search && formData.append('search_key', search);
-            if (project_status) {
+            if (project_status !== null) {
                 client_id && formData.append('client_id', client_id);
                 formData.append('project_status', getProjectStatus());
             } else {

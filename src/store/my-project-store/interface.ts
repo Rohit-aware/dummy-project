@@ -42,8 +42,8 @@ type IsProjectFilterType = {
 }
 
 type Inputes = {
-  client_id: string;
-  project_status: string;
+  client_id: string | null;
+  project_status: string | null;
 }
 interface UseMyProjectStoreProps {
   page: number,

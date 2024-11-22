@@ -2,7 +2,7 @@ import React from 'react';
 import { View } from 'react-native';
 import { Colors } from '../../constants';
 import { useMyProjectHook } from './my-project-hook';
-import { Header,  SearchBar } from '../../components';
+import { Header, SearchBar } from '../../components';
 import ProjectsList from './components/projects-list';
 
 const MyProjects = () => {
@@ -35,7 +35,7 @@ const MyProjects = () => {
                 enabled={
                     project_status == 'Projects'
                         ? false
-                        : project_status != null || isProjectFilter !== ''
+                        : project_status != null
                             ? true
                             : false
                 }
