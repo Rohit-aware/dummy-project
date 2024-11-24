@@ -5,8 +5,8 @@ import { IsProjectFilterType } from "../../store/my-project-store/interface";
 import { useAuthStore, useCommonStore, useMyProjectStore, useReloadStore } from "../../store";
 
 const useMyProjectHook = () => {
-    const navigation = useNavigation<any>();
 
+    const navigation = useNavigation<any>();
     const { projects: data, getProjects, page, isFinish, projectLoad, setMyProjectPage, setIsFinish } = useMyProjectStore();
     const { user_detail: userData, deviceId: uuid, token } = useAuthStore();
     const { reload } = useReloadStore();
@@ -95,7 +95,7 @@ const useMyProjectHook = () => {
             fetchProjects({ page: 0 });
         }, delay);
         return () => clearTimeout(debounce);
-    }, [reload, search]);
+    }, [reload, search, project_status, client_id]);
 
     return {
         page,

@@ -28,7 +28,7 @@ const BottomComp = (props: BottomTabBarProps) => {
         if (index === 3) {
             FilterProjects(null)
             enableProjectFilter({ project_status: null, client_id: null })
-            reloadPage();
+            // reloadPage();
             navigation.navigate('MyProjects');
         }
         else { navigation.navigate(state.routeNames[index]); };

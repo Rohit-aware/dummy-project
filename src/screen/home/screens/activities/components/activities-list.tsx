@@ -4,8 +4,7 @@ import { useNavigation } from '@react-navigation/native';
 import { useUpdateProjectDetail } from '../../../../../hooks';
 import { StyleSheet, FlatList, Linking } from 'react-native';
 import { useProjectDetailsStore } from '../../../../../store';
-import { BottomLoader, Loader, showToast } from '../../../../../components';
-import ListEmptyComponent from '../../followups/components/list-empty-component';
+import { BottomLoader, ListEmptyComponent, Loader, showToast } from '../../../../../components';
 
 interface ActivityListProps {
   data: Array<any>
@@ -24,10 +23,12 @@ export default ({
   onRefresh,
   onEndReached,
 }: ActivityListProps) => {
+
   const { navigate } = useNavigation<any>();
   const [loader, setLoader] = React.useState(false);
   const { resetIsFinishPage } = useProjectDetailsStore();
   const { updateProjectDetail } = useUpdateProjectDetail();
+
   const onJoinMeeting = async (url: string) => {
     try {
       Linking.openURL(url).catch(error => showToast(`Error: ${error.message}`));
