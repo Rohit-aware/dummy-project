@@ -12,7 +12,7 @@ const FileViewer = () => {
     const [loading, setloading] = React.useState(false);
     const pinch = React.useRef();
     const scale = new Animated.Value(1);
-
+    console.log(data)
     const handlePinch = Animated.event([{ nativeEvent: { scale: scale } }], {
         useNativeDriver: true,
     });
@@ -20,7 +20,7 @@ const FileViewer = () => {
     return (
         <View style={{ flex: 1, backgroundColor: Colors.white }}>
             <Header title={data.filename} />
-            {data.filePath.split('.').pop() == 'pdf' ? (
+            {data?.filePath?.split('.')?.pop() === 'pdf' ? (
                 <Pdf
                     trustAllCerts={false}
                     source={{ uri: data.filePath }}

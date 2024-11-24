@@ -7,209 +7,161 @@ import DocumentPicker from 'react-native-document-picker';
 import { networkRequest } from "../../services/network-request";
 import { useAuthStore, useCommonStore, useProfileStore } from "../../store";
 
+type Gender = "M" | "F" | "Other";
+
+interface ProfileInputs {
+    first_name: string;
+    last_name: string;
+    phone_code: number;
+    phone: string;
+    email: string;
+    designation: string;
+    gender: Gender;
+    address: string;
+    state_id: string | number;
+    city_id: string | number;
+    state_name: string;
+    city_name: string;
+    account_number: string;
+    ifsc_code: string;
+    pancard_number: string;
+    aadhar_number: string;
+    pancard: string;
+    aadhar_card: string;
+    pan_file_name: string;
+    aadhar_file_name: string;
+}
+
+const validateProfile = (inputs: ProfileInputs) => {
+    const { checkForEmpty, phoneno, regexEmail, aadharno } = helpers;
+    const validationErrors = [
+        { condition: checkForEmpty(inputs.first_name), message: 'Please enter first name' },
+        { condition: checkForEmpty(inputs.last_name), message: 'Please enter last name' },
+        { condition: checkForEmpty(inputs.phone), message: 'Please enter phone number' },
+        { condition: inputs.phone.length < 10 && inputs.phone_code === 91, message: 'Please enter 10 digit phone number' },
+        { condition: !phoneno.test(inputs.phone), message: 'Please enter valid phone number' },
+        { condition: checkForEmpty(inputs.email), message: 'Please enter email id' },
+        { condition: !regexEmail.test(inputs.email), message: 'Please enter valid email id' },
+        { condition: checkForEmpty(inputs.designation), message: 'Please enter designation' },
+        { condition: checkForEmpty(inputs.address), message: 'Please enter address' },
+        { condition: checkForEmpty(inputs.gender), message: 'Please select gender' },
+        { condition: inputs.pancard_number !== '' && inputs.pancard_number.length < 10, message: 'Please enter 10 digit pan card number' },
+        { condition: inputs.aadhar_number !== '' && inputs.aadhar_number.length < 12 && !aadharno.test(inputs.aadhar_number), message: 'Please enter 12 digit aadhar card number' },
+    ];
+
+    return validationErrors;
+};
+
 const useEditProfileHook = () => {
-    const { aadharno, checkForEmpty, phoneno, regexEmail, Genders } = helpers;
+    const { Genders } = helpers;
     const { user_detail: userData, deviceId: uuid, token } = useAuthStore();
-    const {
-        getPersonalDetails,
-        personalDetails: {
-            first_name,
-            last_name,
-            phone_code,
-            phone,
-            email,
-            address,
-            account_number,
-            ifsc_code,
-            pancard_number,
-            aadhar_number,
-            designation,
-            gender,
-            state_id,
-            city_id,
-            aadhar_card_path: aadhar_card,
-            pancard_path: pancard,
-            pancard: pan_file_name,
-            aadhar_card: aadhar_file_name,
-            state_name,
-            city_name,
-        }
-    } = useProfileStore();
+    const { getPersonalDetails, personalDetails } = useProfileStore();
     const { stateData: states, cityData: city, cityLoad, getCity } = useCommonStore();
-    const [loading, setLoading] = React.useState(false);
-    const [inputs, setInputs] = React.useState<any>({
-        first_name,
-        last_name,
-        phone_code,
-        phone,
-        email,
-        designation,
-        gender,
-        address,
-        state_id,
-        city_id,
-        state_name,
-        city_name,
-        account_number,
-        ifsc_code,
-        pancard_number,
-        aadhar_number,
-        pancard,
-        aadhar_card,
-        pan_file_name,
-        aadhar_file_name,
+
+    const [loading, setLoading] = React.useState<boolean>(false);
+    const [inputs, setInputs] = React.useState<ProfileInputs>({
+        first_name: personalDetails.first_name,
+        last_name: personalDetails.last_name,
+        phone_code: personalDetails.phone_code,
+        phone: personalDetails.phone,
+        email: personalDetails.email,
+        designation: personalDetails.designation,
+        gender: personalDetails.gender,
+        address: personalDetails.address,
+        state_id: personalDetails.state_id,
+        city_id: personalDetails.city_id,
+        state_name: personalDetails.state_name,
+        city_name: personalDetails.city_name,
+        account_number: personalDetails.account_number,
+        ifsc_code: personalDetails.ifsc_code,
+        pancard_number: personalDetails.pancard_number,
+        aadhar_number: personalDetails.aadhar_number,
+        pancard: personalDetails.pancard_path,
+        aadhar_card: personalDetails.aadhar_card_path,
+        pan_file_name: personalDetails.pancard,
+        aadhar_file_name: personalDetails.aadhar_card,
     });
-    const onChangeText = (name: string, value: string) => setInputs({ ...inputs, [name]: value });
-    const panCheck = () => {
-        const error =
-            inputs.pancard_number !== '' && inputs.pancard_number.length < 10
-                ? true
-                : false;
-        return error;
+
+    const onChangeText = (name: keyof ProfileInputs, value: string) => setInputs(prev => ({ ...prev, [name]: value }));
+
+    const onSelect = (name: keyof ProfileInputs, data: any) => {
+        setInputs(prev => ({
+            ...prev,
+            [name === 'gender' ? 'gender' : name]: name === 'state_name' || name === 'city_name' ? data : data['full_name']
+        }));
     };
 
-    const aadharCheck = () => {
-        const error =
-            inputs.aadhar_number !== '' &&
-                inputs.aadhar_number.length < 12 &&
-                !aadharno.test(inputs.aadhar_number)
-                ? true
-                : false;
-        return error;
-    };
-
-    const onSelect = (name: string, data: any) => {
-        name === 'gender'
-            ? setInputs({ ...inputs, [name]: data['full_name'] })
-            : name == 'state_name'
-                ? setInputs({
-                    ...inputs,
-                    state_id: data['state_id'],
-                    state_name: data['state_name'],
-                    city_id: '',
-                    city_name: '',
-                })
-                : name == 'city_name'
-                    ? setInputs({
-                        ...inputs,
-                        city_id: data['city_id'],
-                        city_name: data['city_name'],
-                    })
-                    : null;
-    };
-
-    const fetchCities = async () => {
-        if (inputs.state_id !== '0' && inputs.state_id !== '') {
+    const fetchCities = React.useCallback(async () => {
+        if (inputs.state_id && inputs.state_id !== '0') {
             try {
                 const formData = new FormData();
-                formData.append('state_id', inputs.state_id);
-                getCity({ token: token, formData })
+                formData.append('state_id', inputs.state_id as string);
+                getCity({ token: token, formData });
             } catch (error) {
-                console.log(error);
+                console.error('Error fetching cities:', error);
             }
         }
-    };
+    }, [inputs.state_id, token]);
 
     const onUpload = async (name: string) => {
         try {
             const response = await DocumentPicker.pickSingle({
                 type: [DocumentPicker.types.pdf, DocumentPicker.types.images],
             });
-            name == 'aadhar_card'
-                ? setInputs({
-                    ...inputs,
-                    aadhar_card: {
-                        uri: response.uri,
-                        type: response.type,
-                        name: response.name,
-                    },
-                    aadhar_file_name: response.name,
-                })
-                : setInputs({
-                    ...inputs,
-                    pancard: {
-                        uri: response.uri,
-                        type: response.type,
-                        name: response.name,
-                    },
-                    pan_file_name: response.name,
-                });
-        } catch (error) { }
-    };
-    const onEdit = async () => {
-        if (checkForEmpty(inputs.first_name)) {
-            showToast('Please enter first name');
-        } else if (checkForEmpty(inputs.last_name)) {
-            showToast('Please enter last name');
-        } else if (checkForEmpty(inputs.phone)) {
-            showToast('Please enter phone number');
-        } else if (inputs.phone.length < 10 && phone_code === 91) {
-            showToast('Please enter 10 digit phone number');
+            const newFile = {
+                uri: response.uri,
+                type: response.type,
+                name: response.name,
+            };
+            setInputs(prev => ({
+                ...prev,
+                [name === 'aadhar_card' ? 'aadhar_card' : 'pancard']: newFile,
+                [name === 'aadhar_card' ? 'aadhar_file_name' : 'pan_file_name']: response.name,
+            }));
+        } catch (error) {
+            console.error('Error uploading document:', error);
         }
-        else if (!phoneno.test(inputs.phone)) {
-            showToast('Please enter valid phone number');
-        } else if (checkForEmpty(inputs.email)) {
-            showToast('Please enter email id');
-        } else if (!regexEmail.test(inputs.email)) {
-            showToast('Please enter valid email id');
-        } else if (checkForEmpty(inputs.designation)) {
-            showToast('Please enter designation');
-        } else if (checkForEmpty(inputs.address)) {
-            showToast('Please enter address');
-        } else if (checkForEmpty(inputs.gender)) {
-            showToast('Please select gender');
-        } else if (panCheck()) {
-            showToast('Please enter 10 digit pan card number');
-        } else if (aadharCheck()) {
-            showToast('Please enter 12 digit aadhar card number');
-        } else {
-            try {
-                setLoading(true);
-                const fnName = 'updateProfile';
-                const hash_key = getHashString(
-                    userData.mkey!,
-                    userData.msalt!,
-                    uuid,
-                    fnName,
-                );
-                const formData = new FormData();
-                formData.append('first_name', inputs.first_name);
-                formData.append('last_name', inputs.last_name);
-                formData.append('phone', inputs.phone);
-                formData.append('email', inputs.email);
-                formData.append('designation', inputs.designation);
-                formData.append('gender', inputs.gender == 'Male' ? 'M' : 'F');
-                formData.append('address', inputs.address);
-                !checkForEmpty(inputs.state_id) &&
-                    formData.append('state_id', inputs.state_id);
-                !checkForEmpty(inputs.city_id) &&
-                    formData.append('city_id', inputs.city_id);
-                !checkForEmpty(inputs.account_number) &&
-                    formData.append('account_number', inputs.account_number);
-                !checkForEmpty(inputs.ifsc_code) &&
-                    formData.append('ifsc_code', inputs.ifsc_code);
-                !checkForEmpty(inputs.pancard_number) &&
-                    formData.append('pancard_number', inputs.pancard_number);
-                !checkForEmpty(inputs.aadhar_number) &&
-                    formData.append('aadhar_number', inputs.aadhar_number);
-                !checkForEmpty(inputs.pancard) && inputs.pancard.uri
-                    ? formData.append('pancard', inputs.pancard)
-                    : null;
-                !checkForEmpty(inputs.aadhar_card) && inputs.aadhar_card.uri
-                    ? formData.append('aadhar_card', inputs.aadhar_card)
-                    : null;
-                formData.append('uuid', uuid);
-                formData.append('hash_key', hash_key);
-                const response = await networkRequest({ token }).post(endpoints.updateProfile, formData);
-                showToast(response.data.message);
-                if (response.data.success === '1') {
-                    updatePersonaldetails();
-                }
-            } catch (error) {
-                console.log(error, 'error located at onEdit in edit profile');
+    };
+
+    const onEdit = async () => {
+        const validationErrors = validateProfile(inputs);
+        for (const error of validationErrors) {
+            if (error.condition) {
+                showToast(error.message);
+                return;
             }
         }
-        setLoading(false);
+
+        try {
+            setLoading(true);
+            const fnName = 'updateProfile';
+            const hash_key = getHashString(userData.mkey!, userData.msalt!, uuid, fnName);
+            const formData = new FormData();
+
+            Object.keys(inputs).forEach((key) => {
+                const inputKey = key as keyof ProfileInputs;
+                const inputValue = inputs[inputKey];
+
+                if (inputValue && typeof inputValue === 'object' && 'uri' in inputValue) {
+                    formData.append(inputKey, inputValue);
+                } else if (inputValue && inputValue !== '' && inputKey !== 'pancard' && inputKey !== 'aadhar_card') {
+                    formData.append(inputKey, inputValue);
+                }
+            });
+
+            formData.append('uuid', uuid);
+            formData.append('hash_key', hash_key);
+
+            const response = await networkRequest({ token }).post(endpoints.updateProfile, formData);
+            showToast(response.data.message);
+            if (response.data.success === '1') {
+                updatePersonaldetails();
+            }
+        } catch (error) {
+            console.error('Error updating profile:', error);
+        } finally {
+            setLoading(false);
+        }
     };
 
     const updatePersonaldetails = async () => {
@@ -221,7 +173,7 @@ const useEditProfileHook = () => {
 
     React.useEffect(() => {
         fetchCities();
-    }, [inputs.state_id]);
+    }, [fetchCities]);
 
     return {
         city,
@@ -233,8 +185,8 @@ const useEditProfileHook = () => {
         onSelect,
         cityLoad,
         onUpload,
-        phone_code,
         onChangeText,
     };
 };
+
 export { useEditProfileHook };

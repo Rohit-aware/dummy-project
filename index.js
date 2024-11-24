@@ -9,7 +9,6 @@ import { helpers } from './src/utility';
 import { AppRegistry } from 'react-native';
 import { name as appName } from './app.json';
 import messaging from '@react-native-firebase/messaging';
-import useNavigationFunction from './src/hooks/mainstack-navigation-ref';
 import notifee, { AndroidImportance, AndroidVisibility, EventType, } from '@notifee/react-native';
 
 notifee.createChannel({
@@ -21,7 +20,7 @@ notifee.createChannel({
     importance: AndroidImportance.HIGH,
     visibility: AndroidVisibility.PRIVATE,
 });
-const { navigate } = useNavigationFunction();
+
 notifee.onForegroundEvent(async ({ type, detail }) => {
     switch (type) {
         case EventType.DELIVERED:
@@ -29,10 +28,10 @@ notifee.onForegroundEvent(async ({ type, detail }) => {
         case EventType.PRESS:
             const { project_id, client_id } = detail?.notification?.data;
             if (project_id) {
-                navigate("ProjectDetails", project_id)
+                helpers.navigate("ProjectDetails", project_id)
             }
             else if (client_id) {
-                navigate("LeadDetails", client_id)
+                helpers.navigate("LeadDetails", client_id)
             }
             break;
         default:
@@ -47,10 +46,10 @@ notifee.onBackgroundEvent(async ({ type, detail }) => {
         case EventType.PRESS:
             const { project_id, client_id } = detail?.notification?.data;
             if (project_id) {
-                navigate("ProjectDetails", project_id)
+                helpers.navigate("ProjectDetails", project_id)
             }
             else if (client_id) {
-                navigate("LeadDetails", client_id)
+                helpers.navigate("LeadDetails", client_id)
             }
             break;
         default:

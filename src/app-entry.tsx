@@ -1,10 +1,10 @@
 import React from 'react';
+import { Colors } from './constants';
 import MainStack from './router/main-stack';
 import messaging from '@react-native-firebase/messaging';
 import { StyleSheet, LogBox, StatusBar } from 'react-native';
 import { GestureHandlerRootView } from 'react-native-gesture-handler';
 import { useNotificationPermission } from './hooks/notification-permission';
-import { Colors } from './constants';
 
 LogBox.ignoreAllLogs()
 
@@ -26,7 +26,7 @@ const AppEntry = () => {
 
     return (
         <GestureHandlerRootView style={styles.container}>
-            <StatusBar backgroundColor={Colors.blue} barStyle={'light-content'} networkActivityIndicatorVisible animated />
+            <StatusBar backgroundColor={Colors.lightblue} barStyle={'light-content'} networkActivityIndicatorVisible animated />
             <MainStack />
         </GestureHandlerRootView>
     )

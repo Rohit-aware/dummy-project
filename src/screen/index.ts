@@ -6,6 +6,7 @@ export { default as Notes } from './notes/notes-listing-screen';
 export { default as EditLead } from './edit-lead/edit-lead-screen';
 export { default as ViewTeam } from './view-team/view-team-screen';
 export { default as Login } from './auth-screens/Login/login-screen';
+export { default as FileViewer } from './file-viewer/file-viewer-screen';
 export { default as AddProject } from './add-project/add-project-screen';
 export { default as MyProjects } from './my-projects/my-projects-screen';
 export { default as LeadDetail } from './lead-details/lead-detail-screen';

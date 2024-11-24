@@ -54,6 +54,7 @@ const useProfileHook = () => {
         const hash_key = getHashString(userData.mkey!, userData.msalt!, uuid, fnName);
         const formData = { uuid, hash_key };
         getPersonalDetails({ token, formData });
+        setRefresh(false);
     };
 
     React.useEffect(() => {

@@ -1,20 +1,19 @@
 import { Linking, Platform } from 'react-native';
-import notifee, { AndroidImportance, TriggerType } from '@notifee/react-native';
+import { useUpdateProjectDetail } from '../hooks';
+import useUpdateLeadDetails from '../hooks/update-lead-details-hook';
 import { MainStackNavigatorRef } from '../hooks/mainstack-navigation-ref';
+import notifee, { AndroidImportance, TriggerType } from '@notifee/react-native';
 
 interface NotificationInputs {
     title: string;
     body: string;
     project_id?: string | number
     client_id?: string | number
-}
+};
+
 interface Helpers {
     phoneno: RegExp;
     aadharno: RegExp;
-    Genders: Array<{
-        short_name: string;
-        full_name: string;
-    }>
     regexEmail: RegExp;
     httpPrefix: string;
     websiteprefix: string;
@@ -23,8 +22,10 @@ interface Helpers {
     emailCheck: (value: string) => boolean;
     getDateString: (value: string) => string;
     checkForEmpty: (value: string) => boolean;
+    navigate: (name: string, id: string) => void;
     openCall: ({ phone }: { phone: string }) => void;
     createNotificationChannel: () => Promise<string | ''>;
+    Genders: Array<{ short_name: string; full_name: string; }>
     navigateThroughFCM: (name?: string | any, params?: object | undefined | any) => void;
     scheduleNotification: ({ inputs, scheduleTime }: { inputs: NotificationInputs, scheduleTime: number }) => Promise<void>;
 }
@@ -34,6 +35,21 @@ const helpers: Helpers = {
         let date = dateString.split(" ")
         return `${date[2]}-${date[1]}-${date[3]}`
     },
+    navigate: async (name: string, id: string) => {
+        const { updateProjectDetail } = useUpdateProjectDetail();
+        const { updateLeadDetail } = useUpdateLeadDetails();
+
+        if (MainStackNavigatorRef.current && MainStackNavigatorRef.current.isReady()) {
+            let result;
+            if (name == "ProjectDetails") {
+                result = await updateProjectDetail(id);
+                result && helpers.navigateThroughFCM('ProjectDetails');
+            } else if (name == "LeadDetails") {
+                result = await updateLeadDetail(id);
+                result && helpers.navigateThroughFCM('LeadDetails');
+            }
+        }
+    },
     createNotificationChannel: async (): Promise<string | 'clms'> => {
         const existingChannel = await notifee.getChannel('clms');
         if (!existingChannel) {
@@ -42,7 +58,6 @@ const helpers: Helpers = {
                 name: 'CLMS Notifications',
                 sound: 'default',
                 vibration: true,
-                // vibrationPattern: [10, 20, 30, 40],
                 importance: AndroidImportance.HIGH,
             });
             return channelId;
@@ -70,6 +85,7 @@ const helpers: Helpers = {
                     pressAction: {
                         id: 'default',
                         launchActivity: 'default',
+                        mainComponent: 'AppEntry'
                     },
                 },
                 ios: {
