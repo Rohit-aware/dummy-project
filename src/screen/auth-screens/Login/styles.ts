@@ -17,33 +17,6 @@ const LoginStyles = StyleSheet.create({
         alignSelf: 'center',
         marginVertical: moderateScale(30),
     },
-    topcontainer: {
-        width: SCREEN_WIDTH,
-        height: moderateScale(180),
-        position: 'absolute',
-        top: 0,
-        right: moderateScale(-5),
-    },
-    rightimage: {
-        position: 'absolute',
-        right: moderateScale(0),
-        top: -moderateScale(20),
-    },
-
-    bottomcontainer: {
-        zIndex: -1,
-        width: SCREEN_WIDTH,
-        height: moderateScale(160),
-        position: 'absolute',
-        bottom: 0,
-        left: -5,
-        transform: [{ rotate: '180deg' }],
-    },
-    bottomimage: {
-        position: 'absolute',
-        right: 0,
-        top: -20,
-    },
     root: {
         flex: 1,
         backgroundColor: Colors.white,
@@ -65,6 +38,33 @@ const LoginStyles = StyleSheet.create({
     },
     register: {
         color: Colors.yellow,
+    },
+    topcontainer: {
+        width: SCREEN_WIDTH,
+        height: 180,
+        position: 'absolute',
+        top: 0,
+        right: -5,
+    },
+    rightimage: {
+        position: 'absolute',
+        right: 0,
+        top: -20,
+    },
+
+    bottomcontainer: {
+        zIndex: -1,
+        width: SCREEN_WIDTH,
+        height: 160,
+        position: 'absolute',
+        bottom: 0,
+        left: -5,
+        transform: [{ rotate: '180deg' }],
+    },
+    bottomimage: {
+        position: 'absolute',
+        right: 0,
+        top: -20,
     },
 });
 

@@ -7,8 +7,8 @@ import DeviceInfo from 'react-native-device-info';
 import RNBootSplash from "react-native-bootsplash";
 import { getHashString } from '../utility/hashing';
 import { NavigationContainer } from '@react-navigation/native';
-import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import { MainStackNavigatorRef, } from '../hooks/mainstack-navigation-ref';
+import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import { useAuthStore, useCommonStore, useProfileStore, useStartupStore } from '../store';
 import { Activities, AddActivities, AddLead, AddNotes, AddProject, AddUpcomingActivities, ChangePassword, CreateReminder, EditLead, EditProfile, FileViewer, FilterMyLeads, FilterMyProjects, FollowUpToday, ForgotPassSuccess, ForgotPassword, LeadDetail, Login, Notes, ProjectDetails, Register, Reminders, ShareLead, ShareProject, UpdateProjectStatus, ViewLead, ViewTeam } from '../screen';
 
@@ -64,7 +64,6 @@ const MainStack = () => {
                     getProfileDetails(),
                     getInitialNotification(),
                     fetchStartup({ token })
-
                 ]);
             };
             await RNBootSplash.hide({ fade: true });

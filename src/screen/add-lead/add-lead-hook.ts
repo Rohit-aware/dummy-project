@@ -113,10 +113,11 @@ const useAddLeadHook = (): UseAddLeadHookReturnType => {
         ];
 
         for (const error of validationErrors) {
-            if (error.condition) {
-                showToast(error.message);
+            const { condition, message } = error;
+            if (condition) {
+                showToast(message);
                 return;
-            }
+            };
         };
 
         try {

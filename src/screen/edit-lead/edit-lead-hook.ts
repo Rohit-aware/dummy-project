@@ -83,7 +83,7 @@ const useEditLeadHook = () => {
         }
     };
 
-    const fetchCities = async () => {
+    const fetchCities = React.useCallback(async () => {
         if (inputs.state_id !== '0' && inputs.state_id !== '') {
             try {
                 const formData = new FormData();
@@ -93,10 +93,9 @@ const useEditLeadHook = () => {
                 console.log(error);
             }
         }
-    };
+    }, [inputs.state_id]);
 
     const onSelect = (name: string, data: any) => {
-        // console.log(name,data)
         name == 'state_name'
             ? setInputs({
                 ...inputs,
@@ -214,7 +213,7 @@ const useEditLeadHook = () => {
 
     React.useEffect(() => {
         fetchCities();
-    }, [inputs.state_id]);
+    }, [fetchCities]);
 
 
 

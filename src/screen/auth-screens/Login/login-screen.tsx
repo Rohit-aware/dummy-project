@@ -7,50 +7,8 @@ import { moderateScale } from '../../../constants';
 import { View, Text, ImageBackground } from 'react-native';
 import { Button, InputBox, TakeSpace } from '../../../components';
 
-
-
-
 const LOGO = require('../../../../assets/images/logo.png');
 const CORNER_IMG = require('../../../../assets/images/curves.png');
-
-
-const Greet = () => {
-    return (
-        <>
-            <TakeSpace space={30} />
-            <Text style={styles.heading}>{'Welcome !!'}</Text>
-            <Text style={styles.hint}>
-                {'Sign in to your account and get Started'}
-            </Text>
-            <FastImage source={LOGO} style={styles.logo} resizeMode="stretch" />
-        </>
-    );
-};
-
-const BackGround = () => {
-    return (
-        <>
-            <ImageBackground
-                source={CORNER_IMG}
-                style={styles.topcontainer}
-                resizeMode="cover">
-                <View style={styles.rightimage}>
-                    <Moon />
-                </View>
-            </ImageBackground>
-            <ImageBackground
-                source={CORNER_IMG}
-                style={styles.bottomcontainer}
-                resizeMode="cover">
-                <View style={styles.bottomimage}>
-                    <Moon />
-                </View>
-            </ImageBackground>
-        </>
-    )
-}
-
-
 
 const Login = () => {
 
@@ -62,6 +20,44 @@ const Login = () => {
         onRegister,
         onChangeText,
     } = useLogin();
+
+
+    const Greet = React.useCallback(() => {
+        return (
+            <>
+                <TakeSpace space={30} />
+                <Text style={styles.heading}>{'Welcome !!'}</Text>
+                <Text style={styles.hint}>
+                    {'Sign in to your account and get Started'}
+                </Text>
+                <FastImage source={LOGO} style={styles.logo} resizeMode="stretch" />
+            </>
+        );
+    }, []);
+    
+    const BackGround = React.useCallback(() => {
+        return (
+            <>
+                <ImageBackground
+                    source={CORNER_IMG}
+                    style={styles.topcontainer}
+                    resizeMode="cover">
+                    <View style={styles.rightimage}>
+                        <Moon />
+                    </View>
+                </ImageBackground>
+                <ImageBackground
+                    source={CORNER_IMG}
+                    style={styles.bottomcontainer}
+                    resizeMode="cover">
+                    <View style={styles.bottomimage}>
+                        <Moon />
+                    </View>
+                </ImageBackground>
+            </>
+        );
+    }, []);
+
 
     return (
         <View style={{ flex: 1, paddingHorizontal: moderateScale(16) }}>
@@ -96,6 +92,6 @@ const Login = () => {
             </Text>
         </View>
     )
-}
+};
 
 export default Login;
