@@ -8,7 +8,9 @@ import { Header, NavigatorButton, ProjectsBox, VersionDetail } from './component
 const Home = () => {
     const {
         data,
+        refresh,
         loading,
+        onRefresh,
         onNavigator,
         fetchHomeData,
         fetchOutsiders,
@@ -59,6 +61,8 @@ const Home = () => {
         <View style={{ flex: 1, backgroundColor: Colors.white }}>
             <FlatList
                 data={[1]}
+                refreshing={refresh}
+                onRefresh={onRefresh}
                 renderItem={_renderHome_}
                 showsVerticalScrollIndicator={false}
                 contentContainerStyle={{ paddingBottom: moderateScale(10) }}

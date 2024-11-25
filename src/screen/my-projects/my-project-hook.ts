@@ -21,7 +21,7 @@ const useMyProjectHook = () => {
         setSearch('');
         navigation.navigate('FilterMyProjects');
     };
-console.log(JSON.stringify(isFinish,undefined,4), ' Logged ')
+    
     const onEndReached = () => {
         if (!isFinish && data.length > 0 && !projectLoad) {
             setMyProjectPage({ projectPage: page + 1 });

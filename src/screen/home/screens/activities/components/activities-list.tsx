@@ -85,8 +85,7 @@ export default ({
           }}
         />
       )}
-
-      {loader && <BottomLoader />}
+      {loader && <Loader style={{ backgroundColor: 'transparent' }} />}
     </>
   );
 };

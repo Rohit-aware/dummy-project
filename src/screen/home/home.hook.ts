@@ -1,20 +1,24 @@
+import React from "react";
 import { getHashString } from "../../utility/hashing";
 import { DashboardData } from "../../store/home/interface";
-import { useAuthStore, useCommonStore, useHomeStore, useActivitiesStore } from "../../store";
 import { useNavigation } from "@react-navigation/native";
+import { useAuthStore, useCommonStore, useHomeStore, useActivitiesStore } from "../../store";
 interface UseHomeReturnProps {
-    data: DashboardData;
+    refresh: boolean;
     loading: boolean;
-    onNavigator: (name: string) => void;
-    fetchHomeData: () => Promise<void>;
+    data: DashboardData;
+    onRefresh: () => void;
     fetchOutsiders: () => void;
     fetchmaster_data: () => void;
     resetIsFinishPage: () => void;
+    fetchHomeData: () => Promise<void>;
+    onNavigator: (name: string) => void;
 };
 
 const useHome = (): UseHomeReturnProps => {
     const { navigate } = useNavigation<any>();
     const { resetIsFinishPage } = useActivitiesStore();
+    const [refresh, setRefresh] = React.useState(false);
     const { getOutsiders, getMasterData } = useCommonStore();
     const { getDashboardData, data, loading } = useHomeStore();
     const { user_detail, deviceId: uuid, token } = useAuthStore();
@@ -63,21 +67,29 @@ const useHome = (): UseHomeReturnProps => {
             const formData = new FormData();
             formData.append('uuid', uuid);
             formData.append('hash_key', hash_key);
-            getDashboardData({ formData, token })
+            getDashboardData({ formData, token });
+            setRefresh(loading);
         } catch (error: any) {
             console.log(error, ': error isnide the fetchHomeData function')
-        }
+        };
+    };
+
+    const onRefresh = () => {
+        setRefresh(true);
+        fetchHomeData();
     };
 
     return {
         data,
+        refresh,
         loading,
+        onRefresh,
         onNavigator,
         fetchHomeData,
         fetchOutsiders,
         fetchmaster_data,
         resetIsFinishPage,
-    }
-}
+    };
+};
 
 export { useHome };

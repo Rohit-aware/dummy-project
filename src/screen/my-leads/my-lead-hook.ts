@@ -1,11 +1,26 @@
 import React from 'react';
 import { getHashString } from '../../utility/hashing';
-import { useAuthStore, useMyLeadStore, useReloadStore } from '../../store';
 import { useNavigation } from '@react-navigation/native';
 import { IsLeadsFilterType } from '../../store/my-leads/interface';
+import { useAuthStore, useMyLeadStore, useReloadStore } from '../../store';
 
 
-const useMyLeadHook = () => {
+interface UseMyLeadHookReturnTpye {
+    page: number;
+    search: string;
+    loading: boolean;
+    refresh: boolean;
+    isFinish: boolean;
+    onFilter: () => void;
+    onRefresh: () => void;
+    leadsData: any[];
+    onEndReached: () => Promise<void>;
+    leadsFilter: Partial<IsLeadsFilterType> | null;
+    setSearch: React.Dispatch<React.SetStateAction<string>>;
+};
+
+
+const useMyLeadHook = (): UseMyLeadHookReturnTpye => {
     const [search, setSearch] = React.useState('');
     const [refresh, setRefresh] = React.useState(false);
 
@@ -61,19 +76,6 @@ const useMyLeadHook = () => {
         fetchLeads({});
     };
 
-    // React.useEffect(() => {
-    //     const delay = search == '' ? 0 : 500;
-    //     const debounce = setTimeout(() => {
-    //         setMyLeadPage({ leadPage: 0 });
-    //         fetchLeads({ page: 0 });
-    //     }, delay);
-
-    //     const timeoutId = setTimeout(() => {
-    //         setMyLeadPage({ leadPage: 1 });
-    //     }, 1000);
-
-    //     return () => { clearTimeout(timeoutId); clearTimeout(debounce) };
-    // }, [reload, search]);
 
     React.useEffect(() => {
         const delay = search == '' ? 0 : 500;

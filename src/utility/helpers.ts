@@ -10,7 +10,6 @@ const helpers: Helpers = {
         let date = dateString.split(" ")
         return `${date[2]}-${date[1]}-${date[3]}`
     },
-
     createNotificationChannel: async () => {
         const existingChannel = await notifee.getChannel('clms');
         if (!existingChannel) {
