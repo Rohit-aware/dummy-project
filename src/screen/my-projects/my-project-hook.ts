@@ -21,7 +21,7 @@ const useMyProjectHook = () => {
         setSearch('');
         navigation.navigate('FilterMyProjects');
     };
-
+console.log(JSON.stringify(isFinish,undefined,4), ' Logged ')
     const onEndReached = () => {
         if (!isFinish && data.length > 0 && !projectLoad) {
             setMyProjectPage({ projectPage: page + 1 });
@@ -30,8 +30,8 @@ const useMyProjectHook = () => {
     };
 
     const onRefresh = () => {
-        setRefresh(true);
         setIsFinish()
+        setRefresh(true);
         setMyProjectPage({ projectPage: 0 });
         fetchProjects({ page: 0 });
     };
@@ -71,26 +71,10 @@ const useMyProjectHook = () => {
         setRefresh(false);
     };
 
-    // React.useEffect(() => {
-    //     const delay = search == '' ? 0 : 500;
-    //     const debounce = setTimeout(() => {
-    //         setMyProjectPage({ projectPage: 0 });
-    //         fetchProjects({ page: 0 });
-    //     }, delay);
-
-    //     const timeoutId = setTimeout(() => {
-    //         setMyProjectPage({ projectPage: 1 });
-    //     }, 1000);
-
-    //     return () => { 
-    //         clearTimeout(timeoutId); 
-    //         clearTimeout(debounce);
-    //      };
-    // }, [reload, search]);
-
     React.useEffect(() => {
         const delay = search == '' ? 0 : 500;
         const debounce = setTimeout(() => {
+            setIsFinish();
             setMyProjectPage({ projectPage: 0 });
             fetchProjects({ page: 0 });
         }, delay);
