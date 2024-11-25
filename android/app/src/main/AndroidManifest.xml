@@ -3,6 +3,7 @@
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.POST_NOTIFICATIONS" />
     <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED"/>
+    <uses-permission android:name="android.permission.REQUEST_IGNORE_BATTERY_OPTIMIZATIONS"/>
 
     <application
       android:name=".MainApplication"
@@ -14,9 +15,20 @@
       android:usesCleartextTraffic="true"
       android:supportsRtl="true"
       android:extractNativeLibs="true">
+      
+      <service
+        android:name=".NotificationGenie"
+        android:enabled="true" 
+        android:exported="true"> 
+          <intent-filter>
+            <action android:name="com.google.firebase.MESSAGING_EVENT"/>
+          </intent-filter>
+      </service>
+
       <service android:name="me.dieam.reactnativepushnotification.services.NotificationService" 
          android:enabled="true" 
          android:exported="false"/>
+      
       <activity
         android:name=".MainActivity"
         android:label="@string/app_name"

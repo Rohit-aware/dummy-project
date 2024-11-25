@@ -18,7 +18,6 @@ interface Helpers {
     emailCheck: (value: string) => boolean;
     getDateString: (value: string) => string;
     checkForEmpty: (value: string) => boolean;
-    navigate: (name: string, id: string) => void;
     openCall: ({ phone }: { phone: string }) => void;
     createNotificationChannel: () => Promise<string | ''>;
     Genders: Array<{ short_name: string; full_name: string; }>

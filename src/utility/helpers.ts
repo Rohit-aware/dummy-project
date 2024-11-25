@@ -1,9 +1,6 @@
 import { Helpers } from './interface';
 import { Linking, Platform } from 'react-native';
-import { useUpdateProjectDetail } from '../hooks';
-import useUpdateLeadDetails from '../hooks/update-lead-details-hook';
 import { MainStackNavigatorRef } from '../hooks/mainstack-navigation-ref';
-import { useAuthStore, useMyLeadStore, useMyProjectStore } from '../store';
 import notifee, { AndroidImportance, TriggerType } from '@notifee/react-native';
 
 
@@ -13,25 +10,7 @@ const helpers: Helpers = {
         let date = dateString.split(" ")
         return `${date[2]}-${date[1]}-${date[3]}`
     },
-    navigate: async (name, id) => {
-        const { getSingleLeads } = useMyLeadStore();
-        const { token, user_detail, deviceId } = useAuthStore();
-        const { updateLeadDetail } = useUpdateLeadDetails();
-        const { updateProjectDetail } = useUpdateProjectDetail();
-        const { getSingleProject, setProjectDetail } = useMyProjectStore();
 
-        if (MainStackNavigatorRef.current && MainStackNavigatorRef.current.isReady()) {
-            let result;
-            if (name === "ProjectDetails") {
-                result = await updateProjectDetail(id, token, user_detail, deviceId, getSingleProject, setProjectDetail);
-                console.log({ result });
-                result && helpers.navigateThroughFCM('ProjectDetails');
-            } else if (name === "LeadDetails") {
-                result = await updateLeadDetail(id, token, user_detail, deviceId, getSingleLeads);
-                result && helpers.navigateThroughFCM('LeadDetails');
-            }
-        }
-    },
     createNotificationChannel: async () => {
         const existingChannel = await notifee.getChannel('clms');
         if (!existingChannel) {
@@ -46,7 +25,6 @@ const helpers: Helpers = {
         }
         return existingChannel?.id;
     },
-
     navigateThroughFCM: (name, params) => {
         MainStackNavigatorRef.current?.navigate(name, params);
     },
@@ -57,7 +35,7 @@ const helpers: Helpers = {
             body: remoteMessage.notification!.body,
             data: { ...remoteMessage.data },
             android: {
-                channelId: 'Channel-ID',
+                channelId: 'clms',
                 color: '#f0f0f0',
                 sound: "default",
                 pressAction: {
@@ -108,7 +86,6 @@ const helpers: Helpers = {
             }
         );
     },
-
 
     checkForEmpty: (value) => {
         return value == null || value === 'undefined' || value === '' || value === 'null';

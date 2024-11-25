@@ -1,11 +1,11 @@
 import React from 'react';
 import BottomTab from './BottomTab';
-import { helpers } from '../utility';
-import notifee from '@notifee/react-native';
+import {useNavigateHelper} from '../hooks';
 import { MainStackProps } from './interface';
 import DeviceInfo from 'react-native-device-info';
 import RNBootSplash from "react-native-bootsplash";
 import { getHashString } from '../utility/hashing';
+import messaging from '@react-native-firebase/messaging';
 import { NavigationContainer } from '@react-navigation/native';
 import { MainStackNavigatorRef, } from '../hooks/mainstack-navigation-ref';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
@@ -15,17 +15,29 @@ import { Activities, AddActivities, AddLead, AddNotes, AddProject, AddUpcomingAc
 const Stack = createNativeStackNavigator<MainStackProps>();
 
 
-const getInitialNotification = async () => {
-    const remoteMessage = await notifee.getInitialNotification();
-    if (remoteMessage) {
+const getInitialNotification = async (navigate: Function) => {
+    messaging().onNotificationOpenedApp((remoteMessage) => {
         console.log(JSON.stringify(remoteMessage, undefined, 4), 'inside the getInitialNotification ');
-        const { project_id, client_id } = remoteMessage?.notification?.data as any;
-        if (project_id) {
-            helpers.navigate("ProjectDetails", project_id);
-        } else if (client_id) {
-            helpers.navigate("LeadDetails", client_id);
+        if (remoteMessage) {
+            console.log(JSON.stringify(remoteMessage, undefined, 4), 'inside the getInitialNotification ');
+            const { data: { project_id, client_id } } = remoteMessage?.notification as any;
+            if (project_id) {
+                navigate("ProjectDetails", project_id);
+            } else if (client_id) {
+                navigate("LeadDetails", client_id);
+            };
         };
-    };
+    })
+    // const remoteMessage = await notifee.getInitialNotification();
+    // if (remoteMessage) {
+    //     console.log(JSON.stringify(remoteMessage, undefined, 4), 'inside the getInitialNotification ');
+    //     const { project_id, client_id } = remoteMessage?.notification?.data as any;
+    //     if (project_id) {
+    //         helpers.navigate("ProjectDetails", project_id);
+    //     } else if (client_id) {
+    //         helpers.navigate("LeadDetails", client_id);
+    //     };
+    // };
 };
 
 const MainStack = () => {
@@ -33,7 +45,7 @@ const MainStack = () => {
     const { getPersonalDetails } = useProfileStore();
     const { getStates, getRequirementType } = useCommonStore();
     const { updateDeviceId, token, user_detail: userData, deviceId: uuid } = useAuthStore();
-
+    const { navigate } = useNavigateHelper();
     const getUuid = async () => {
         const deviceId = await DeviceInfo.getUniqueId();
         updateDeviceId({ id: deviceId });
@@ -55,7 +67,6 @@ const MainStack = () => {
 
     const initialiseApp = async () => {
         try {
-            await getInitialNotification();
             await getUuid();
             await getStates();
             if (token) {
@@ -66,6 +77,7 @@ const MainStack = () => {
                 ]);
             };
             await RNBootSplash.hide({ fade: true });
+            await getInitialNotification(navigate);
         } catch (error: any) {
             console.log('Error while initialising app : ', error);
         }
