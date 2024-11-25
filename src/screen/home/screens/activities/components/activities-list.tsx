@@ -1,9 +1,8 @@
 import React from 'react';
 import ActvityCard from './actvity-card';
-import { useNavigation } from '@react-navigation/native';
-import { useUpdateProjectDetail } from '../../../../../hooks';
 import { StyleSheet, FlatList, Linking } from 'react-native';
 import { useProjectDetailsStore } from '../../../../../store';
+import { useNavigateHelper, useUpdateProjectDetail } from '../../../../../hooks';
 import { BottomLoader, ListEmptyComponent, Loader, showToast } from '../../../../../components';
 
 interface ActivityListProps {
@@ -24,7 +23,7 @@ export default ({
   onEndReached,
 }: ActivityListProps) => {
 
-  const { navigate } = useNavigation<any>();
+  const { navigate: navigateToProjectDetails } = useNavigateHelper();
   const [loader, setLoader] = React.useState(false);
   const { resetIsFinishPage } = useProjectDetailsStore();
   const { updateProjectDetail } = useUpdateProjectDetail();
@@ -39,11 +38,8 @@ export default ({
 
   const showProjectDetail = async (project_id: string) => {
     setLoader(true);
-    const result = await updateProjectDetail(project_id);
-    if (result) {
-      resetIsFinishPage();
-      navigate('ProjectDetails');
-    }
+    resetIsFinishPage();
+    await navigateToProjectDetails('ProjectDetails', project_id);
     setLoader(false);
   };
 

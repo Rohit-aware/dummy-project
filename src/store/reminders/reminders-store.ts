@@ -6,6 +6,7 @@ interface UseRemindersStoreProps {
     isFinish: boolean;
     loading: boolean;
     page: number;
+    resetPageIsFinish: () => void;
     setPage: ({ page }: { page: number }) => void;
     getReminders: ({ formData, page, token }: { formData: {}, page: number, token: string }) => void;
 };
@@ -17,7 +18,10 @@ const useRemindersStore = create<UseRemindersStoreProps>()((set) => ({
     loading: false,
     page: 0,
     setPage: ({ page }) => {
-
+        set({ page })
+    },
+    resetPageIsFinish: () => {
+        set({ page: 0, isFinish: false })
     },
     getReminders: async ({ formData, page, token }) => {
         try {

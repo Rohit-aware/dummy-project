@@ -46,7 +46,7 @@ export default ({
           onRefresh={onRefresh}
           refreshing={refresh}
           ListFooterComponent={() =>
-            loader && page !== 0 ? <BottomLoader /> : null
+            loading && page !== 0 ? <BottomLoader /> : null
           }
           onEndReached={onEndReached}
           onEndReachedThreshold={0.5}

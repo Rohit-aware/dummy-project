@@ -9,7 +9,7 @@ const useRemindersHook = () => {
     const { reload, reloadPage } = useReloadStore();
     const { user_detail: userData, deviceId: uuid, token } = useAuthStore();
     const {
-        getReminders, isFinish, loading, page, setPage, reminders
+        getReminders, isFinish, loading, page, setPage, reminders, resetPageIsFinish
     } = useRemindersStore();
 
     const [refresh, setRefresh] = React.useState(false);
@@ -37,28 +37,28 @@ const useRemindersHook = () => {
         } catch (e) {
             console.log(e);
         }
+        setRefresh(false);
     };
 
     const onDateChange = (newSelectedDate: string, newShowDate: string) => {
-        setPage({ page: 0 });
+        resetPageIsFinish();
         setShowDate(newShowDate);
         setSelectedDate(newSelectedDate);
         reloadPage();
     };
 
     const onEndReached = () => {
-        if (!isFinish) {
+        if (!isFinish && reminders.length > 0 && !loading) {
             setPage({ page: page + 1 });
             fetchReminders({ page: page + 1 });
         }
     };
     const onRefresh = () => {
-        setPage({ page: 0 });
+        resetPageIsFinish();
         fetchReminders({ page: 0 });
     };
 
     React.useEffect(() => {
-        setPage({ page: 0 });
         fetchReminders({ page: 0 });
     }, [reload]);
 

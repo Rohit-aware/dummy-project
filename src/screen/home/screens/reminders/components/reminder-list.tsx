@@ -3,7 +3,7 @@ import RemindersCard from './reminders-card';
 import { FlatList, StyleSheet } from 'react-native';
 import listEmptyComponent from './list-empty-component';
 import { useNavigation } from '@react-navigation/native';
-import { useUpdateProjectDetail } from '../../../../../hooks';
+import { useNavigateHelper, useUpdateProjectDetail } from '../../../../../hooks';
 import { BottomLoader, Loader } from '../../../../../components';
 import { useProjectDetailsStore } from '../../../../../store';
 interface RemindersListProps {
@@ -24,17 +24,14 @@ export default ({
   loading,
 }: RemindersListProps) => {
   const [loader, setLoader] = React.useState(false);
-  const { updateProjectDetail } = useUpdateProjectDetail();
   const { navigate } = useNavigation<any>();
+  const { navigate: navigateToProjectDetails } = useNavigateHelper();
   const { resetIsFinishPage } = useProjectDetailsStore();
 
   const showProjectDetail = async (project_id: string) => {
     setLoader(true);
-    let result = await updateProjectDetail(project_id);
-    if (result) {
-      resetIsFinishPage();
-      navigate('ProjectDetails');
-    }
+    resetIsFinishPage();
+    await navigateToProjectDetails('ProjectDetails', project_id);
     setLoader(false);
   };
 
