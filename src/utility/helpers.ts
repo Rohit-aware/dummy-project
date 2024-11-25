@@ -1,56 +1,38 @@
+import { Helpers } from './interface';
 import { Linking, Platform } from 'react-native';
 import { useUpdateProjectDetail } from '../hooks';
 import useUpdateLeadDetails from '../hooks/update-lead-details-hook';
 import { MainStackNavigatorRef } from '../hooks/mainstack-navigation-ref';
+import { useAuthStore, useMyLeadStore, useMyProjectStore } from '../store';
 import notifee, { AndroidImportance, TriggerType } from '@notifee/react-native';
 
-interface NotificationInputs {
-    title: string;
-    body: string;
-    project_id?: string | number
-    client_id?: string | number
-};
 
-interface Helpers {
-    phoneno: RegExp;
-    aadharno: RegExp;
-    regexEmail: RegExp;
-    httpPrefix: string;
-    websiteprefix: string;
-    linkedInprefix: string;
-    isEmpty: (value: string) => string;
-    emailCheck: (value: string) => boolean;
-    getDateString: (value: string) => string;
-    checkForEmpty: (value: string) => boolean;
-    navigate: (name: string, id: string) => void;
-    openCall: ({ phone }: { phone: string }) => void;
-    createNotificationChannel: () => Promise<string | ''>;
-    Genders: Array<{ short_name: string; full_name: string; }>
-    navigateThroughFCM: (name?: string | any, params?: object | undefined | any) => void;
-    scheduleNotification: ({ inputs, scheduleTime }: { inputs: NotificationInputs, scheduleTime: number }) => Promise<void>;
-}
 
 const helpers: Helpers = {
-    getDateString: (dateString: String) => {
+    getDateString: (dateString) => {
         let date = dateString.split(" ")
         return `${date[2]}-${date[1]}-${date[3]}`
     },
-    navigate: async (name: string, id: string) => {
-        const { updateProjectDetail } = useUpdateProjectDetail();
+    navigate: async (name, id) => {
+        const { getSingleLeads } = useMyLeadStore();
+        const { token, user_detail, deviceId } = useAuthStore();
         const { updateLeadDetail } = useUpdateLeadDetails();
+        const { updateProjectDetail } = useUpdateProjectDetail();
+        const { getSingleProject, setProjectDetail } = useMyProjectStore();
 
         if (MainStackNavigatorRef.current && MainStackNavigatorRef.current.isReady()) {
             let result;
-            if (name == "ProjectDetails") {
-                result = await updateProjectDetail(id);
+            if (name === "ProjectDetails") {
+                result = await updateProjectDetail(id, token, user_detail, deviceId, getSingleProject, setProjectDetail);
+                console.log({ result });
                 result && helpers.navigateThroughFCM('ProjectDetails');
-            } else if (name == "LeadDetails") {
-                result = await updateLeadDetail(id);
+            } else if (name === "LeadDetails") {
+                result = await updateLeadDetail(id, token, user_detail, deviceId, getSingleLeads);
                 result && helpers.navigateThroughFCM('LeadDetails');
             }
         }
     },
-    createNotificationChannel: async (): Promise<string | 'clms'> => {
+    createNotificationChannel: async () => {
         const existingChannel = await notifee.getChannel('clms');
         if (!existingChannel) {
             const channelId = await notifee.createChannel({
@@ -68,24 +50,48 @@ const helpers: Helpers = {
     navigateThroughFCM: (name, params) => {
         MainStackNavigatorRef.current?.navigate(name, params);
     },
-    scheduleNotification: async ({ inputs, scheduleTime }): Promise<void> => {
+    onDisplayNotification: async (remoteMessage) => {
+        console.log(remoteMessage, 'remoteMessage inside onDisplayNotification')
+        await notifee.displayNotification({
+            title: remoteMessage.notification!.title,
+            body: remoteMessage.notification!.body,
+            data: { ...remoteMessage.data },
+            android: {
+                channelId: 'Channel-ID',
+                color: '#f0f0f0',
+                sound: "default",
+                pressAction: {
+                    id: 'default',
+                    launchActivity: 'default',
+                },
+                largeIcon: 'ic_launcher',
+                smallIcon: 'ic_clms',
+                importance: AndroidImportance.HIGH,
+            },
+            ios: {
+                sound: 'default',
+            },
+        });
+    },
+
+    scheduleNotification: async ({ inputs, scheduleTime }) => {
         const { title, project_id, client_id, body } = inputs;
         // const channelId = await helpers.createNotificationChannel();
+        const timestamp = Date.now() + scheduleTime * 1000;
         await notifee.createTriggerNotification(
             {
                 title,
                 body,
                 android: {
-                    color: '#F5F5F5',
                     sound: 'default',
+                    color: '#f0f0f0',
                     channelId: 'clms',
-                    smallIcon: 'ic_launcher',
+                    smallIcon: 'ic_clms',
                     largeIcon: 'ic_launcher',
                     importance: AndroidImportance.HIGH,
                     pressAction: {
                         id: 'default',
                         launchActivity: 'default',
-                        mainComponent: 'AppEntry'
                     },
                 },
                 ios: {
@@ -98,25 +104,25 @@ const helpers: Helpers = {
             },
             {
                 type: TriggerType.TIMESTAMP,
-                timestamp: Date.now() + scheduleTime * 100,
+                timestamp,
             }
         );
     },
 
 
-    checkForEmpty: (value: string): boolean => {
+    checkForEmpty: (value) => {
         return value == null || value === 'undefined' || value === '' || value === 'null';
     },
 
-    isEmpty: (value: string): string => {
+    isEmpty: (value) => {
         return value === '' || value == null || value === 'undefined' || value === undefined ? '' : value;
     },
 
-    emailCheck: (value: string): boolean => {
+    emailCheck: (value) => {
         return value !== '' && !(/\w+([-+.']\w+)*@\w+([-.]\w+)*\.\w+([-.]\w+)*/).test(value);
     },
 
-    openCall: ({ phone }: { phone: string }): void => {
+    openCall: ({ phone }) => {
         let phoneNumber;
         Platform.OS === 'ios' ? phoneNumber = `telprompt:${phone}` : phoneNumber = `tel:${phone}`;
         Linking.openURL(phoneNumber)

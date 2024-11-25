@@ -18,13 +18,12 @@ const Stack = createNativeStackNavigator<MainStackProps>();
 const getInitialNotification = async () => {
     const remoteMessage = await notifee.getInitialNotification();
     if (remoteMessage) {
-        console.log(JSON.stringify(remoteMessage, undefined, 4), 'inside the getInitialNotification ')
-        const { project_id, client_id } = remoteMessage?.notification?.data?.screen as any;
+        console.log(JSON.stringify(remoteMessage, undefined, 4), 'inside the getInitialNotification ');
+        const { project_id, client_id } = remoteMessage?.notification?.data as any;
         if (project_id) {
-            helpers.navigate("ProjectDetails", project_id)
-        }
-        else if (client_id) {
-            helpers.navigate("LeadDetails", client_id)
+            helpers.navigate("ProjectDetails", project_id);
+        } else if (client_id) {
+            helpers.navigate("LeadDetails", client_id);
         };
     };
 };
@@ -56,13 +55,13 @@ const MainStack = () => {
 
     const initialiseApp = async () => {
         try {
+            await getInitialNotification();
             await getUuid();
             await getStates();
             if (token) {
                 await Promise.all([
                     getRequirements(),
                     getProfileDetails(),
-                    getInitialNotification(),
                     fetchStartup({ token })
                 ]);
             };

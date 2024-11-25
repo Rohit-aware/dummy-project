@@ -1,4 +1,5 @@
 import React from 'react';
+import { helpers } from './utility';
 import { Colors } from './constants';
 import MainStack from './router/main-stack';
 import messaging from '@react-native-firebase/messaging';
@@ -20,6 +21,7 @@ const AppEntry = () => {
         const unsubscribe = messaging().onMessage(async remoteMessage => {
             if (!remoteMessage) return;
             console.log('Message handled in the Forground! on AppEntry', remoteMessage);
+            helpers.onDisplayNotification(remoteMessage);
         });
         return () => unsubscribe();
     }, []);

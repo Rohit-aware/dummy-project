@@ -60,6 +60,7 @@ notifee.onBackgroundEvent(async ({ type, detail }) => {
 messaging().setBackgroundMessageHandler(async remoteMessage => {
     if (!remoteMessage) return;
     console.log(JSON.stringify(remoteMessage, undefined, 4), 'remoteMessage inside setBackgroundHandler');
+    helpers.onDisplayNotification(remoteMessage);
 });
 
 AppRegistry.registerComponent(appName, () => App);
