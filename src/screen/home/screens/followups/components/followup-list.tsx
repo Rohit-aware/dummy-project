@@ -50,6 +50,7 @@ export default ({
           }
           onEndReached={onEndReached}
           onEndReachedThreshold={0.5}
+          showsVerticalScrollIndicator={false}
           ListEmptyComponent={listEmptyComponent}
           contentContainerStyle={styles.container}
           renderItem={({ item }) => {

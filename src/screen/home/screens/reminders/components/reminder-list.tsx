@@ -2,10 +2,9 @@ import React from 'react';
 import RemindersCard from './reminders-card';
 import { FlatList, StyleSheet } from 'react-native';
 import listEmptyComponent from './list-empty-component';
-import { useNavigation } from '@react-navigation/native';
-import { useNavigateHelper, useUpdateProjectDetail } from '../../../../../hooks';
-import { BottomLoader, Loader } from '../../../../../components';
+import { useNavigateHelper } from '../../../../../hooks';
 import { useProjectDetailsStore } from '../../../../../store';
+import { BottomLoader, Loader } from '../../../../../components';
 interface RemindersListProps {
   data: Array<any>,
   page: number,
@@ -24,7 +23,6 @@ export default ({
   loading,
 }: RemindersListProps) => {
   const [loader, setLoader] = React.useState(false);
-  const { navigate } = useNavigation<any>();
   const { navigate: navigateToProjectDetails } = useNavigateHelper();
   const { resetIsFinishPage } = useProjectDetailsStore();
 
@@ -46,6 +44,7 @@ export default ({
           onRefresh={onRefresh}
           onEndReached={onEndReached}
           onEndReachedThreshold={0.5}
+          showsVerticalScrollIndicator={false}
           contentContainerStyle={styles.container}
           ListEmptyComponent={listEmptyComponent}
           keyExtractor={(item) => item.reminder_id}

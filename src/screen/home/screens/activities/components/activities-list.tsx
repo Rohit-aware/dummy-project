@@ -1,8 +1,8 @@
 import React from 'react';
 import ActvityCard from './actvity-card';
+import { useNavigateHelper } from '../../../../../hooks';
 import { StyleSheet, FlatList, Linking } from 'react-native';
 import { useProjectDetailsStore } from '../../../../../store';
-import { useNavigateHelper, useUpdateProjectDetail } from '../../../../../hooks';
 import { BottomLoader, ListEmptyComponent, Loader, showToast } from '../../../../../components';
 
 interface ActivityListProps {
@@ -26,7 +26,6 @@ export default ({
   const { navigate: navigateToProjectDetails } = useNavigateHelper();
   const [loader, setLoader] = React.useState(false);
   const { resetIsFinishPage } = useProjectDetailsStore();
-  const { updateProjectDetail } = useUpdateProjectDetail();
 
   const onJoinMeeting = async (url: string) => {
     try {
@@ -55,6 +54,7 @@ export default ({
           onEndReached={onEndReached}
           onEndReachedThreshold={0.2}
           onRefresh={onRefresh}
+          showsVerticalScrollIndicator={false}
           refreshing={refresh}
           ListEmptyComponent={ListEmptyComponent}
           ListFooterComponent={() => {
