@@ -14,5 +14,6 @@ export { default as useShareLeadStore } from './share-lead/share-lead-store';
 export { default as useRegisterStore } from './registration/registration-store';
 export { default as useAddProjectSotre } from './add-project/add-project-store';
 export { default as useMyProjectStore } from './my-project-store/my-project-store';
+export { default as useActivitiesStore } from './activites-store/activites-store';
 export { default as useActionStore } from './action-screen-store/action-screen-store';
 export { default as useProjectDetailsStore } from './project-details/project-details-store';

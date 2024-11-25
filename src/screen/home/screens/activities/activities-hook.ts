@@ -1,8 +1,8 @@
 import React from 'react';
-import { useAuthStore, useProjectDetailsStore, useReloadStore } from '../../../../store';
-import { helpers } from '../../../../utility';
 import moment from 'moment';
+import { helpers } from '../../../../utility';
 import { getHashString } from '../../../../utility/hashing';
+import { useAuthStore, useActivitiesStore, useReloadStore } from '../../../../store';
 
 
 const useActivitiesHook = () => {
@@ -17,7 +17,7 @@ const useActivitiesHook = () => {
         resetIsFinishPage,
         upcActivityPage,
         upcActivityFinsih
-    } = useProjectDetailsStore();
+    } = useActivitiesStore();
 
     const [refresh, setRefresh] = React.useState(false);
     const [showDate, setShowDate] = React.useState(getDateString(new Date().toDateString()));
