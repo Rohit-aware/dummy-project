@@ -1,10 +1,10 @@
 import React from 'react';
 import Button from './button';
 import EmployeeInfo from './employee-info';
-import { Colors, moderateScale } from '../../../../../constants';
 import { fontStyles } from '../../../../../styles';
 import { Dots } from '../../../../../../assets/icons';
 import { View, Text, StyleSheet } from 'react-native';
+import { Colors, moderateScale } from '../../../../../constants';
 import { useMyProjectStore, useStartupStore } from '../../../../../store';
 
 interface ListHeaderProps {

@@ -1,19 +1,24 @@
 import React from 'react';
+import { helpers } from '../../../utility';
 import { fontStyles } from '../../../styles';
-import { useMyLeadStore } from '../../../store';
+import { useMyLeadStore, useStartupStore } from '../../../store';
 import { MainStackProps } from '../../../router/interface';
 import { Call, Dots, Notes, Share } from '../../../../assets/icons';
+import { View, Text, StyleSheet, TouchableOpacity } from 'react-native';
 import { NavigationProp, useNavigation } from '@react-navigation/native';
-import { View, Text, Linking, Platform, StyleSheet, TouchableOpacity } from 'react-native';
-import { helpers } from '../../../utility';
 
 export default () => {
-  const navigation = useNavigation<NavigationProp<MainStackProps, 'LeadDetails'>>();
   const { openCall } = helpers;
   const { leadDetails } = useMyLeadStore();
+  const navigation = useNavigation<NavigationProp<MainStackProps, 'LeadDetails'>>();
+
+  const { data: { screens, share_allowed: share_allowedStartup } } = useStartupStore() || {};
+  const { call_icon, share_lead, add_note_icon } = screens?.lead_detail || {}
+
   const { contact_person, phone, country_id, share_allowed, client_id, company_name } = leadDetails;
   const diplay_number = `${contact_person}  |  +${country_id} ${phone}`;
   const phoneNo = `+${leadDetails.country_id}${leadDetails.phone}`;
+
   const handleCall = () => openCall({ phone: phoneNo })
 
   const onShareButton = () => navigation.navigate('ShareLead', { client_id });
@@ -34,9 +39,9 @@ export default () => {
       <Text style={styles.companyname}>{company_name}</Text>
       <Text style={styles.phoneno}>{diplay_number}</Text>
       <View style={styles.container}>
-        <ButtonTile icon={<Call width={25} height={25} />} onPress={handleCall} show={true} />
-        <ButtonTile icon={<Share width={25} height={25} />} onPress={onShareButton} show={share_allowed == 'Y'} />
-        <ButtonTile icon={<Notes width={25} height={25} />} onPress={onNoteButton} show={true} />
+        <ButtonTile icon={<Call width={25} height={25} />} onPress={handleCall} show={call_icon} />
+        <ButtonTile icon={<Share width={25} height={25} />} onPress={onShareButton} show={(share_allowed == 'Y' && share_lead && share_allowedStartup)} />
+        <ButtonTile icon={<Notes width={25} height={25} />} onPress={onNoteButton} show={add_note_icon} />
       </View>
       <Dots />
     </View>

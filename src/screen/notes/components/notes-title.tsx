@@ -17,7 +17,7 @@ export default () => {
     <View style={styles.container}>
       <Text style={styles.companyname}>{company_name}</Text>
       <Text style={styles.info}>{display_info}</Text>
-      {true &&
+      {edit_allowed &&
         <TouchableWithoutFeedback onPress={onAddNote}>
           <View style={styles.wrapper}>
             <Pen />

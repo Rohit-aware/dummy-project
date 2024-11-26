@@ -1,6 +1,6 @@
 import React from 'react';
 import LeadsCard from './lead-card';
-import { useMyLeadStore } from '../../../store';
+import { useMyLeadStore, useStartupStore } from '../../../store';
 import { StyleSheet, FlatList } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 import { Loader, BottomLoader, ListEmptyComponent } from '../../../components';
@@ -27,7 +27,11 @@ const LeadsList = ({
 }: LeadsListProps) => {
   const { setLeadDetails } = useMyLeadStore();
   const { navigate } = useNavigation<any>();
-  const checkForEmpty = (value: any) => {
+
+  const { data: { screens: { lead_listing } = {}, edit_allowed } = {} } = useStartupStore() || {};
+  const { add_project } = lead_listing || {};
+
+  const checkForEmpty = (value: string) => {
     const isEmpty =
       value == null || value == 'undefined' || value == undefined || value == '' || value == "null"
         ? true
@@ -79,7 +83,7 @@ const LeadsList = ({
             } = item;
             return (
               <LeadsCard
-                add_project={true}
+                add_project={add_project!}
                 companyname={company_name}
                 contactname={contact_person}
                 contactnumber={`+${country_id} ${phone}`}

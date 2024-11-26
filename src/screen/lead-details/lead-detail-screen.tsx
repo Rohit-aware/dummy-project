@@ -4,13 +4,13 @@ import Boxes from './components/boxes';
 import { Colors } from '../../constants';
 import { Header } from '../../components';
 import LeadInfo from './components/lead-info';
-import { ScrollView, StyleSheet, View } from 'react-native';
 import BottomButtons from './components/BottomButtons';
+import { ScrollView, StyleSheet, View } from 'react-native';
 
 const LeadDetail = () => {
 
     return (
-        <View style={{ flex: 1,backgroundColor:Colors.white }}>
+        <View style={{ flex: 1, backgroundColor: Colors.white }}>
             <Header title={'Lead Details'} />
             <ScrollView
                 style={styles.wrapper}

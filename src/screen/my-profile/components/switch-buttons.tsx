@@ -1,10 +1,12 @@
 import React from 'react';
-import { StyleSheet, View, Text, TouchableWithoutFeedback, } from 'react-native';
 import { fontStyles } from '../../../styles';
 import { Colors } from '../../../constants';
 import { Dots } from '../../../../assets/icons';
+import { StyleSheet, View, Text, TouchableWithoutFeedback, } from 'react-native';
+import { useStartupStore } from '../../../store';
 
 const SwitchButton = ({ setActive, active }: { setActive: (value: string) => void, active: string }) => {
+  const { data: { screens: { profile: { profile_details, work_overview } = {} } = {} } } = useStartupStore() || {};
 
   const changeColor = (title: string) => {
     return {
@@ -13,10 +15,10 @@ const SwitchButton = ({ setActive, active }: { setActive: (value: string) => voi
   };
   return (
     <>
-      {true && true ? (
+      {work_overview && profile_details ? (
         <View style={styles.container}>
           <Dots style={styles.dot} />
-          {true &&
+          {profile_details &&
             <TouchableWithoutFeedback>
               <Text
                 style={[styles.title, changeColor('Personal Details')]}
@@ -25,7 +27,7 @@ const SwitchButton = ({ setActive, active }: { setActive: (value: string) => voi
               </Text>
             </TouchableWithoutFeedback>
           }
-          {true &&
+          {work_overview &&
             <TouchableWithoutFeedback>
               <Text
                 style={[styles.title, changeColor('Work Overview')]}

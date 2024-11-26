@@ -1,8 +1,9 @@
 import React from 'react'
 import Title from './components/title';
-import { Header, Loader } from '../../components';
+import { useStartupStore } from '../../store';
 import { useProfileHook } from './profile-hook'
 import YearsModal from './components/years-modal';
+import { Header, Loader } from '../../components';
 import WorkOverview from './components/work-overview';
 import SwitchButton from './components/switch-buttons';
 import { Colors, moderateScale } from '../../constants';
@@ -10,6 +11,7 @@ import PersonalDetails from './components/personal-details';
 import { RefreshControl, ScrollView, StyleSheet, View } from 'react-native'
 
 const MyProfile = () => {
+  const { data: { screens: { profile: { profile_details, work_overview } = {} } = {} } = {} } = useStartupStore();
 
   const {
     year,
@@ -35,11 +37,12 @@ const MyProfile = () => {
         contentContainerStyle={styles.contentContainerStyle}>
         <Title />
         <SwitchButton setActive={setActive} active={active} />
-        {(active == 'Personal Details') ? (
+        {(active == 'Personal Details' && profile_details) ? (
           <PersonalDetails />
-        ) : (
+        ) : work_overview ? (
           <WorkOverview year={year} open={open} loading={loading} />
-        )}
+        ) :
+          <></>}
       </ScrollView>
       <YearsModal
         close={close}

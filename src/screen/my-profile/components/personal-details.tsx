@@ -5,7 +5,7 @@ import ViewInfo from './view-info';
 import { helpers } from '../../../utility';
 import { Colors } from '../../../constants';
 import { fontStyles } from '../../../styles';
-import { useProfileStore } from '../../../store';
+import { useProfileStore, useStartupStore } from '../../../store';
 import { View, Text, StyleSheet } from 'react-native';
 import { Button, showToast } from '../../../components';
 import { useNavigation } from '@react-navigation/native';
@@ -31,6 +31,9 @@ export default () => {
     pancard: pan_file_name,
     aadhar_card: aadhar_file_name,
   } = personalDetails;
+
+  const { data: { screens: { profile } = {} } = {} } = useStartupStore();
+  const { edit_profile, change_password } = profile || {}
 
   const { ToggleText, textToShow } = useToggleText({ input: address, maxLength: 60 });
   const { checkForEmpty } = helpers;
@@ -109,7 +112,7 @@ export default () => {
       </View>
 
       <View style={styles.btncontainer}>
-        {true &&
+        {edit_profile &&
           <Button
             title="EDIT"
             onPress={() => navigation.navigate('EditProfile')}
@@ -117,7 +120,7 @@ export default () => {
             textStyle={styles.edittext}
           />
         }
-        {true &&
+        {change_password &&
           <Button
             title="CHANGE PASSWORD"
             onPress={() => navigation.navigate('ChangePassword')}
