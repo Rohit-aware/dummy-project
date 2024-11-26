@@ -26,7 +26,7 @@ export default ({
   onRefresh,
   refresh,
 }: NotesListProps) => {
-  
+
   return (
     <>
       {page === 0 && loading ? (
@@ -34,11 +34,12 @@ export default ({
       ) : (
         <FlatList
           data={data}
-          keyExtractor={(_, i) => i.toString()}
-          onEndReachedThreshold={0.5}
-          onEndReached={onEndReached}
           refreshing={refresh}
           onRefresh={onRefresh}
+          onEndReached={onEndReached}
+          onEndReachedThreshold={0.5}
+          showsVerticalScrollIndicator={false}
+          keyExtractor={(_, i) => i.toString()}
           contentContainerStyle={styles.contentContainerStyle}
           ListFooterComponent={() =>
             data.length > 0 && !finish ? <BottomLoader /> : null

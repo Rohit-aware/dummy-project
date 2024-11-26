@@ -102,6 +102,7 @@ const ProjectDetails = () => {
                 data={[1]}
                 onRefresh={onRefresh}
                 refreshing={refresh}
+                showsVerticalScrollIndicator={false}
                 ListHeaderComponent={() => (
                     <ListHeader
                         active={active}
@@ -121,8 +122,8 @@ const ProjectDetails = () => {
                 hideProjectbutton={actionData?.is_update_status == 'Y' ? false : true}
             />
         </View>
-    )
-}
+    );
+};
 
 export default ProjectDetails;
 
