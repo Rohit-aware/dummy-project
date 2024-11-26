@@ -24,7 +24,7 @@ const useAddLeadHook = (): UseAddLeadHookReturnType => {
         address: '',
         state_id: '',
         city_id: '',
-        state_name: '',
+        state_name: 'India',
         city_name: '',
         source: '',
         designation: '',
@@ -33,7 +33,7 @@ const useAddLeadHook = (): UseAddLeadHookReturnType => {
         outsider_name: '',
         outsider_id: '',
         countrycode: '91',
-        countryname: 'India',
+        countryname: '',
     });
 
     const onChangeText = React.useCallback((name: string, value: string) => {
@@ -60,19 +60,21 @@ const useAddLeadHook = (): UseAddLeadHookReturnType => {
 
     const onSelect = React.useCallback((name: string, data: any) => {
         const updatedInputs = { ...inputs, [name]: data };
-        if (name === 'state_name') {
-            updatedInputs.state_id = data['state_id'];
+        if (name == 'state_name') {
+            updatedInputs.state_id = data?.['state_id'];
+            updatedInputs.state_name = data?.['state_name'];
             updatedInputs.city_id = '';
             updatedInputs.city_name = '';
-        } else if (name === 'city_name') {
-            updatedInputs.city_id = data['city_id'];
-            updatedInputs.city_name = data['city_name'];
-        } else if (name === 'outsider_name') {
-            updatedInputs.outsider_name = data['nickname'];
-            updatedInputs.outsider_id = data['id'];
+        } else if (name == 'city_name') {
+            updatedInputs.city_id = data?.['city_id'];
+            updatedInputs.city_name = data?.['city_name'];
+        } else if (name == 'outsider_name') {
+            updatedInputs.outsider_name = data?.['nickname'];
+            updatedInputs.outsider_id = data?.['id'];
         }
         setInputs(updatedInputs);
     }, [inputs]);
+
 
     const onSelectCountry = (country: any) => {
         const { callingCode, name } = country;

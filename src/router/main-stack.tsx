@@ -1,6 +1,6 @@
 import React from 'react';
 import BottomTab from './BottomTab';
-import {useNavigateHelper} from '../hooks';
+import { useNavigateHelper } from '../hooks';
 import { MainStackProps } from './interface';
 import DeviceInfo from 'react-native-device-info';
 import RNBootSplash from "react-native-bootsplash";
@@ -11,15 +11,14 @@ import { MainStackNavigatorRef, } from '../hooks/mainstack-navigation-ref';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import { useAuthStore, useCommonStore, useProfileStore, useStartupStore } from '../store';
 import { Activities, AddActivities, AddLead, AddNotes, AddProject, AddUpcomingActivities, ChangePassword, CreateReminder, EditLead, EditProfile, FileViewer, FilterMyLeads, FilterMyProjects, FollowUpToday, ForgotPassSuccess, ForgotPassword, LeadDetail, Login, Notes, ProjectDetails, Register, Reminders, ShareLead, ShareProject, UpdateProjectStatus, ViewLead, ViewTeam } from '../screen';
+import { helpers } from '../utility';
 
 const Stack = createNativeStackNavigator<MainStackProps>();
 
 
 const getInitialNotification = async (navigate: Function) => {
     messaging().onNotificationOpenedApp((remoteMessage) => {
-        console.log(JSON.stringify(remoteMessage, undefined, 4), 'inside the getInitialNotification ');
         if (remoteMessage) {
-            console.log(JSON.stringify(remoteMessage, undefined, 4), 'inside the getInitialNotification ');
             const { data: { project_id, client_id } } = remoteMessage?.notification as any;
             if (project_id) {
                 navigate("ProjectDetails", project_id);
@@ -27,17 +26,7 @@ const getInitialNotification = async (navigate: Function) => {
                 navigate("LeadDetails", client_id);
             };
         };
-    })
-    // const remoteMessage = await notifee.getInitialNotification();
-    // if (remoteMessage) {
-    //     console.log(JSON.stringify(remoteMessage, undefined, 4), 'inside the getInitialNotification ');
-    //     const { project_id, client_id } = remoteMessage?.notification?.data as any;
-    //     if (project_id) {
-    //         helpers.navigate("ProjectDetails", project_id);
-    //     } else if (client_id) {
-    //         helpers.navigate("LeadDetails", client_id);
-    //     };
-    // };
+    });
 };
 
 const MainStack = () => {
