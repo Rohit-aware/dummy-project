@@ -23,7 +23,6 @@ const ProjectDetails = () => {
         actionData,
         onViewTeam,
         activities,
-        projectLoad,
         activityLoad,
         activityPage,
         onEndActivity,
@@ -99,25 +98,21 @@ const ProjectDetails = () => {
     return (
         <View style={{ flex: 1, backgroundColor: Colors.white }}>
             <Header title="Project Details" />
-            {projectLoad ?
-                <Loader />
-                :
-                <FlatList
-                    data={[1]}
-                    onRefresh={onRefresh}
-                    refreshing={refresh}
-                    ListHeaderComponent={() => (
-                        <ListHeader
-                            active={active}
-                            setActive={setActive}
-                            open={open}
-                            onViewTeam={onViewTeam}
-                        />
-                    )}
-                    renderItem={_renderProjectDetails_}
-                    contentContainerStyle={{ paddingVertical: moderateScale(15) }}
-                />
-            }
+            <FlatList
+                data={[1]}
+                onRefresh={onRefresh}
+                refreshing={refresh}
+                ListHeaderComponent={() => (
+                    <ListHeader
+                        active={active}
+                        setActive={setActive}
+                        open={open}
+                        onViewTeam={onViewTeam}
+                    />
+                )}
+                renderItem={_renderProjectDetails_}
+                contentContainerStyle={{ paddingVertical: moderateScale(15) }}
+            />
             <ActionsModal
                 show={show}
                 details={actionData}
