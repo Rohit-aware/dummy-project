@@ -1,4 +1,4 @@
-import React, { useCallback } from 'react';
+import React from 'react';
 import { fontStyles } from '../../../../styles';
 import ListHeader from './components/list-header';
 import ActionsModal from './components/actions-modal';
@@ -23,6 +23,7 @@ const ProjectDetails = () => {
         actionData,
         onViewTeam,
         activities,
+        projectLoad,
         activityLoad,
         activityPage,
         onEndActivity,
@@ -42,7 +43,7 @@ const ProjectDetails = () => {
         </View>
     ), []);
 
-    const _renderProjectDetails_ = useCallback(() => {
+    const _renderProjectDetails_ = React.useCallback(() => {
         return (project_detail?.activity || project_detail?.upcoming_activity) ? (
             <>
                 {active == 'Activities' ?
@@ -98,21 +99,25 @@ const ProjectDetails = () => {
     return (
         <View style={{ flex: 1, backgroundColor: Colors.white }}>
             <Header title="Project Details" />
-            <FlatList
-                data={[1]}
-                onRefresh={onRefresh}
-                refreshing={refresh}
-                ListHeaderComponent={() => (
-                    <ListHeader
-                        active={active}
-                        setActive={setActive}
-                        open={open}
-                        onViewTeam={onViewTeam}
-                    />
-                )}
-                renderItem={_renderProjectDetails_}
-                contentContainerStyle={{ paddingVertical: moderateScale(15) }}
-            />
+            {projectLoad ?
+                <Loader />
+                :
+                <FlatList
+                    data={[1]}
+                    onRefresh={onRefresh}
+                    refreshing={refresh}
+                    ListHeaderComponent={() => (
+                        <ListHeader
+                            active={active}
+                            setActive={setActive}
+                            open={open}
+                            onViewTeam={onViewTeam}
+                        />
+                    )}
+                    renderItem={_renderProjectDetails_}
+                    contentContainerStyle={{ paddingVertical: moderateScale(15) }}
+                />
+            }
             <ActionsModal
                 show={show}
                 details={actionData}

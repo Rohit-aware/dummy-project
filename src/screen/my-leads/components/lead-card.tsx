@@ -1,11 +1,22 @@
 import React from 'react';
 import Details from './details';
-import { View, Text, StyleSheet, TouchableWithoutFeedback } from 'react-native';
-import { fontStyles } from '../../../styles';
 import { Colors } from '../../../constants';
+import { fontStyles } from '../../../styles';
 import { Dots } from '../../../../assets/icons';
+import { View, Text, StyleSheet, TouchableWithoutFeedback } from 'react-native';
 
- const LeadsCard = ({
+interface LeadsCardType {
+  contactname: string;
+  contactnumber: string;
+  location: string;
+  source: string;
+  companyname: string;
+  onLeadDetails: () => void;
+  onAddProject: () => void;
+  add_project: boolean;
+}
+
+const LeadsCard = ({
   contactname,
   contactnumber,
   location,
@@ -14,7 +25,7 @@ import { Dots } from '../../../../assets/icons';
   onLeadDetails,
   onAddProject,
   add_project
-}: any) => {
+}: LeadsCardType) => {
   return (
     <TouchableWithoutFeedback onPress={onLeadDetails}>
       <View style={styles.card}>

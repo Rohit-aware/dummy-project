@@ -2,9 +2,10 @@ import React from "react";
 import { useNavigation } from "@react-navigation/native";
 import { getHashString } from "../../../../utility/hashing";
 import { useAuthStore, useMyProjectStore, useProjectDetailsStore, useReloadStore, useStartupStore, useViewTeamStore } from "../../../../store";
+import { ProjectDetailsType } from "../types";
 
 
-const useProjectDetailsHook = () => {
+const useProjectDetailsHook = (): ProjectDetailsType=> {
     const { navigate } = useNavigation<any>();
     const [show, setShow] = React.useState(false);
     const [refresh, setRefresh] = React.useState(false);
