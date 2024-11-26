@@ -56,7 +56,7 @@ const MainStack = () => {
         getRequirementType({ token, formData });
     };
 
-    const initialiseApp = React.useCallback(async () => {
+    const initialiseApp = (async () => {
         try {
             await getUuid();
             await getStates();
@@ -67,16 +67,16 @@ const MainStack = () => {
                     fetchStartup({ token })
                 ]);
             };
-            await RNBootSplash.hide({ fade: true });
-            await getInitialNotification(navigate);
+            getInitialNotification(navigate);
+            RNBootSplash.hide({ fade: true });
         } catch (error: any) {
             console.log('Error while initialising app : ', error);
         }
-    }, [isConnected, token]);
+    })
 
     React.useEffect(() => {
         initialiseApp();
-    }, [initialiseApp]);
+    }, [token, isConnected]);
 
     return (
         <NavigationContainer ref={MainStackNavigatorRef}>

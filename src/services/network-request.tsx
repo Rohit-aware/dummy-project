@@ -1,5 +1,7 @@
 import axios, { AxiosHeaders, AxiosResponse } from "axios";
 import { Platform } from "react-native";
+import { useAuthStore } from "../store";
+import { helpers } from "../utility";
 
 // bassic auth
 // const username ="mypcot";
@@ -11,6 +13,11 @@ const BASE_URLS = {
   KAUSHIK_LOCAL: 'https://3575-110-227-197-199.ngrok-free.app/webservices/v1/',
 };
 
+
+const forceLogOut = () => {
+  const clearLoginData = useAuthStore.getState().clearLoginData; 
+  clearLoginData();  
+};
 interface NetworkConfig {
   token?: string;
 };
@@ -40,6 +47,9 @@ const networkRequest = (networkConfig: NetworkConfig) => {
   });
 
   axiosInstance.interceptors.response.use((response: AxiosResponse) => {
+    if (response.data.success == '4') {
+      forceLogOut();
+    }
     return response;
   }, (error) => {
     console.error('Response error: ', error);

@@ -1,8 +1,8 @@
 import React from "react";
-import { useAuthStore, useMyLeadStore, useReloadStore } from "../../../../store";
-import { helpers } from "../../../../utility";
 import moment from "moment";
+import { helpers } from "../../../../utility";
 import { getHashString } from "../../../../utility/hashing";
+import { useAuthStore, useMyLeadStore, useReloadStore } from "../../../../store";
 
 
 const useTodaysFollowUpsHook = () => {
@@ -37,9 +37,8 @@ const useTodaysFollowUpsHook = () => {
             formData.append('followup', 'Y');
             formData.append('followup_date', selectedDate);
             getLeads({ token, formData, leadPage: page });
-
         } catch (e) {
-            console.log(e);
+            console.log('Error isnide get FollowUps : ', e);
         }
         setRefresh(false);
     };
@@ -53,7 +52,7 @@ const useTodaysFollowUpsHook = () => {
     };
 
     const onEndReached = () => {
-        if (!isFinish && followup.length > 0 && !loading) {
+        if (!isFinish && followup?.length > 0 && !loading) {
             setPage({ leadPage: page + 1 });
             fetchFollowups({ page: page + 1 });
         }
