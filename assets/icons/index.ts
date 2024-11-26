@@ -15,5 +15,6 @@ export { default as Creator } from './Creator';
 export { default as Profile } from './Profile';
 export { default as Projects } from './Projects';
 export { default as EmailSvg } from './email-svg';  
+export { default as NoInternet } from './NoInternet';  
 export { default as DottedLine } from './DottedLine';  
 export { default as DropDownIcon } from './DropdownButton';

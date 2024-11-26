@@ -14,6 +14,7 @@ export { default as FilterMyLeads } from './filter-screens/my-lead-filter';
 export { default as EditProfile } from './edit-profile/edit-profile-screen';
 export { default as Register } from './auth-screens/register/register-screen';
 export { default as AddNotes } from './notes/screens/add-note/add-note-screen';
+export { default as NoInternetScreen } from './no-internet/not-internet-screen';
 export { default as Reminders } from './home/screens/reminders/reminder-screen';
 export { default as FilterMyProjects } from './filter-screens/my-project-filter';
 export { default as Activities } from './home/screens/activities/activities-screen';

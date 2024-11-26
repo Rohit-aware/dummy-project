@@ -24,7 +24,7 @@ const AddLead = () => {
         openCountryModal,
         closeCountryModal,
     } = useAddLeadHook();
-    console.log(inputs)
+    
     return (
         <View style={styles.container}>
             <Header title={'Add Lead'} />

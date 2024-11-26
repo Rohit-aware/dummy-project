@@ -24,7 +24,7 @@ const useAddLeadHook = (): UseAddLeadHookReturnType => {
         address: '',
         state_id: '',
         city_id: '',
-        state_name: 'India',
+        state_name: '',
         city_name: '',
         source: '',
         designation: '',
@@ -33,7 +33,7 @@ const useAddLeadHook = (): UseAddLeadHookReturnType => {
         outsider_name: '',
         outsider_id: '',
         countrycode: '91',
-        countryname: '',
+        countryname: 'India',
     });
 
     const onChangeText = React.useCallback((name: string, value: string) => {

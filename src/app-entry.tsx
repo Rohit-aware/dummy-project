@@ -6,6 +6,7 @@ import messaging from '@react-native-firebase/messaging';
 import { StyleSheet, LogBox, StatusBar } from 'react-native';
 import { GestureHandlerRootView } from 'react-native-gesture-handler';
 import { useNotificationPermission } from './hooks/notification-permission';
+import { NetworkProvider } from './context/network-context';
 
 LogBox.ignoreAllLogs()
 
@@ -29,7 +30,9 @@ const AppEntry = () => {
     return (
         <GestureHandlerRootView style={styles.container}>
             <StatusBar backgroundColor={Colors.lightblue} barStyle={'light-content'} networkActivityIndicatorVisible animated />
-            <MainStack />
+            <NetworkProvider>
+                <MainStack />
+            </NetworkProvider>
         </GestureHandlerRootView>
     )
 };

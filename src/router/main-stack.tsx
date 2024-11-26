@@ -12,6 +12,7 @@ import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import { useAuthStore, useCommonStore, useProfileStore, useStartupStore } from '../store';
 import { Activities, AddActivities, AddLead, AddNotes, AddProject, AddUpcomingActivities, ChangePassword, CreateReminder, EditLead, EditProfile, FileViewer, FilterMyLeads, FilterMyProjects, FollowUpToday, ForgotPassSuccess, ForgotPassword, LeadDetail, Login, Notes, ProjectDetails, Register, Reminders, ShareLead, ShareProject, UpdateProjectStatus, ViewLead, ViewTeam } from '../screen';
 import { helpers } from '../utility';
+import { useNetwork } from '../context/network-context';
 
 const Stack = createNativeStackNavigator<MainStackProps>();
 
@@ -30,6 +31,7 @@ const getInitialNotification = async (navigate: Function) => {
 };
 
 const MainStack = () => {
+    const { isConnected } = useNetwork();
     const { fetchStartup } = useStartupStore();
     const { getPersonalDetails } = useProfileStore();
     const { getStates, getRequirementType } = useCommonStore();
@@ -54,7 +56,7 @@ const MainStack = () => {
         getRequirementType({ token, formData });
     };
 
-    const initialiseApp = async () => {
+    const initialiseApp = React.useCallback(async () => {
         try {
             await getUuid();
             await getStates();
@@ -70,11 +72,11 @@ const MainStack = () => {
         } catch (error: any) {
             console.log('Error while initialising app : ', error);
         }
-    }
+    }, [isConnected, token]);
 
     React.useEffect(() => {
         initialiseApp();
-    }, [token]);
+    }, [initialiseApp]);
 
     return (
         <NavigationContainer ref={MainStackNavigatorRef}>
