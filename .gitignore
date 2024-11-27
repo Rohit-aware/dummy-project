@@ -21,7 +21,8 @@ DerivedData
 *.ipa
 *.xcuserstate
 **/.xcode.env.local
-
+.prettierrrc.js
+settting.json
 # Android/IntelliJ
 #
 build/
