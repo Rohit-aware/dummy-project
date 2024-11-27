@@ -1,11 +1,17 @@
-import axios, { AxiosHeaders, AxiosResponse } from "axios";
 import { Platform } from "react-native";
 import { useAuthStore } from "../store";
-import { helpers } from "../utility";
+import axios, { AxiosHeaders, AxiosResponse } from "axios";
 
 // bassic auth
 // const username ="mypcot";
 // const password="mypcotoptleads"
+
+
+function forceLogOut() {
+  const clearLoginData = useAuthStore.getState().clearLoginData;
+  clearLoginData();
+};
+
 
 const BASE_URLS = {
   STAGING: 'http://skyonliners.com/demo/clms-web/webservices/v1/',
@@ -13,14 +19,7 @@ const BASE_URLS = {
   KAUSHIK_LOCAL: 'https://3575-110-227-197-199.ngrok-free.app/webservices/v1/',
 };
 
-
-const forceLogOut = () => {
-  const clearLoginData = useAuthStore.getState().clearLoginData; 
-  clearLoginData();  
-};
-interface NetworkConfig {
-  token?: string;
-};
+interface NetworkConfig { token?: string };
 
 const networkRequest = (networkConfig: NetworkConfig) => {
   const { token } = networkConfig;
