@@ -9,7 +9,7 @@ import { helpers } from './src/utility';
 import { AppRegistry } from 'react-native';
 import { name as appName } from './app.json';
 import messaging from '@react-native-firebase/messaging';
-import notifee, { AndroidImportance, AndroidVisibility } from '@notifee/react-native';
+import notifee, { AndroidImportance, AndroidVisibility, EventType } from '@notifee/react-native';
 
 notifee.createChannel({
     name: 'Scheduled Notification',
@@ -21,10 +21,52 @@ notifee.createChannel({
     visibility: AndroidVisibility.PRIVATE,
 });
 
+notifee.onForegroundEvent(async ({ type, detail }) => {
+    switch (type) {
+        case EventType.DELIVERED:
+            break;
+        case EventType.PRESS:
+            const { project_id, client_id } = detail?.notification?.data;
+            if (project_id) {
+                helpers.navigateThroughFCM("ProjectDetails", project_id)
+            }
+            else if (client_id) {
+                helpers.navigateThroughFCM("LeadDetails", client_id)
+            }
+            break;
+        default:
+            return true;
+    }
+});
+
+notifee.onBackgroundEvent(async ({ type, detail }) => {
+    switch (type) {
+        case EventType.DELIVERED:
+            break;
+        case EventType.PRESS:
+            const { project_id, client_id } = detail?.notification?.data;
+            if (project_id) {
+                helpers.navigateThroughFCM("ProjectDetails", project_id);
+            } else if (client_id) {
+                helpers.navigateThroughFCM("LeadDetails", client_id);
+            }
+            break;
+        default:
+            return;
+    }
+});
+
 
 messaging().setBackgroundMessageHandler(async remoteMessage => {
     if (!remoteMessage) return;
     helpers.onDisplayNotification(remoteMessage);
 });
 
-AppRegistry.registerComponent(appName, () => App);
+function HeadlessCheck({ isHeadless }) {
+    if (isHeadless) {
+        return null;
+    };
+    return <App />;
+};
+
+AppRegistry.registerComponent(appName, () => HeadlessCheck);

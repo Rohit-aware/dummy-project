@@ -1,7 +1,9 @@
 import { Helpers } from './interface';
 import { Linking, Platform } from 'react-native';
-import { MainStackNavigatorRef } from '../hooks/mainstack-navigation-ref';
+import { MainStackNavigatorRef } from '../hooks/navigation-ref';
 import notifee, { AndroidImportance, TriggerType } from '@notifee/react-native';
+import updateProjectDetail from '../hooks/update-project-details-hooks';
+import { updateLeadDetail } from '../hooks';
 
 
 
@@ -24,8 +26,15 @@ const helpers: Helpers = {
         }
         return existingChannel?.id;
     },
-    navigateThroughFCM: (name, params) => {
-        MainStackNavigatorRef.current?.navigate(name, params);
+    navigateThroughFCM: async (name, id) => {
+        let result;
+        if (name == "ProjectDetails") {
+            result = await updateProjectDetail({ project_id: id })
+            result && MainStackNavigatorRef.current?.navigate(name);
+        } else if (name == "LeadDetails") {
+            result = await updateLeadDetail({ client_id: id })
+            result && MainStackNavigatorRef.current?.navigate(name);
+        }
     },
     onDisplayNotification: async (remoteMessage) => {
         console.log(remoteMessage, 'remoteMessage inside onDisplayNotification')

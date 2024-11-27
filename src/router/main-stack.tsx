@@ -1,30 +1,29 @@
 import React from 'react';
 import BottomTab from './BottomTab';
-import { useNavigateHelper } from '../hooks';
+import { helpers } from '../utility';
 import { MainStackProps } from './interface';
 import DeviceInfo from 'react-native-device-info';
 import RNBootSplash from "react-native-bootsplash";
 import { getHashString } from '../utility/hashing';
 import messaging from '@react-native-firebase/messaging';
+import { useNetwork } from '../context/network-context';
 import { NavigationContainer } from '@react-navigation/native';
-import { MainStackNavigatorRef, } from '../hooks/mainstack-navigation-ref';
+import { MainStackNavigatorRef, } from '../hooks/navigation-ref';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import { useAuthStore, useCommonStore, useProfileStore, useStartupStore } from '../store';
 import { Activities, AddActivities, AddLead, AddNotes, AddProject, AddUpcomingActivities, ChangePassword, CreateReminder, EditLead, EditProfile, FileViewer, FilterMyLeads, FilterMyProjects, FollowUpToday, ForgotPassSuccess, ForgotPassword, LeadDetail, Login, Notes, ProjectDetails, Register, Reminders, ShareLead, ShareProject, UpdateProjectStatus, ViewLead, ViewTeam } from '../screen';
-import { helpers } from '../utility';
-import { useNetwork } from '../context/network-context';
 
 const Stack = createNativeStackNavigator<MainStackProps>();
 
 
-const getInitialNotification = async (navigate: Function) => {
+const getInitialNotification = async () => {
     messaging().onNotificationOpenedApp((remoteMessage) => {
         if (remoteMessage) {
             const { data: { project_id, client_id } } = remoteMessage?.notification as any;
             if (project_id) {
-                navigate("ProjectDetails", project_id);
+                helpers.navigateThroughFCM("ProjectDetails", project_id);
             } else if (client_id) {
-                navigate("LeadDetails", client_id);
+                helpers.navigateThroughFCM("LeadDetails", client_id);
             };
         };
     });
@@ -36,7 +35,6 @@ const MainStack = () => {
     const { getPersonalDetails } = useProfileStore();
     const { getStates, getRequirementType } = useCommonStore();
     const { updateDeviceId, token, user_detail: userData, deviceId: uuid } = useAuthStore();
-    const { navigate } = useNavigateHelper();
     const getUuid = async () => {
         const deviceId = await DeviceInfo.getUniqueId();
         updateDeviceId({ id: deviceId });
@@ -56,7 +54,7 @@ const MainStack = () => {
         getRequirementType({ token, formData });
     };
 
-    const initialiseApp = (async () => {
+    const initialiseApp = React.useCallback(async () => {
         try {
             await getUuid();
             await getStates();
@@ -66,17 +64,17 @@ const MainStack = () => {
                     getProfileDetails(),
                     fetchStartup({ token })
                 ]);
-            };
-            getInitialNotification(navigate);
-            RNBootSplash.hide({ fade: true });
-        } catch (error: any) {
+            }
+            await getInitialNotification();
+            await RNBootSplash.hide({ fade: true });
+        } catch (error) {
             console.log('Error while initialising app : ', error);
         }
-    })
+    }, [token, isConnected]);
 
     React.useEffect(() => {
         initialiseApp();
-    }, [token, isConnected]);
+    }, [initialiseApp]);
 
     return (
         <NavigationContainer ref={MainStackNavigatorRef}>

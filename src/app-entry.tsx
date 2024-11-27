@@ -23,6 +23,14 @@ const AppEntry = () => {
             if (!remoteMessage) return;
             console.log('Message handled in the Forground! on AppEntry', remoteMessage);
             helpers.onDisplayNotification(remoteMessage);
+            if (remoteMessage) {
+                const { data: { project_id, client_id } } = remoteMessage?.notification as any;
+                if (project_id) {
+                    helpers.navigateThroughFCM("ProjectDetails", project_id);
+                } else if (client_id) {
+                    helpers.navigateThroughFCM("LeadDetails", client_id);
+                };
+            };
         });
         return () => unsubscribe();
     }, []);
