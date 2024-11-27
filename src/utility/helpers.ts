@@ -28,14 +28,18 @@ const helpers: Helpers = {
     },
 
     navigateThroughFCM: async (name, id) => {
-        let result;
-        if (name == "ProjectDetails") {
-            result = await updateProjectDetail({ project_id: id });
-            result && MainStackNavigatorRef.current?.navigate(name);
-        } else if (name == "LeadDetails") {
-            result = await updateLeadDetail({ client_id: id });
-            result && MainStackNavigatorRef.current?.navigate(name);
-        };
+        try {
+            let result;
+            if (name == "ProjectDetails") {
+                result = await updateProjectDetail({ project_id: id });
+                result && MainStackNavigatorRef.current?.navigate(name);
+            } else if (name == "LeadDetails") {
+                result = await updateLeadDetail({ client_id: id });
+                result && MainStackNavigatorRef.current?.navigate(name);
+            };
+        } catch (error) {
+            console.log('Error while navigating through FCm :', error);
+        }
     },
 
     onDisplayNotification: async (remoteMessage) => {

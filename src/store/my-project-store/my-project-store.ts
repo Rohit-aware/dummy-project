@@ -33,10 +33,13 @@ const useMyProjectStore = create<UseMyProjectStoreProps>()((set, get) => ({
         set({ projects: [] })
     },
     getSingleProject: async ({ token, formData }) => {
-        set({ projectLoad: true })
-        const response = await networkRequest({ token }).post(endpoints.getProjects, formData);
-        set({ projectLoad: true })
-        return response.data;
+        try {
+            const response = await networkRequest({ token }).post(endpoints.getProjects, formData);
+            if (response.data.success == 1) {
+                set({ projectDetails: { ...response.data.data[0] } });
+            }
+            return response.data;
+        } catch (error) { };
     },
     getProjects: async ({ token, formData, projectPage }) => {
         set({ projectLoad: true })
@@ -48,7 +51,7 @@ const useMyProjectStore = create<UseMyProjectStoreProps>()((set, get) => ({
                 set((state) => ({ projects: [...state.projects, ...response.data.data] }));
             }
         }
-        if (response.data.success === '0' && response.data.data?.length === 0 && response.data.total_record == 0) {
+        if (response.data.success === '0' && response.data?.data?.length === 0 && response.data.total_record == 0) {
             if (projectPage === 0) {
                 set({ projects: [] });
             }

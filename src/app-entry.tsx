@@ -3,10 +3,10 @@ import { helpers } from './utility';
 import { Colors } from './constants';
 import MainStack from './router/main-stack';
 import messaging from '@react-native-firebase/messaging';
+import { NetworkProvider } from './context/network-context';
 import { StyleSheet, LogBox, StatusBar } from 'react-native';
 import { GestureHandlerRootView } from 'react-native-gesture-handler';
 import { useNotificationPermission } from './hooks/notification-permission';
-import { NetworkProvider } from './context/network-context';
 
 LogBox.ignoreAllLogs()
 
@@ -21,8 +21,6 @@ const AppEntry = () => {
     React.useEffect(() => {
         const unsubscribe = messaging().onMessage(async remoteMessage => {
             if (!remoteMessage) return;
-            console.log('Message handled in the Forground! on AppEntry', remoteMessage);
-            helpers.onDisplayNotification(remoteMessage);
             if (remoteMessage) {
                 const { data: { project_id, client_id } } = remoteMessage?.notification as any;
                 if (project_id) {
@@ -31,13 +29,14 @@ const AppEntry = () => {
                     helpers.navigateThroughFCM("LeadDetails", client_id);
                 };
             };
+            helpers.onDisplayNotification(remoteMessage);
         });
         return () => unsubscribe();
     }, []);
 
     return (
         <GestureHandlerRootView style={styles.container}>
-            <StatusBar backgroundColor={Colors.lightblue} barStyle={'light-content'} networkActivityIndicatorVisible animated />
+            <StatusBar backgroundColor={Colors.lightblue} barStyle={'light-content'} />
             <NetworkProvider>
                 <MainStack />
             </NetworkProvider>
