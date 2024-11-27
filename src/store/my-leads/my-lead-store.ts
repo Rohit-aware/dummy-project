@@ -82,7 +82,8 @@ const useMyLeadStore = create<UseMyLeadStore>()((set, get) => ({
             if (response.data.success == 1) {
                 set({ leadDetails: { ...response.data.data[0] } });
             }
-            set({ loading: false })
+            set({ loading: false });
+            return response.data;
         } catch (error: any) {
             console.log('Error inside useMyLeadStore : ', error)
         }
