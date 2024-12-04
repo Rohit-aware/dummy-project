@@ -1,5 +1,5 @@
 import React from "react";
-import { MainStackProps } from "../router/interface";
+import { MainStackProps } from "../route/interface";
 import { NavigationContainerRef } from "@react-navigation/native";
 
 

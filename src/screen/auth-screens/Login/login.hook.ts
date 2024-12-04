@@ -5,7 +5,7 @@ import { showToast } from '../../../components';
 import { useNavigation } from '@react-navigation/native';
 import messaging from '@react-native-firebase/messaging';
 import useAuthStore from "../../../store/auth/auth-store";
-import { MainStackProps } from '../../../router/interface';
+import { MainStackProps } from '../../../route/interface';
 import { getHashString, RSAPUBLICKEY } from '../../../utility/hashing';
 import { NativeStackNavigationProp } from '@react-navigation/native-stack';
 

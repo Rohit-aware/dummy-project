@@ -2,13 +2,15 @@ import React from "react";
 import BottomComp from "./components/BottomComp";
 import { Home, MyProfile, MyProjects, MyLeads } from "../screen";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
+import { useStartupStore } from "../store";
 
 const Tabs = createBottomTabNavigator();
 const Empty: React.FC = () => null;
 
 const BottomTab = () => {
+    const { data: { screens: { bottom_nav: { add_lead_icon, home, leads, profiles, projects } = {} } = {} } = {} } = useStartupStore() || {};
 
-    const renderTab = (name: string, component: React.ComponentType, condition: boolean) => {
+    const renderTab = (name: string, component: React.ComponentType, condition: boolean | undefined) => {
         return condition ? (
             <Tabs.Screen name={name} component={component} />
         ) : (
@@ -29,11 +31,11 @@ const BottomTab = () => {
             tabBar={(props) => <BottomComp {...props} />}
             screenOptions={{ headerShown: false }}
         >
-            {renderTab("Dashboard", Home, true)}
-            {renderTab("MyLeads", MyLeads, true)}
-            {renderTab("Empty", Empty, true)}
-            {renderTab("MyProjects", MyProjects, true)}
-            {renderTab("MyProfile", MyProfile, true)}
+            {renderTab("Dashboard", Home, home)}
+            {renderTab("MyLeads", MyLeads, leads)}
+            {renderTab("Empty", Empty, add_lead_icon)}
+            {renderTab("MyProjects", MyProjects, projects)}
+            {renderTab("MyProfile", MyProfile, profiles)}
         </Tabs.Navigator>
     );
 };

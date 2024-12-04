@@ -3,7 +3,7 @@ import { useAuthStore, useMyLeadStore, useReloadStore, useShareLeadStore } from 
 import { getHashString } from "../../../../utility/hashing";
 import { showToast } from "../../../../components";
 import { RouteProp, useNavigation, useRoute } from "@react-navigation/native";
-import { MainStackProps } from "../../../../router/interface";
+import { MainStackProps } from "../../../../route/interface";
 
 const useShareLeadHook = () => {
     const { params: { client_id } } = useRoute<RouteProp<MainStackProps, 'ShareLead'>>();

@@ -1,7 +1,7 @@
 import React from 'react';
 import { helpers } from './utility';
 import { Colors } from './constants';
-import MainStack from './router/main-stack';
+import MainStack from './route/main-stack';
 import messaging from '@react-native-firebase/messaging';
 import { NetworkProvider } from './context/network-context';
 import { StyleSheet, LogBox, StatusBar } from 'react-native';

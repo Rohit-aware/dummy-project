@@ -2,19 +2,20 @@ import React from "react";
 import { helpers } from "../../utility";
 import { showToast } from "../../components";
 import { getHashString } from "../../utility/hashing";
-import { UseAddLeadHookReturnType } from "./interface";
 import { useNavigation } from "@react-navigation/native";
 import { useAddLeadStore, useAuthStore, useCommonStore } from "../../store";
+import { InputFields, UseAddLeadHookReturnType, ValidationRule } from "./interface";
+
 
 const useAddLeadHook = (): UseAddLeadHookReturnType => {
     const { navigate } = useNavigation<any>();
     const { createlead } = useAddLeadStore();
-    const { outsiderData, cityData, stateData, sources, stateLoad, cityLoad, getCity } = useCommonStore();
     const { token, deviceId: uuid, user_detail: userData } = useAuthStore();
     const { linkedInprefix, websiteprefix, httpPrefix, checkForEmpty, emailCheck } = helpers;
+    const { outsiderData, cityData, stateData, sources, stateLoad, cityLoad, getCity } = useCommonStore();
 
-    const [countryModal, setCountryModal] = React.useState(false);
-    const [inputs, setInputs] = React.useState({
+    const [countryModal, setCountryModal] = React.useState<boolean>(false);
+    const [inputs, setInputs] = React.useState<InputFields>({
         company_name: '',
         contact_name: '',
         contact_number: '',
@@ -47,7 +48,7 @@ const useAddLeadHook = (): UseAddLeadHookReturnType => {
         if (name === 'website_url' && (inputs.website_url === '' || !inputs.website_url.includes(httpPrefix))) {
             setInputs(prevInputs => ({ ...prevInputs, website_url: websiteprefix }));
         }
-    }, [inputs, linkedInprefix, websiteprefix, httpPrefix]);
+    }, [inputs]);
 
     const removePrefix = React.useCallback(({ name }: { name: string }) => {
         if (name === 'linkedIn' && (inputs.linkedIn === '' || inputs.linkedIn === linkedInprefix)) {
@@ -56,7 +57,7 @@ const useAddLeadHook = (): UseAddLeadHookReturnType => {
         if (name === 'website_url' && (inputs.website_url === '' || !inputs.website_url.includes(httpPrefix))) {
             setInputs(prevInputs => ({ ...prevInputs, website_url: '' }));
         }
-    }, [inputs, linkedInprefix, httpPrefix]);
+    }, [inputs]);
 
     const onSelect = React.useCallback((name: string, data: any) => {
         const updatedInputs = { ...inputs, [name]: data };
@@ -75,8 +76,7 @@ const useAddLeadHook = (): UseAddLeadHookReturnType => {
         setInputs(updatedInputs);
     }, [inputs]);
 
-
-    const onSelectCountry = (country: any) => {
+    const onSelectCountry = (country: { callingCode: string, name: string }) => {
         const { callingCode, name } = country;
         setInputs(prevInputs => ({
             ...prevInputs,
@@ -105,41 +105,49 @@ const useAddLeadHook = (): UseAddLeadHookReturnType => {
     }, [fetchCities]);
 
     const addLead = async () => {
-        const validationErrors = [
-            { condition: checkForEmpty(inputs.company_name), message: 'Please enter company name' },
-            { condition: checkForEmpty(inputs.contact_name), message: 'Please enter contact name' },
-            { condition: checkForEmpty(inputs.countryname), message: 'Please select any country' },
-            { condition: checkForEmpty(inputs.contact_number), message: 'Please enter your mobile number' },
-            { condition: emailCheck(inputs.emailId), message: 'Please enter valid email id' },
-            { condition: checkForEmpty(inputs.source), message: 'Please select any source' },
+        const validationRules: ValidationRule[] = [
+            { field: 'company_name', message: 'Please enter company name' },
+            { field: 'contact_name', message: 'Please enter contact name' },
+            { field: 'countryname', message: 'Please select any country' },
+            { field: 'contact_number', message: 'Please enter your mobile number' },
+            { field: 'emailId', message: 'Please enter valid email id', condition: (val) => emailCheck(val) },
+            { field: 'source', message: 'Please select any source' },
         ];
 
-        for (const error of validationErrors) {
-            const { condition, message } = error;
-            if (condition) {
+        for (const { field, message, condition = checkForEmpty } of validationRules) {
+            if (condition(inputs[field])) {
                 showToast(message);
                 return;
-            };
-        };
+            }
+        }
 
         try {
             const fnName = 'createLead';
             const hash_key = getHashString(userData.mkey!, userData.msalt!, uuid, fnName);
             const formData = new FormData();
 
-            formData.append('company_name', inputs.company_name);
-            formData.append('contact_person', inputs.contact_name);
-            formData.append('phone', inputs.contact_number);
-            if (!emailCheck(inputs.emailId)) formData.append('email', inputs.emailId);
-            if (!checkForEmpty(inputs.designation)) formData.append('person_role', inputs.designation);
-            if (!checkForEmpty(inputs.skype)) formData.append('skype', inputs.skype);
-            if (!checkForEmpty(inputs.source)) formData.append('source', inputs.source);
-            if (!checkForEmpty(inputs.requirement)) formData.append('remark', inputs.requirement);
-            if (inputs.source === 'outsider' && inputs.outsider_id) formData.append('outsider_id', inputs.outsider_id);
-            if (!checkForEmpty(inputs.linkedIn)) formData.append('linkedin_url', inputs.linkedIn);
-            if (!checkForEmpty(inputs.website_url)) formData.append('website_url', inputs.website_url);
-            if (!checkForEmpty(inputs.countrycode)) formData.append('country_id', inputs.countrycode);
-            if (!checkForEmpty(inputs.countryname)) formData.append('country_name', inputs.countryname);
+            const fields: Array<{ field: keyof InputFields, target?: string, condition?: (val: string) => boolean }> = [
+                { field: "company_name" },
+                { field: "contact_name", target: 'contact_person' },
+                { field: "contact_number", target: 'phone' },
+                { field: "emailId", target: 'email', condition: (val: string) => !emailCheck(val) },
+                { field: "designation", target: 'person_role' },
+                { field: "skype" },
+                { field: "source" },
+                { field: "requirement", target: 'remark' },
+                { field: "outsider_id", condition: (val: any) => inputs.source === 'outsider' && val },
+                { field: "linkedIn", target: 'linkedin_url' },
+                { field: "website_url" },
+                { field: "countrycode", target: 'country_id' },
+                { field: "countryname", target: 'country_name' },
+            ];
+
+
+            fields.forEach(({ field, target = field, condition = checkForEmpty }) => {
+                if (!condition(inputs[field])) {
+                    formData.append(target, inputs[field]);
+                }
+            });
 
             if (inputs.countrycode === '91') {
                 formData.append('state_id', inputs.state_id);

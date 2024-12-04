@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState, useEffect, useCallback } from 'react';
 import { Text } from 'react-native';
 import { Colors } from '../../constants';
 import { fontStyles } from '../../styles';
@@ -21,19 +21,35 @@ type ReturnType = {
 };
 
 const useToggleText = ({ input, maxLength = 60 }: ToggleTextProps): ReturnType => {
-    const [state, setState] = React.useState({
+    const [state, setState] = useState({
         open: false,
         displayValue: !input?.length ? '-' : input?.length >= maxLength ? input.substring(0, maxLength) + '...' : input,
     });
 
     // Memoize the getTruncatedValue function to avoid recreation on every render
-    const getTruncatedValue = React.useCallback(
+    const getTruncatedValue = useCallback(
         ({ value, open, maxLength }: GetTruncatedValueProps) => {
             if (open || value.length <= maxLength!) {
                 return value;
             }
             return value.substring(0, maxLength) + '...';
         }, []);
+
+    // Update the state when the input changes
+    useEffect(() => {
+        setState((prevState) => {
+            const newDisplayValue = getTruncatedValue({ value: input, open: prevState.open, maxLength });
+
+            // Only update if the display value has changed
+            if (newDisplayValue !== prevState.displayValue) {
+                return {
+                    ...prevState,
+                    displayValue: newDisplayValue,
+                };
+            }
+            return prevState;
+        });
+    }, [input, maxLength, getTruncatedValue]);
 
     const onToggle = () => {
         // Only update state if the value has actually changed
@@ -58,6 +74,7 @@ const useToggleText = ({ input, maxLength = 60 }: ToggleTextProps): ReturnType =
             {state.open ? 'Show Less' : 'Show More'}
         </Text>
     ) : <></>;
+
     return {
         textToShow: state.displayValue,
         ToggleText,

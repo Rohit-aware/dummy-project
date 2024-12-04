@@ -2,7 +2,7 @@ import React from 'react';
 import { helpers } from '../../../utility';
 import { fontStyles } from '../../../styles';
 import { useMyLeadStore, useStartupStore } from '../../../store';
-import { MainStackProps } from '../../../router/interface';
+import { MainStackProps } from '../../../route/interface';
 import { Call, Dots, Notes, Share } from '../../../../assets/icons';
 import { View, Text, StyleSheet, TouchableOpacity } from 'react-native';
 import { NavigationProp, useNavigation } from '@react-navigation/native';

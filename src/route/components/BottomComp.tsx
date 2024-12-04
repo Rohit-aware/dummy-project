@@ -2,7 +2,7 @@ import React from 'react';
 import { styles } from './styles';
 import { Colors } from '../../constants';
 import BottomBack from '../../../assets/icons/BottomBack';
-import { useMyLeadStore, useMyProjectStore } from '../../store';
+import { useMyLeadStore, useMyProjectStore, useStartupStore } from '../../store';
 import { BottomTabBarProps } from '@react-navigation/bottom-tabs';
 import { Home, Leads, Plus, Profile, Projects } from '../../../assets/icons';
 import { FlatList, Keyboard, Text, TouchableOpacity, View } from 'react-native';
@@ -14,11 +14,24 @@ const BottomComp = (props: BottomTabBarProps) => {
     const { FilterLeads } = useMyLeadStore();
     const [showBottomTab, setShowBottTab] = React.useState(true);
     const { FilterProjects, enableProjectFilter } = useMyProjectStore();
+    const {
+        data: {
+            screens: {
+                bottom_nav:
+                { home, leads, add_lead_icon, projects, profiles } = {}
+            } = {},
+            edit_allowed
+        } = {},
+        loading
+    } = useStartupStore() || {};
+    const addLead = edit_allowed && add_lead_icon;
+    const isVisible = [home, leads, addLead, projects, profiles];
 
     const showtab = () => setShowBottTab(true);
     const hidetab = () => setShowBottTab(false);
 
-    const handleTabPress = async (index: number) => {
+    const handleTabPress = async (index: number, isFocused?: boolean) => {
+        if (isFocused) return;
         if (index === 2) return;
         if (index === 1) {
             FilterLeads(null)
@@ -70,16 +83,16 @@ const BottomComp = (props: BottomTabBarProps) => {
                     contentContainerStyle={styles.tabContainer}
                     renderItem={({ item, index }) => {
                         const isFocused = index === state.index;
-                        return (
+                        return isVisible[index] ? (
                             <TouchableOpacity
                                 key={index}
-                                onPress={() => handleTabPress(index)}
+                                onPress={() => handleTabPress(index, isFocused)}
                                 style={[styles.tab]}
                             >
                                 <RenderIcon index={index} isFocused={isFocused} />
                                 <RenderTabLabel index={index} isFocused={isFocused} />
                             </TouchableOpacity>
-                        );
+                        ) : <></>;
                     }}
                     keyExtractor={(_, index) => index.toString()}
                 />

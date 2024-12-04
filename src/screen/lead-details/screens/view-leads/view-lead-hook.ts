@@ -2,7 +2,7 @@ import React from "react";
 import { getHashString } from "../../../../utility/hashing";
 import { useAuthStore, useViewLeadStore } from "../../../../store";
 import { RouteProp, useRoute } from "@react-navigation/native";
-import { MainStackProps } from "../../../../router/interface";
+import { MainStackProps } from "../../../../route/interface";
 
 
 

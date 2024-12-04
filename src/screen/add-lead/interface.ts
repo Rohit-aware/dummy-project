@@ -1,25 +1,27 @@
+interface InputFields {
+    company_name: string;
+    contact_name: string;
+    contact_number: string;
+    emailId: string;
+    linkedIn: string;
+    website_url: string;
+    address: string;
+    state_id: string;
+    city_id: string;
+    state_name: string;
+    city_name: string;
+    source: string;
+    designation: string;
+    skype: string;
+    requirement: string;
+    outsider_name: string;
+    outsider_id: string;
+    countrycode: string;
+    countryname: string;
+}
+
 interface UseAddLeadHookReturnType {
-    inputs: {
-        company_name: string;
-        contact_name: string;
-        contact_number: string;
-        emailId: string;
-        linkedIn: string;
-        website_url: string;
-        address: string;
-        state_id: string;
-        city_id: string;
-        state_name: string;
-        city_name: string;
-        source: string;
-        designation: string;
-        skype: string;
-        requirement: string;
-        outsider_name: string;
-        outsider_id: string;
-        countrycode: string;
-        countryname: string;
-    };
+    inputs: InputFields;
     outsiderData: any[];
     cityData: any[];
     stateData: any[];
@@ -55,4 +57,9 @@ type StateItems = {
     gst_code: string;
     state_code: string;
 }
-export type { UseAddLeadHookReturnType, CityItems, StateItems,SelectName };
+type ValidationRule = {
+    field: keyof InputFields;
+    message: string;
+    condition?: (value: string) => boolean;
+};
+export type { UseAddLeadHookReturnType, CityItems, StateItems, SelectName,InputFields ,ValidationRule};

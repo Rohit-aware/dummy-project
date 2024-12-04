@@ -2,7 +2,7 @@ import React from 'react';
 import Pdf from 'react-native-pdf';
 import { Colors } from '../../constants';
 import { Header, Loader } from '../../components';
-import { MainStackProps } from '../../router/interface';
+import { MainStackProps } from '../../route/interface';
 import { View, StyleSheet, Animated } from 'react-native';
 import { RouteProp, useRoute } from '@react-navigation/native';
 import { PinchGestureHandler, State } from 'react-native-gesture-handler';
