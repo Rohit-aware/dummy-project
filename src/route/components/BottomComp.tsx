@@ -2,10 +2,10 @@ import React from 'react';
 import { styles } from './styles';
 import { Colors } from '../../constants';
 import BottomBack from '../../../assets/icons/BottomBack';
-import { useMyLeadStore, useMyProjectStore, useStartupStore } from '../../store';
 import { BottomTabBarProps } from '@react-navigation/bottom-tabs';
 import { Home, Leads, Plus, Profile, Projects } from '../../../assets/icons';
 import { FlatList, Keyboard, Text, TouchableOpacity, View } from 'react-native';
+import { useMyLeadStore, useMyProjectStore, useStartupStore } from '../../store';
 
 type LabelIconProps = { index: number, isFocused: boolean }
 
